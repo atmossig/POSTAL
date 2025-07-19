@@ -81,27 +81,27 @@
     <_ProjectFileVersion>12.0.21005.1</_ProjectFileVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugOptimized|Win32'">
-    <OutDir>$(SolutionDir)Build\</OutDir>
+    <OutDir>$(SolutionDir)Intermediate\$(ProjectName)_$(PlatformToolset)\$(Platform)_$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)Intermediate\$(ProjectName)_$(PlatformToolset)\$(Platform)_$(Configuration)\</IntDir>
     <TargetName>$(ProjectName)_$(Platform)_$(Configuration)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>$(SolutionDir)Build\</OutDir>
+    <OutDir>$(SolutionDir)Intermediate\$(ProjectName)_$(PlatformToolset)\$(Platform)_$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)Intermediate\$(ProjectName)_$(PlatformToolset)\$(Platform)_$(Configuration)\</IntDir>
     <TargetName>$(ProjectName)_$(Platform)_$(Configuration)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>$(SolutionDir)Build\</OutDir>
+    <OutDir>$(SolutionDir)Intermediate\$(ProjectName)_$(PlatformToolset)\$(Platform)_$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)Intermediate\$(ProjectName)_$(PlatformToolset)\$(Platform)_$(Configuration)\</IntDir>
     <TargetName>$(ProjectName)_$(Platform)_$(Configuration)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseSteamworks|Win32'">
-    <OutDir>$(SolutionDir)Build\</OutDir>
+    <OutDir>$(SolutionDir)Intermediate\$(ProjectName)_$(PlatformToolset)\$(Platform)_$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)Intermediate\$(ProjectName)_$(PlatformToolset)\$(Platform)_$(Configuration)\</IntDir>
     <TargetName>$(ProjectName)_$(Platform)_$(Configuration)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDebugLog|Win32'">
-    <OutDir>$(SolutionDir)Build\</OutDir>
+    <OutDir>$(SolutionDir)Intermediate\$(ProjectName)_$(PlatformToolset)\$(Platform)_$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)Intermediate\$(ProjectName)_$(PlatformToolset)\$(Platform)_$(Configuration)\</IntDir>
     <TargetName>$(ProjectName)_$(Platform)_$(Configuration)</TargetName>
   </PropertyGroup>
@@ -114,17 +114,19 @@
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
-      <PrecompiledHeader />
-      <PrecompiledHeaderOutputFile>.\Build\Orange\Optimized Debug/Orange.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderOutputFile>
+      </PrecompiledHeaderOutputFile>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <ObjectFileName>$(IntDir)</ObjectFileName>
-      <ProgramDataBaseFileName>$(OutDir)$(ProjectName)_$(Platform)_$(Configuration)</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(IntDir)$(ProjectName)_$(Platform)_$(Configuration)</ProgramDataBaseFileName>
       <WarningLevel>Level3</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <CompileAs>Default</CompileAs>
       <ForcedIncludeFiles>$(SolutionDir)forceinclude.h;</ForcedIncludeFiles>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <PrecompiledHeaderFile />
     </ClCompile>
     <ResourceCompile>
       <Culture>0x0409</Culture>
@@ -145,7 +147,7 @@
       </PrecompiledHeaderOutputFile>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <ObjectFileName>$(IntDir)</ObjectFileName>
-      <ProgramDataBaseFileName>$(OutDir)$(ProjectName)_$(Platform)_$(Configuration)</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(IntDir)$(ProjectName)_$(Platform)_$(Configuration)</ProgramDataBaseFileName>
       <WarningLevel>Level3</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
@@ -171,16 +173,18 @@
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
-      <PrecompiledHeader />
-      <PrecompiledHeaderOutputFile>.\Build\Orange\Release/Orange.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderOutputFile>
+      </PrecompiledHeaderOutputFile>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <ObjectFileName>$(IntDir)</ObjectFileName>
-      <ProgramDataBaseFileName>$(OutDir)$(ProjectName)_$(Platform)_$(Configuration)</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(IntDir)$(ProjectName)_$(Platform)_$(Configuration)</ProgramDataBaseFileName>
       <WarningLevel>Level3</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <CompileAs>Default</CompileAs>
       <ForcedIncludeFiles>$(SolutionDir)forceinclude.h;</ForcedIncludeFiles>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <PrecompiledHeaderFile />
     </ClCompile>
     <ResourceCompile>
       <Culture>0x0409</Culture>
@@ -199,17 +203,18 @@
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
-      <PrecompiledHeaderOutputFile>.\Build\Orange\Release/Orange.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderOutputFile>
+      </PrecompiledHeaderOutputFile>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <ObjectFileName>$(IntDir)</ObjectFileName>
-      <ProgramDataBaseFileName>$(OutDir)$(ProjectName)_$(Platform)_$(Configuration)</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(IntDir)$(ProjectName)_$(Platform)_$(Configuration)</ProgramDataBaseFileName>
       <WarningLevel>Level3</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <CompileAs>Default</CompileAs>
       <ForcedIncludeFiles>$(SolutionDir)forceinclude.h;</ForcedIncludeFiles>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <PrecompiledHeaderFile />
     </ClCompile>
     <ResourceCompile>
       <Culture>0x0409</Culture>
@@ -228,17 +233,18 @@
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
-      <PrecompiledHeaderOutputFile>.\Build\Orange\Release/Orange.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderOutputFile>
+      </PrecompiledHeaderOutputFile>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <ObjectFileName>$(IntDir)</ObjectFileName>
-      <ProgramDataBaseFileName>$(OutDir)$(ProjectName)_$(Platform)_$(Configuration)</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(IntDir)$(ProjectName)_$(Platform)_$(Configuration)</ProgramDataBaseFileName>
       <WarningLevel>Level3</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <CompileAs>Default</CompileAs>
       <ForcedIncludeFiles>$(SolutionDir)forceinclude.h;</ForcedIncludeFiles>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <PrecompiledHeaderFile />
     </ClCompile>
     <ResourceCompile>
       <Culture>0x0409</Culture>

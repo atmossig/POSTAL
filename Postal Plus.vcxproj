@@ -124,12 +124,14 @@
       <AdditionalIncludeDirectories>.\SDL2\include;.\RSPiX\Src;.\RSPiX\Src\Blue;.\RSPiX\Inc;.\steamworks\sdk\public;.;%(AdditionalIncludeDirectories);.\Postal;.\Postal\Common</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>TRACENASSERT;_DEBUG;NOSHMALLOC;TRACENASSERT;WIN32;_WINDOWS;LOCALE=US;TARGET=POSTAL_2015;WITH_STEAMWORKS=0;ALLOW_TWINSTICK;DEBUG_LEVEL_CHEAT;RSP_DEBUG_OUT_FILE;RSP_TRACE_LOG_NAME="Postal.log";%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <PrecompiledHeader />
-      <PrecompiledHeaderFile>RSPiX.H</PrecompiledHeaderFile>
-      <PrecompiledHeaderOutputFile>.\Build\Postal Plus\Debug/Postal Plus.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>
+      </PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>
+      </PrecompiledHeaderOutputFile>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <ObjectFileName>$(IntDir)</ObjectFileName>
-      <ProgramDataBaseFileName>$(OutDir)</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(OutDir)Postal_$(Platform)_$(Configuration).pdb</ProgramDataBaseFileName>
       <BrowseInformation>true</BrowseInformation>
       <WarningLevel>Level3</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
@@ -149,7 +151,7 @@
       <AdditionalLibraryDirectories>.\SDL2\libs\win32;.\steamworks\sdk\redistributable_bin;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>libc;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ProgramDatabaseFile>$(SoltuionDir)Build\Postal PlusD.pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>$(OutDir)Postal_$(Platform)_$(Configuration).pdb</ProgramDatabaseFile>
       <SubSystem>Console</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
@@ -171,16 +173,18 @@
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
-      <PrecompiledHeader />
-      <PrecompiledHeaderOutputFile>.\Build\Postal Plus\Release/Postal Plus.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderOutputFile>
+      </PrecompiledHeaderOutputFile>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <ObjectFileName>$(IntDir)</ObjectFileName>
-      <ProgramDataBaseFileName>$(OutDir)</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(OutDir)Postal_$(Platform)_$(Configuration).pdb</ProgramDataBaseFileName>
       <WarningLevel>Level3</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <CompileAs>Default</CompileAs>
       <ForcedIncludeFiles>$(SolutionDir)forceinclude.h;</ForcedIncludeFiles>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <PrecompiledHeaderFile />
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>NDEBUG;POSTAL_PLUS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -192,7 +196,7 @@
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>.\SDL2\libs\win32;.\steamworks\sdk\redistributable_bin;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>libc;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
-      <ProgramDatabaseFile>.\Build\Postal Plus\Release/Postal Plus.pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>$(OutDir)Postal_$(Platform)_$(Configuration).pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
@@ -215,17 +219,18 @@
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
-      <PrecompiledHeaderOutputFile>.\Build\Postal Plus\Release/Postal Plus.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderOutputFile>
+      </PrecompiledHeaderOutputFile>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <ObjectFileName>$(IntDir)</ObjectFileName>
-      <ProgramDataBaseFileName>$(OutDir)</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(OutDir)Postal_$(Platform)_$(Configuration).pdb</ProgramDataBaseFileName>
       <WarningLevel>Level3</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <CompileAs>Default</CompileAs>
       <ForcedIncludeFiles>$(SolutionDir)forceinclude.h;</ForcedIncludeFiles>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <PrecompiledHeaderFile />
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>NDEBUG;POSTAL_PLUS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -237,7 +242,7 @@
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>.\SDL2\libs\win32;.\steamworks\sdk\redistributable_bin;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>libc;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
-      <ProgramDatabaseFile>.\Build\Postal Plus\Release/Postal Plus.pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>$(OutDir)Postal_$(Platform)_$(Configuration).pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
@@ -260,17 +265,18 @@
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
-      <PrecompiledHeaderOutputFile>.\Build\Postal Plus\Release/Postal Plus.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderOutputFile>
+      </PrecompiledHeaderOutputFile>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <ObjectFileName>$(IntDir)</ObjectFileName>
-      <ProgramDataBaseFileName>$(OutDir)</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(OutDir)Postal_$(Platform)_$(Configuration).pdb</ProgramDataBaseFileName>
       <WarningLevel>Level3</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <CompileAs>Default</CompileAs>
       <ForcedIncludeFiles>$(SolutionDir)forceinclude.h;</ForcedIncludeFiles>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <PrecompiledHeaderFile />
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>NDEBUG;POSTAL_PLUS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -282,7 +288,7 @@
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>.\SDL2\libs\win32;.\steamworks\sdk\redistributable_bin;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>libc;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
-      <ProgramDatabaseFile>.\Build\Postal Plus\Release/Postal Plus.pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>$(OutDir)Postal_$(Platform)_$(Configuration).pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
@@ -304,12 +310,14 @@
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
-      <PrecompiledHeader />
-      <PrecompiledHeaderFile>RSPiX.H</PrecompiledHeaderFile>
-      <PrecompiledHeaderOutputFile>.\Build\Postal Plus\Optimized Debug/Postal Plus.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>
+      </PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>
+      </PrecompiledHeaderOutputFile>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <ObjectFileName>$(IntDir)</ObjectFileName>
-      <ProgramDataBaseFileName>$(OutDir)</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(OutDir)Postal_$(Platform)_$(Configuration).pdb</ProgramDataBaseFileName>
       <WarningLevel>Level3</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -328,7 +336,7 @@
       <AdditionalLibraryDirectories>.\SDL2\libs\win32;.\steamworks\sdk\redistributable_bin;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>libc;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ProgramDatabaseFile>.\Build\Postal Plus\Optimized Debug/Postal PlusOD.pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>$(OutDir)Postal_$(Platform)_$(Configuration).pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
