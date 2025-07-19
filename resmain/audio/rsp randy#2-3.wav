@@ -1,0 +1,71 @@
+ctab 320,color 244,size 48,`Developer`;size 36,color 245,`Running With Scissors`;;skip 15,
+color 244,size 36,`Executive Producer`;color 245,size 28,`Vince Desi`;
+skip 25,
+color 244,size 36,`Project Director`;color 245,size 28,`Mike Riedel`;
+skip 25,
+color 244,size 36,`Art Director`;color 245,size 28,`Randy Briley`;skip 0,
+color 244,size 36,`Level Design`;color 245,size 28,`Steve Wik`;skip 0,
+color 244,size 36,`Postal Programmers`;color 245,size 28,
+				`Bill Harman`;
+				`Jonathan Isabelle`;skip 0,
+color 244,size 36,`Visual Effects Programming`;color 245,size 28,`Jeff Diamond`;
+skip 25,
+color 244,size 36,`Associate Producer`;color 245,size 28,`Amy Searcy`;
+skip 25,
+color 244,size 36,`3D Engine, Blitters and Alpha Effects`;color 245,size 28,`Jeff Diamond`;skip 0,
+color 244,size 32,`Character Logic, Navigation and Weapons`;color 245,size 28,`Bill Harman`;skip 0,
+color 244,size 32,`Player Logic`;`Particle Effects and User Interface`;color 245,size 28,`Jonathan Isabelle`;skip 0,
+color 244,size 36,`Shell, Networking and Mac Version`;color 245,size 28,`Mike Riedel`;;skip 0,
+color 244,size 36,`RSPiX Library Programming`;color 245,size 28,
+`Jeff Diamond`;
+`Bill Harman`;
+`Jonathan Isabelle`;
+`Mike Riedel`;
+;;skip 0,
+color 244,size 36,`Additional Programming`;color 245,size 28,
+`Andy Muir`;
+`Paul Lin`;
+;;
+skip 25,
+color 244,size 36,`3D Animation`;color 245,size 28,`Randy Briley`;skip 0,
+color 244,size 36,`2D Animation`;color 245,size 28,`Steve Wik`;skip 0,
+color 244,size 36,`Background Design and Layout`;color 245,size 28,`Steve Wik`;skip 0,
+color 244,size 36,`Background Art`;color 245,size 28,`Randy Briley`;skip 0,
+color 244,size 36,`Cutscene Design and Art`;color 245,size 28,`Randy Briley`;skip 0,
+color 244,size 36,`Additional Art`;color 245,size 28,
+	`Jared Binder`;
+	`Steve Macomber`;
+	`Steve Wik`;
+	;
+
+skip 25,
+color 244,size 36,`Game Design`;color 245,size 28,
+	`Randy Briley`;
+	`Jeff Diamond`;
+	`Bill Harman`;
+	`Jonathan Isabelle`;
+	`Mike Riedel`;
+	`Steve Wik`;
+	;skip 0,
+
+color 244,size 36,`Story`;color 245,size 28,
+	`Mike Riedel`;
+	`Steve Wik`;
+	`The Pain Killer`;
+	;skip 0,
+
+color 244,size 36,`Cutscene Text`;color 245,size 28,
+	`Vince Desi`;
+	`Steve Wik`;
+	`The Pain Killer`;
+	;
+
+skip 25,
+
+color 244,size 36,`Music and Ambient Sound Design`;color 245,size 28,`Christian A. Salyer`;skip 0,
+color 244,size 36,`Additional Sound Effects`;color 245,size 28,`Amy Searcy`;
+
+skip 25,
+
+
+end
