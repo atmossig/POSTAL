@@ -109,9 +109,9 @@
 // PATHS_IN_INCLUDES.  Blue.h includes system.h so you can include that
 // instead.
 #ifdef PATHS_IN_INCLUDES
-	#include "GREEN/Hot/hot.h"
+#include "GREEN/Hot/hot.h"
 #else
-	#include "hot.h"
+#include "hot.h"
 #endif // PATHS_IN_INCLUDES
 
 //////////////////////////////////////////////////////////////////////////////
@@ -136,10 +136,10 @@
 //
 //////////////////////////////////////////////////////////////////////////////
 RHot::RHot()
-	{
+{
 	// Reset all members.
 	Init();
-	}
+}
 
 //////////////////////////////////////////////////////////////////////////////
 //
@@ -155,25 +155,25 @@ RHot::RHot(
 	int16_t	sActive /*= FALSE*/,					// Initially active, if TRUE.
 	uint32_t	ulUser /*= 0*/,						// User value.
 	int16_t sPriority /*= RHOT_NO_PRIORITY*/)// Priority.  Default == non-prioritized.
-	{
+{
 	// Reset all members.
 	Init();
-	
-	m_sX	= sX;
-	m_sY	= sY;
-	m_sW	= sW;
-	m_sH	= sH;
 
-	m_ulUser		= ulUser;
+	m_sX = sX;
+	m_sY = sY;
+	m_sW = sW;
+	m_sH = sH;
 
-	m_ecUser		= fnEventCall;
+	m_ulUser = ulUser;
+
+	m_ecUser = fnEventCall;
 
 	SetPriority(sPriority);
 
 	// Set activation status.
 	SetActive(sActive);
-	}
-		
+}
+
 //////////////////////////////////////////////////////////////////////////////
 //
 // Constructura Especial that sets some intial values.
@@ -188,25 +188,25 @@ RHot::RHot(
 	int16_t	sActive /*= FALSE*/,					// Initially active, if TRUE.
 	uint32_t	ulUser /*= 0*/,						// User value.
 	int16_t sPriority /*= RHOT_NO_PRIORITY*/)// Priority.  Default == non-prioritized.
-	{
+{
 	// Reset all members.
 	Init();
-	
-	m_sX	= sX;
-	m_sY	= sY;
-	m_sW	= sW;
-	m_sH	= sH;
 
-	m_epcUser	= fnEventPosCall;
+	m_sX = sX;
+	m_sY = sY;
+	m_sW = sW;
+	m_sH = sH;
 
-	m_ulUser		= ulUser;
+	m_epcUser = fnEventPosCall;
+
+	m_ulUser = ulUser;
 
 	SetPriority(sPriority);
 
 	// Set activation status.
 	SetActive(sActive);
-	}
-		
+}
+
 //////////////////////////////////////////////////////////////////////////////
 //
 // Constructura Especial that sets some intial values.
@@ -221,24 +221,24 @@ RHot::RHot(
 	int16_t	sActive /*= FALSE*/,					// Initially active, if TRUE.
 	uint32_t	ulUser /*= 0*/,						// User value.
 	int16_t sPriority /*= RHOT_NO_PRIORITY*/)// Priority.  Default == non-prioritized.
-	{
+{
 	// Reset all members.
 	Init();
-	
-	m_sX	= sX;
-	m_sY	= sY;
-	m_sW	= sW;
-	m_sH	= sH;
 
-	m_iecUser	= fnInputEventCall;
+	m_sX = sX;
+	m_sY = sY;
+	m_sW = sW;
+	m_sH = sH;
 
-	m_ulUser		= ulUser;
+	m_iecUser = fnInputEventCall;
+
+	m_ulUser = ulUser;
 
 	SetPriority(sPriority);
 
 	// Set activation status.
 	SetActive(sActive);
-	}
+}
 
 //////////////////////////////////////////////////////////////////////////////
 //
@@ -246,24 +246,24 @@ RHot::RHot(
 //
 //////////////////////////////////////////////////////////////////////////////
 RHot::~RHot()
-	{
+{
 	// Deactivate.
 	SetActive(FALSE);
 	// Decapture.
 	SetCapture(FALSE);
 
 	// Release all children.
-	RHot*	phot	= m_listChildren.GetHead();
+	RHot* phot = m_listChildren.GetHead();
 	while (phot != NULL)
-		{
+	{
 		phot->SetParent(NULL);
 
-		phot	= m_listChildren.GetNext();
-		}
+		phot = m_listChildren.GetNext();
+	}
 
 	// Release parent.
 	SetParent(NULL);
-	}
+}
 
 //////////////////////////////////////////////////////////////////////////////
 // Manipulations.
@@ -277,55 +277,55 @@ RHot::~RHot()
 //////////////////////////////////////////////////////////////////////////////
 void RHot::SetActive(	// Returns nothing.
 	int16_t sActive)			// TRUE to activate, FALSE otherwise.
-	{
+{
 	if (m_sActive != sActive)
-		{
+	{
 		if (sActive == TRUE)
-			{
+		{
 			// If this item has a parent . . .
-			RHot*	photParent	= GetParent();
+			RHot* photParent = GetParent();
 			if (photParent != NULL)
-				{
+			{
 				// Add us into its list.
 				if (photParent->m_slistActiveChildren.Insert(this, &m_sPriority) == 0)
-					{
-					// Success.
-					m_sActive	= TRUE;
-					}
-				else
-					{
-					TRACE("SetActive(): Failed to insert into list.  Delete me; I'm useless.\n");
-					}
-				}
-			else
 				{
-				m_sActive	= TRUE;
+					// Success.
+					m_sActive = TRUE;
+				}
+				else
+				{
+					TRACE("SetActive(): Failed to insert into list.  Delete me; I'm useless.\n");
 				}
 			}
-		else
+			else
 			{
+				m_sActive = TRUE;
+			}
+		}
+		else
+		{
 			// If this item has a parent . . .
-			RHot*	photParent	= GetParent();
+			RHot* photParent = GetParent();
 			if (photParent != NULL)
-				{
+			{
 				// Remove us from list.
 				if (photParent->m_slistActiveChildren.Remove(this) == 0)
-					{
-					// Success.
-					m_sActive	= FALSE;
-					}
-				else
-					{
-					TRACE("SetActive(): Failed to remove from list.\n");
-					}
-				}
-			else
 				{
-				m_sActive	= FALSE;
+					// Success.
+					m_sActive = FALSE;
 				}
+				else
+				{
+					TRACE("SetActive(): Failed to remove from list.\n");
+				}
+			}
+			else
+			{
+				m_sActive = FALSE;
 			}
 		}
 	}
+}
 
 //////////////////////////////////////////////////////////////////////////////
 //
@@ -337,31 +337,31 @@ void RHot::SetActive(	// Returns nothing.
 //////////////////////////////////////////////////////////////////////////////
 void RHot::SetPriority(	// Returns 0 on success.
 	int16_t sPriority)			// New priority for hotbox.  Lower value
-									// equals higher priority.
-									// RHOT_NO_PRIORITY(default) indicates non-prioritized.
-	{
+	// equals higher priority.
+	// RHOT_NO_PRIORITY(default) indicates non-prioritized.
+{
 	// Change priority.
-	m_sPriority	= sPriority;
+	m_sPriority = sPriority;
 
 	// If this hotbox is active . . .
 	if (m_sActive != FALSE)
-		{
+	{
 		// If this item has a parent . . .
-		RHot*	photParent	= GetParent();
+		RHot* photParent = GetParent();
 		if (photParent != NULL)
-			{
+		{
 			// Reposition with new priority.
 			if (photParent->m_slistActiveChildren.Reposition(this) == 0)
-				{
+			{
 				// Success.
-				}
+			}
 			else
-				{
+			{
 				TRACE("SetPriority(): photParent->m_listChildren.Reposition() failed.\n");
-				}
 			}
 		}
 	}
+}
 
 
 //////////////////////////////////////////////////////////////////////////////
@@ -373,64 +373,64 @@ void RHot::SetPriority(	// Returns 0 on success.
 //////////////////////////////////////////////////////////////////////////////
 void RHot::SetParent(	// Returns nothing.
 	RHot* photParent)		// Hotbox to be parent of this hotbox or NULL
-								// for none.
-	{
+	// for none.
+{
 	ASSERT(photParent != this);
 
 	// Store activation status.
-	int16_t	sActive	= IsActive();
+	int16_t	sActive = IsActive();
 	// Store capture status.
-	int16_t	sCapture	= IsCapturing();
+	int16_t	sCapture = IsCapturing();
 
 	// If active . . .
 	if (sActive != FALSE)
-		{
+	{
 		// Deactivate.
 		SetActive(FALSE);
-		}
+	}
 
 	// If capturing . . .
 	if (sCapture != FALSE)
-		{
+	{
 		// Decapture.
 		SetCapture(FALSE);
-		}
+	}
 
 	// If there's an existing parent . . .
 	if (m_photParent != NULL)
-		{
+	{
 		// Remove from its list of children.
 		m_photParent->m_listChildren.Remove(this);
-		}
+	}
 
 	// Set new parent.
-	m_photParent	= photParent;
+	m_photParent = photParent;
 
 	// If there's a new parent . . .
 	if (m_photParent != NULL)
-		{
+	{
 		// Remove from its list of children.
 		m_photParent->m_listChildren.AddTail(this);
-		}
+	}
 
 	// If active . . .
 	if (sActive != FALSE)
-		{
+	{
 		// Activate.
 		SetActive(TRUE);
-		}
+	}
 
 	// If capturing . . .
 	if (sCapture != FALSE)
-		{
+	{
 		// Capture.
 		SetCapture(TRUE);
-		}
+	}
 
 	// We should be back in original shape.
-	ASSERT(sActive == IsActive() );
-	ASSERT(sCapture == IsCapturing() );
-	}
+	ASSERT(sActive == IsActive());
+	ASSERT(sCapture == IsCapturing());
+}
 
 //////////////////////////////////////////////////////////////////////////////
 //
@@ -441,37 +441,37 @@ void RHot::SetParent(	// Returns nothing.
 //////////////////////////////////////////////////////////////////////////////
 void RHot::SetCapture(	// Returns nothing.
 	int16_t sActive)			// TRUE to activate, FALSE otherwise.
-	{
+{
 	if (m_sCapture != sActive)
-		{
+	{
 		if (sActive == TRUE)
-			{
+		{
 			// Add us into list . . .
 			if (GetCaptureList()->Insert(this) == 0)
-				{
-				// Success.
-				m_sCapture	= TRUE;
-				}
-			else
-				{
-				TRACE("SetCapture(): Failed to insert into list.  Delete me; I'm useless.\n");
-				}
-			}
-		else
 			{
+				// Success.
+				m_sCapture = TRUE;
+			}
+			else
+			{
+				TRACE("SetCapture(): Failed to insert into list.  Delete me; I'm useless.\n");
+			}
+		}
+		else
+		{
 			// Remove us from list . . .
 			if (GetCaptureList()->Remove(this) == 0)
-				{
+			{
 				// Success.
-				m_sCapture	= FALSE;
-				}
+				m_sCapture = FALSE;
+			}
 			else
-				{
+			{
 				TRACE("SetCapture(): Failed to remove from list.\n");
-				}
 			}
 		}
 	}
+}
 
 //////////////////////////////////////////////////////////////////////////////
 // Methods.
@@ -488,46 +488,46 @@ void RHot::SetCapture(	// Returns nothing.
 //
 //////////////////////////////////////////////////////////////////////////////
 int16_t	RHot::Do(			// Returns priority of item called back or 
-								// RHOT_NO_PRIORITY.
-	RInputEvent*	pie)	// In:  Most recent user input event.
-								// Out: Depends on callbacks.  Generally,
-								// pie->sUsed = TRUE, if used.
-	{
-	int16_t	sPriorityCalled	= RHOT_NO_PRIORITY;	// Assume no callback.
+	// RHOT_NO_PRIORITY.
+	RInputEvent* pie)	// In:  Most recent user input event.
+	// Out: Depends on callbacks.  Generally,
+	// pie->sUsed = TRUE, if used.
+{
+	int16_t	sPriorityCalled = RHOT_NO_PRIORITY;	// Assume no callback.
 
 	// Make sure we're dealing with the correct event type . . .
 	if (pie->type == RInputEvent::Mouse)
-		{
+	{
 		// If this item is top-level . . .
 		if (m_photParent == NULL)
-			{
+		{
 			// Process capture items.
 			// Notify all hotboxes that are capturing.
 			// Note that capture items have no priority.
 			int16_t sChildPosX;
 			int16_t	sChildPosY;
-			RHot* phot	= m_listCapturing.GetHead();
+			RHot* phot = m_listCapturing.GetHead();
 			while (phot != NULL)
-				{
+			{
 				// Notify user via callback(s).
 				if (phot->m_ecUser != NULL)
-					{
+				{
 					(*phot->m_ecUser)(phot, pie->sEvent);
-					}
+				}
 
 				if (phot->m_epcUser != NULL)
-					{
-					sChildPosX	= pie->sPosX;
-					sChildPosY	= pie->sPosY;
+				{
+					sChildPosX = pie->sPosX;
+					sChildPosY = pie->sPosY;
 
 					// Get the child position equivalent.
 					phot->GetChildPos(&sChildPosX, &sChildPosY);
 
 					(*phot->m_epcUser)(phot, pie->sEvent, sChildPosX, sChildPosY);
-					}
+				}
 
 				if (phot->m_iecUser != NULL)
-					{
+				{
 					// Get the child position equivalent.
 					phot->GetChildPos(&pie->sPosX, &pie->sPosY);
 
@@ -535,90 +535,90 @@ int16_t	RHot::Do(			// Returns priority of item called back or
 
 					// Convert back to parent coords.
 					phot->GetTopPos(&pie->sPosX, &pie->sPosY);
-					}
+				}
 
 				// Store priority.
 				if (sPriorityCalled == RHOT_NO_PRIORITY)
-					{
-					sPriorityCalled	= phot->m_sPriority;
-					}
-				else
-					{
-					sPriorityCalled	= MIN(sPriorityCalled, phot->m_sPriority);
-					}
-
-				phot	= m_listCapturing.GetNext();
+				{
+					sPriorityCalled = phot->m_sPriority;
 				}
+				else
+				{
+					sPriorityCalled = MIN(sPriorityCalled, phot->m_sPriority);
+				}
+
+				phot = m_listCapturing.GetNext();
 			}
+		}
 
 		// Is the event inside this region . . .
-		if (	pie->sPosX >= m_sX 
-			&&	pie->sPosY >= m_sY
-			&&	pie->sPosX < m_sX + m_sW
+		if (pie->sPosX >= m_sX
+			&& pie->sPosY >= m_sY
+			&& pie->sPosX < m_sX + m_sW
 			&& pie->sPosY < m_sY + m_sH)
-			{
+		{
 			// Get first child.
-			RHot*	photChild			= m_slistActiveChildren.GetHead();
+			RHot* photChild = m_slistActiveChildren.GetHead();
 			// While there are more children and no prioritized callback has occurred.
 			while (photChild != NULL)
-				{
+			{
 				ASSERT(photChild != this);
 
 				// If this item is non-prioritized or no prioritized callback
 				// has yet occurred . . .
 				if (sPriorityCalled == RHOT_NO_PRIORITY || photChild->m_sPriority == RHOT_NO_PRIORITY)
-					{
+				{
 					// Convert to child coords.
-					pie->sPosX	-= m_sX;
-					pie->sPosY	-= m_sY;
+					pie->sPosX -= m_sX;
+					pie->sPosY -= m_sY;
 
 					// Process event in child using our coordinate system.
-					sPriorityCalled	= photChild->Do(pie);
+					sPriorityCalled = photChild->Do(pie);
 
 					// Convert back to parent coords.
-					pie->sPosX	+= m_sX;
-					pie->sPosY	+= m_sY;
-					}
+					pie->sPosX += m_sX;
+					pie->sPosY += m_sY;
+				}
 
 				// Get next child.
-				photChild	= m_slistActiveChildren.GetNext();
-				}
+				photChild = m_slistActiveChildren.GetNext();
+			}
 
 			// If no prioritized item yet called or this is a non-prioritized item 
 			// and this item is not capturing . . .
 			if ((sPriorityCalled == RHOT_NO_PRIORITY || m_sPriority == RHOT_NO_PRIORITY)
 				&& m_sCapture == FALSE)
-				{
+			{
 				// Notify user via callback(s).
 				if (m_ecUser != NULL)
-					{
+				{
 					(*m_ecUser)(this, pie->sEvent);
 
 					// Store priority.
-					sPriorityCalled	= m_sPriority;
-					}
+					sPriorityCalled = m_sPriority;
+				}
 
 				if (m_epcUser != NULL)
-					{
+				{
 					(*m_epcUser)(this, pie->sEvent, pie->sPosX, pie->sPosY);
 
 					// Store priority.
-					sPriorityCalled	= m_sPriority;
-					}
+					sPriorityCalled = m_sPriority;
+				}
 
 				if (m_iecUser != NULL)
-					{
+				{
 					(*m_iecUser)(this, pie);
 
 					// Store priority.
-					sPriorityCalled	= m_sPriority;
-					}
+					sPriorityCalled = m_sPriority;
 				}
 			}
 		}
+	}
 
 	return sPriorityCalled;
-	}
+}
 
 //////////////////////////////////////////////////////////////////////////////
 // Querries.
@@ -631,21 +631,21 @@ int16_t	RHot::Do(			// Returns priority of item called back or
 //////////////////////////////////////////////////////////////////////////////
 void RHot::GetChildPos(	// Returns nothing.
 	int16_t* psX,				// In:  Top-level position.
-								// Out: Child position.
+	// Out: Child position.
 	int16_t* psY)				// In:  Top-level position.
-								// Out: Child position.
-	{
-	RHot*	photParent	= m_photParent;
+	// Out: Child position.
+{
+	RHot* photParent = m_photParent;
 	while (photParent != NULL)
-		{
+	{
 		// Move through parent's coordinate system.
-		*psX	-= photParent->m_sX;
-		*psY	-= photParent->m_sY;
+		*psX -= photParent->m_sX;
+		*psY -= photParent->m_sY;
 
 		// Get next parent.
-		photParent	= photParent->m_photParent;
-		}
+		photParent = photParent->m_photParent;
 	}
+}
 
 //////////////////////////////////////////////////////////////////////////////
 //
@@ -654,21 +654,21 @@ void RHot::GetChildPos(	// Returns nothing.
 //////////////////////////////////////////////////////////////////////////////
 void RHot::GetTopPos(	// Returns nothing.
 	int16_t* psX,				// In:  Child position.
-								// Out: Top-level position.
+	// Out: Top-level position.
 	int16_t* psY)				// In:  Child position.
-								// Out: Top-level position.    
-	{
-	RHot*	photParent	= m_photParent;
+	// Out: Top-level position.    
+{
+	RHot* photParent = m_photParent;
 	while (photParent != NULL)
-		{
+	{
 		// Move through parent's coordinate system.
-		*psX	+= photParent->m_sX;
-		*psY	+= photParent->m_sY;
+		*psX += photParent->m_sX;
+		*psY += photParent->m_sY;
 
 		// Get next parent.
-		photParent	= photParent->m_photParent;
-		}
+		photParent = photParent->m_photParent;
 	}
+}
 
 //////////////////////////////////////////////////////////////////////////////
 // Internal.
@@ -681,46 +681,46 @@ void RHot::GetTopPos(	// Returns nothing.
 //
 //////////////////////////////////////////////////////////////////////////////
 void RHot::Init(void)
-	{
+{
 	// Initially not active.
-	m_sActive	= FALSE;
+	m_sActive = FALSE;
 	// Clear callbacks.
-	m_ecUser		= NULL;
-	m_epcUser	= NULL;
-	m_iecUser	= NULL;
+	m_ecUser = NULL;
+	m_epcUser = NULL;
+	m_iecUser = NULL;
 	// Clear user value.
-	m_ulUser		= 0L;
+	m_ulUser = 0L;
 	// Initialize positions.
-	m_sX	= m_sY	= m_sW	= m_sH	= 0;
+	m_sX = m_sY = m_sW = m_sH = 0;
 	// Non-prioritized.
-	m_sPriority		= RHOT_NO_PRIORITY;
+	m_sPriority = RHOT_NO_PRIORITY;
 	// Global; no parent.
-	m_photParent	= NULL;
+	m_photParent = NULL;
 	// Not capturing events.
-	m_sCapture		= FALSE;
-	}
-	
+	m_sCapture = FALSE;
+}
+
 //////////////////////////////////////////////////////////////////////////////
 //
 // Gets the list appropriate for this hotbox.
 //
 //////////////////////////////////////////////////////////////////////////////
 RHot::ListHots* RHot::GetCaptureList(void)	// Returns Capture list 
-															// appropriate for this RHot.
-															// Cannot fail.
-	{
+// appropriate for this RHot.
+// Cannot fail.
+{
 	// Go to highest level.
-	RHot*	phot			= this;
-	RHot*	photParent	= GetParent();
+	RHot* phot = this;
+	RHot* photParent = GetParent();
 	while (photParent != NULL)
-		{
-		phot			= photParent;
-		photParent	= phot->GetParent();
-		}
+	{
+		phot = photParent;
+		photParent = phot->GetParent();
+	}
 
 	// Use this RHot's capture list.
 	return &(phot->m_listCapturing);
-	}
+}
 
 //////////////////////////////////////////////////////////////////////////////
 // EOF

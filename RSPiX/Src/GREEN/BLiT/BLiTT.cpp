@@ -17,15 +17,15 @@
 //
 // Do uncompressed transparent copying!
 #ifdef PATHS_IN_INCLUDES
-	#include "GREEN/BLiT/BLIT.H"
+#include "GREEN/BLiT/BLIT.H"
 #else
-	#include "BLIT.H"
+#include "BLIT.H"
 #endif
 
 #ifdef PATHS_IN_INCLUDES
-	#include "GREEN/BLiT/_BlitInt.H"
+#include "GREEN/BLiT/_BlitInt.H"
 #else
-	#include "_BlitInt.H" 
+#include "_BlitInt.H" 
 #endif
 
 //========================================================================================
@@ -35,13 +35,13 @@
 // pre-validated rect copy: (Pitch will be sign based!)
 //
 template <class PIXSIZE>
-inline void _BLiTT(PIXSIZE ucTransparent,PIXSIZE* pSrc,PIXSIZE* pDst,int32_t lSrcPitch, int32_t lDstPitch,
-						int16_t sHeight,int16_t	sPixWidth)
-	{
-	union	{
-		PIXSIZE *w;
-		uint8_t	*b;
-		} pSrcLine,pDstLine;
+inline void _BLiTT(PIXSIZE ucTransparent, PIXSIZE* pSrc, PIXSIZE* pDst, int32_t lSrcPitch, int32_t lDstPitch,
+	int16_t sHeight, int16_t	sPixWidth)
+{
+	union {
+		PIXSIZE* w;
+		uint8_t* b;
+	} pSrcLine, pDstLine;
 
 	int i;
 
@@ -49,22 +49,22 @@ inline void _BLiTT(PIXSIZE ucTransparent,PIXSIZE* pSrc,PIXSIZE* pDst,int32_t lSr
 	pDstLine.w = pDst;
 
 	while (sHeight--)
-		{
+	{
 		pSrc = pSrcLine.w;
 		pDst = pDstLine.w;
 
 		i = sPixWidth;
-		while (i--) 
-			{
+		while (i--)
+		{
 			if (*pSrc != ucTransparent) *pDst = *pSrc;
-			pDst++;pSrc++;
-			}
+			pDst++; pSrc++;
+		}
 
 		pSrcLine.b += lSrcPitch;
 		pDstLine.b += lDstPitch;
 
-		}
 	}
+}
 
 
 
@@ -73,40 +73,40 @@ inline void _BLiTT(PIXSIZE ucTransparent,PIXSIZE* pSrc,PIXSIZE* pDst,int32_t lSr
 // if prSrc == NULL, no source clipping will occure
 // if prDst == NULL, it will clip to the CImage
 //
-int16_t	rspBlitT(uint32_t ucTransparent,RImage* pimSrc,RImage* pimDst,int16_t sSrcX,int16_t sSrcY,int16_t sDstX,
-			  int16_t sDstY,int16_t sW,int16_t sH,const RRect* prDst,const RRect* prSrc)
-	{
+int16_t	rspBlitT(uint32_t ucTransparent, RImage* pimSrc, RImage* pimDst, int16_t sSrcX, int16_t sSrcY, int16_t sDstX,
+	int16_t sDstY, int16_t sW, int16_t sH, const RRect* prDst, const RRect* prSrc)
+{
 	int16_t sClip;
 
 	// 1) preliminary parameter validation:
 #ifdef _DEBUG
 
 	if ((pimSrc == NULL) || (pimDst == NULL))
-		{
+	{
 		TRACE("rspBlitT: null CImage* passed\n");
 		return -1;
-		}
+	}
 
-	if ( (sW < 1) || (sH < 1) )
-		{
+	if ((sW < 1) || (sH < 1))
+	{
 		TRACE("rspBlitT: zero or negative area passed\n");
 		return -1;
-		}
+	}
 
-	if ( !ImageIsUncompressed(pimSrc->m_type) || 
-			!ImageIsUncompressed(pimDst->m_type) )
-		{
+	if (!ImageIsUncompressed(pimSrc->m_type) ||
+		!ImageIsUncompressed(pimDst->m_type))
+	{
 		TRACE("rspBlitT: To BLiT using COMPRESSED Images, you must specify"
 			"your parameters differently (see BLiT.DOC)!\n");
 		return -1;
-		}
+	}
 
 #endif
 
-	
+
 	// 2) Optional Source Clipping
 	if (prSrc)
-		{
+	{
 		// clip rect to source
 		// clip against user values
 		sClip = prSrc->sX - sDstX; // positive = clipped
@@ -118,29 +118,29 @@ int16_t	rspBlitT(uint32_t ucTransparent,RImage* pimSrc,RImage* pimDst,int16_t sS
 		sClip = sDstY + sH - prSrc->sY - prSrc->sH; // positive = clipped
 		if (sClip > 0) { sH -= sClip; }
 
-		if ( (sW <= 0) || (sH <= 0) ) return -1; // clipped out!
-		}
+		if ((sW <= 0) || (sH <= 0)) return -1; // clipped out!
+	}
 
 	// 2) Source clipping is SO critical in locked screen stuff, that we MUST check it:
 
 #ifdef _DEBUG 
 
 	else // no source clipping:
+	{
+		if ((sSrcX < 0) || (sSrcY < 0) ||
+			((sSrcX + sW) > pimSrc->m_sWidth) || ((sSrcY + sH) > pimSrc->m_sHeight))
 		{
-		if ( (sSrcX < 0) || (sSrcY < 0) ||
-			((sSrcX + sW) > pimSrc->m_sWidth) || ((sSrcY + sH) > pimSrc->m_sHeight) )
-			{
 			TRACE("rspBlitT:  Gone outside source buffer.  Must source clip.\n");
 			return -1;
-			}
 		}
+	}
 
 #endif
 
 
 	// 3) Destination Clipping:
 	if (prDst)
-		{
+	{
 		// clip against user values
 		sClip = prDst->sX - sDstX; // positive = clipped
 		if (sClip > 0) { sW -= sClip; sSrcX += sClip; sDstX = prDst->sX; }
@@ -151,10 +151,10 @@ int16_t	rspBlitT(uint32_t ucTransparent,RImage* pimSrc,RImage* pimDst,int16_t sS
 		sClip = sDstY + sH - prDst->sY - prDst->sH; // positive = clipped
 		if (sClip > 0) { sH -= sClip; }
 
-		if ( (sW <= 0) || (sH <= 0) ) return -1; // clipped out!
-		}
-	else	
-		{
+		if ((sW <= 0) || (sH <= 0)) return -1; // clipped out!
+	}
+	else
+	{
 		// clip against full destination buffer
 		if (sDstX < 0) { sW += sDstX; sSrcX -= sDstX; sDstX = 0; }
 		if (sDstY < 0) { sH += sDstY; sSrcY -= sDstY; sDstY = 0; }
@@ -164,7 +164,7 @@ int16_t	rspBlitT(uint32_t ucTransparent,RImage* pimSrc,RImage* pimDst,int16_t sS
 		if (sClip > 0) sH -= sClip; // positive = clipped
 
 		if ((sW <= 0) || (sH <= 0)) return -1; // fully clipped
-		}
+	}
 
 	//**************  INSERT BUFFER HOOKS HERE!  ************************
 
@@ -187,10 +187,10 @@ int16_t	rspBlitT(uint32_t ucTransparent,RImage* pimSrc,RImage* pimDst,int16_t sS
 	if (pimSrc->m_type == RImage::IMAGE_STUB) sBlitTypeSrc = (int16_t)((S64)pimSrc->m_pSpecial);
 	if (pimDst->m_type == RImage::IMAGE_STUB) sBlitTypeDst = (int16_t)((S64)pimDst->m_pSpecial);
 
-	switch ( (sBlitTypeSrc<<3) + sBlitTypeDst) // 0 = normal image
-		{
-		case (BUF_MEMORY<<3) + 0: // system buffer to an image
-			// need to lock / unlock this one:
+	switch ((sBlitTypeSrc << 3) + sBlitTypeDst) // 0 = normal image
+	{
+	case (BUF_MEMORY << 3) + 0: // system buffer to an image
+		// need to lock / unlock this one:
 /*
 			if (rspLockBuffer()
 				!=0)
@@ -199,26 +199,26 @@ int16_t	rspBlitT(uint32_t ucTransparent,RImage* pimSrc,RImage* pimDst,int16_t sS
 				return -1;
 				}
 			// Locked the system buffer, remember to unlock it:
-			sNeedToUnlock = BUF_MEMORY;	
+			sNeedToUnlock = BUF_MEMORY;
 */
 		break;
 
-		case (0<<3) + BUF_MEMORY: // image to system buffer
-/*
-			// need to lock / unlock this one:
-			if (rspLockBuffer()
-				!=0)
-				{
-				TRACE("rspBlitT: Unable to lock the system buffer, failed!\n");
-				return -1;
-				}
-			// Locked the system buffer, remember to unlock it:
-			sNeedToUnlock = BUF_MEMORY;		
-*/
+	case (0 << 3) + BUF_MEMORY: // image to system buffer
+		/*
+					// need to lock / unlock this one:
+					if (rspLockBuffer()
+						!=0)
+						{
+						TRACE("rspBlitT: Unable to lock the system buffer, failed!\n");
+						return -1;
+						}
+					// Locked the system buffer, remember to unlock it:
+					sNeedToUnlock = BUF_MEMORY;
+		*/
 		break;
 
-		case (BUF_VRAM<<3) + 0: // front screen to image
-			// need to lock / unlock this one:
+	case (BUF_VRAM << 3) + 0: // front screen to image
+		// need to lock / unlock this one:
 /*
 			if (rspLockScreen()
 				!=0)
@@ -227,95 +227,95 @@ int16_t	rspBlitT(uint32_t ucTransparent,RImage* pimSrc,RImage* pimDst,int16_t sS
 				return -1;
 				}
 			// Locked the front VRAM, remember to unlock it:
-			sNeedToUnlock = BUF_VRAM;		
+			sNeedToUnlock = BUF_VRAM;
 */
 		break;
 
-		case (0<<3) + BUF_VRAM: // image to front screen
-/*
-			// need to lock / unlock this one:
-			if (rspLockScreen()
-				!=0)
-				{
-				TRACE("rspBlitT: Unable to lock the OnScreen system buffer, failed!\n");
-				return -1;
-				}
-			// Locked the front VRAM, remember to unlock it:
-			sNeedToUnlock = BUF_VRAM;			
-*/
+	case (0 << 3) + BUF_VRAM: // image to front screen
+		/*
+					// need to lock / unlock this one:
+					if (rspLockScreen()
+						!=0)
+						{
+						TRACE("rspBlitT: Unable to lock the OnScreen system buffer, failed!\n");
+						return -1;
+						}
+					// Locked the front VRAM, remember to unlock it:
+					sNeedToUnlock = BUF_VRAM;
+		*/
 		break;
 
 		// HOOK the special case of sytem buffer to front VRAM
-		case (BUF_MEMORY<<3) + BUF_VRAM: // system buffer to front screen
+	case (BUF_MEMORY << 3) + BUF_VRAM: // system buffer to front screen
 
-			rspUpdateDisplay(sDstX,sDstY,sW,sH); 
-			return 0; // DONE!!!!!
+		rspUpdateDisplay(sDstX, sDstY, sW, sH);
+		return 0; // DONE!!!!!
 		break;
 
-		case (BUF_VRAM<<3) + BUF_MEMORY: // front screen to system buffer
-//			sNeedToUnlock = (BUF_VRAM<<3) + BUF_MEMORY;
+	case (BUF_VRAM << 3) + BUF_MEMORY: // front screen to system buffer
+		//			sNeedToUnlock = (BUF_VRAM<<3) + BUF_MEMORY;
 
 		break;
 
-		case 0:	// image to image, no need to lock!
+	case 0:	// image to image, no need to lock!
 		break;
 
-		default:
-			TRACE("rspBlitT: This type of copy is not yet supported.\n");
-			return -1;
-		}
+	default:
+		TRACE("rspBlitT: This type of copy is not yet supported.\n");
+		return -1;
+	}
 
-//BLIT_PRELOCKED:
-	//********************************************************************
+	//BLIT_PRELOCKED:
+		//********************************************************************
 
-	// Check for locking error:
+		// Check for locking error:
 	if (!pimDst->m_pData)
-		{
+	{
 		TRACE("rspBlitT: Null data - possible locking error.\n");
 		return FAILURE;
-		}
+	}
 
 	// Done clipping, convert to bytes to find best alignment:
 	// Currently based on source, assumes source = destination depth:
 	switch (pimSrc->m_sDepth)
-		{
-		case 16:
-			sDstX <<= 1;
-			sSrcX <<= 1;
-			sW <<= 1;
+	{
+	case 16:
+		sDstX <<= 1;
+		sSrcX <<= 1;
+		sW <<= 1;
 		break;
-		case 32:
-			sDstX <<= 2;
-			sSrcX <<= 2;
-			sW <<= 2;
+	case 32:
+		sDstX <<= 2;
+		sSrcX <<= 2;
+		sW <<= 2;
 		break;
-		case 24:
-			sDstX += (sDstX << 1);
-			sSrcX += (sSrcX << 1);
-			sW += (sW << 1);
+	case 24:
+		sDstX += (sDstX << 1);
+		sSrcX += (sSrcX << 1);
+		sW += (sW << 1);
 		break;
 		// 8-bit needs nothing...
-		}
+	}
 
 	// Calculate memory offsets using signed pitch:
 	U8* pSrc = pimSrc->m_pData + sSrcX + pimSrc->m_lPitch * sSrcY;
 	U8* pDst = pimDst->m_pData + sDstX + pimDst->m_lPitch * sDstY;
-	
+
 	// Copy based on pixel size:
 	switch (pimDst->m_sDepth)
-		{
-		case 8:
-			_BLiTT((uint8_t)ucTransparent,(U8*)pSrc,(U8*)pDst,pimSrc->m_lPitch,pimDst->m_lPitch,sH,sW); 
+	{
+	case 8:
+		_BLiTT((uint8_t)ucTransparent, (U8*)pSrc, (U8*)pDst, pimSrc->m_lPitch, pimDst->m_lPitch, sH, sW);
 		break;
-		case 16:
-			_BLiTT((uint16_t)ucTransparent,(U16*)pSrc,(U16*)pDst,(pimSrc->m_lPitch),(pimDst->m_lPitch),sH,int16_t(sW>>1)); 
+	case 16:
+		_BLiTT((uint16_t)ucTransparent, (U16*)pSrc, (U16*)pDst, (pimSrc->m_lPitch), (pimDst->m_lPitch), sH, int16_t(sW >> 1));
 		break;
-		case 32:
-			_BLiTT((uint32_t)ucTransparent,(U32*)pSrc,(U32*)pDst,(pimSrc->m_lPitch),(pimDst->m_lPitch),sH,int16_t(sW>>2)); 
+	case 32:
+		_BLiTT((uint32_t)ucTransparent, (U32*)pSrc, (U32*)pDst, (pimSrc->m_lPitch), (pimDst->m_lPitch), sH, int16_t(sW >> 2));
 		break;
-		default:
-			TRACE("rspBlitT: color depth not supported.\n");
-		}
+	default:
+		TRACE("rspBlitT: color depth not supported.\n");
+	}
 
 	// IN RELEASE MODE, GIVE THE USER A CHANCE:
 #ifndef _DEBUG
@@ -328,31 +328,31 @@ int16_t	rspBlitT(uint32_t ucTransparent,RImage* pimSrc,RImage* pimDst,int16_t sS
 	// OS_SPECIFIC:
 	//********************  UNLOCK WHATEVER YOU NEED TO
 	switch (sNeedToUnlock)
-		{
-		case 0:
+	{
+	case 0:
 		break;
 
-		case BUF_MEMORY:
-	//		rspUnlockBuffer();
-		break;
-		
-		case BUF_VRAM:
-	//		rspUnlockScreen();
-		break;
-		
-		case BUF_VRAM2:
-			rspUnlockVideoFlipPage();
+	case BUF_MEMORY:
+		//		rspUnlockBuffer();
 		break;
 
-		case (BUF_VRAM<<3) + BUF_MEMORY:
-//			rspUnlockBuffer();
-//			rspUnlockScreen();
+	case BUF_VRAM:
+		//		rspUnlockScreen();
 		break;
-		
-		default:
-			TRACE("rspBlitT:  Unlocking error!\n");
-		}
 
-//BLIT_DONTUNLOCK:	
-	return 0;
+	case BUF_VRAM2:
+		rspUnlockVideoFlipPage();
+		break;
+
+	case (BUF_VRAM << 3) + BUF_MEMORY:
+		//			rspUnlockBuffer();
+		//			rspUnlockScreen();
+		break;
+
+	default:
+		TRACE("rspBlitT:  Unlocking error!\n");
 	}
+
+	//BLIT_DONTUNLOCK:	
+	return 0;
+}

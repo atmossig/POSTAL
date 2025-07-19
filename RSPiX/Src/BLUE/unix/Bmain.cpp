@@ -47,8 +47,8 @@
 #include "SDL.h"
 #include "BLUE/Blue.h"
 
-SDL_Window *sdlWindow = NULL;
-SDL_Surface *sdlShadowSurface = NULL;
+SDL_Window* sdlWindow = NULL;
+SDL_Surface* sdlShadowSurface = NULL;
 
 bool mouse_grabbed = false;
 static int16_t ms_sQuit = 0;
@@ -67,16 +67,16 @@ extern void Key_Init(void);
 extern void Joy_Init(void);
 
 int16_t rspInitBlue(void)
-	{
-	int16_t	sRes	= 0;	// Assume success.
+{
+	int16_t	sRes = 0;	// Assume success.
 
 #ifdef BETAEXPIRE
-    if ( time(NULL) > (BETAEXPIRE + 30 * 24 * 60 * 60) )
-    {
-        fprintf(stderr, "This beta has expired.\n\n");
-        fflush(stderr);
-        while (1) _exit(42);
-    }
+	if (time(NULL) > (BETAEXPIRE + 30 * 24 * 60 * 60))
+	{
+		fprintf(stderr, "This beta has expired.\n\n");
+		fflush(stderr);
+		while (1) _exit(42);
+	}
 #endif
 
 	if (SDL_Init(SDL_INIT_VIDEO) == -1)
@@ -86,12 +86,12 @@ int16_t rspInitBlue(void)
 	}
 
 	Disp_Init();
-    Key_Init();
-    Joy_Init();
+	Key_Init();
+	Joy_Init();
 
 	return sRes;
-	}
-		
+}
+
 
 //////////////////////////////////////////////////////////////////////////////
 // 
@@ -101,10 +101,10 @@ int16_t rspInitBlue(void)
 // 
 //////////////////////////////////////////////////////////////////////////////
 void rspKillBlue(void)
-	{
-	    // Kill display module.
-    	SDL_Quit();
-	}
+{
+	// Kill display module.
+	SDL_Quit();
+}
 
 //////////////////////////////////////////////////////////////////////////////
 // 
@@ -116,49 +116,49 @@ void rspKillBlue(void)
 
 extern void rspSetQuitStatus(int16_t sQuitStatus);
 
-extern void Mouse_Event(SDL_Event *event);
-extern void Key_Event(SDL_Event *event);
+extern void Mouse_Event(SDL_Event* event);
+extern void Key_Event(SDL_Event* event);
 
 bool GSDLAppIsActive = true;
 
 extern void rspDoSystem(void)										// Returns nothing.
+{
+	rspPresentFrame();
+
+#if WITH_STEAMWORKS
+	extern void RunSteamworksUpkeep();
+	RunSteamworksUpkeep();
+#endif
+
+	SDL_Event event;
+	while (SDL_PollEvent(&event))
 	{
-        rspPresentFrame();
+		switch (event.type)
+		{
+			//case SDL_MOUSEMOTION:
+			//case SDL_JOYBALLMOTION:
+		case SDL_MOUSEBUTTONDOWN:
+		case SDL_MOUSEBUTTONUP:
+		case SDL_MOUSEWHEEL:
+			Mouse_Event(&event);
+			break;
 
-        #if WITH_STEAMWORKS
-        extern void RunSteamworksUpkeep();
-        RunSteamworksUpkeep();
-        #endif
+		case SDL_KEYDOWN:
+		case SDL_KEYUP:
+			Key_Event(&event);
+			break;
 
-        SDL_Event event;
-        while (SDL_PollEvent(&event))
-        {
-            switch (event.type)
-            {
-                //case SDL_MOUSEMOTION:
-                //case SDL_JOYBALLMOTION:
-                case SDL_MOUSEBUTTONDOWN:
-                case SDL_MOUSEBUTTONUP:
-				case SDL_MOUSEWHEEL:
-                    Mouse_Event(&event);
-                    break;
+			//                case SDL_ACTIVEEVENT:
+			//                    if (event.active.state & SDL_APPINPUTFOCUS)
+			//                        GSDLAppIsActive = (event.active.gain != 0);
+			//                    break;
 
-                case SDL_KEYDOWN:
-                case SDL_KEYUP:
-                    Key_Event(&event);
-                    break;
-
-//                case SDL_ACTIVEEVENT:
-//                    if (event.active.state & SDL_APPINPUTFOCUS)
-//                        GSDLAppIsActive = (event.active.gain != 0);
-//                    break;
-
-                case SDL_QUIT:
-                    rspSetQuitStatus(1);
-                    break;
-            }
-        }
+		case SDL_QUIT:
+			rspSetQuitStatus(1);
+			break;
+		}
 	}
+}
 
 //////////////////////////////////////////////////////////////////////////////
 // 
@@ -167,10 +167,10 @@ extern void rspDoSystem(void)										// Returns nothing.
 //////////////////////////////////////////////////////////////////////////////
 extern void rspSetDoSystemMode(	// Returns nothing.
 	int16_t sCooperativeLevel)		// In:  One of the RSP_DOSYSTEM_* macros 
-											// defining what level of cooperation to use.
-	{
-        /* no-op */
-	}
+	// defining what level of cooperation to use.
+{
+	/* no-op */
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -178,9 +178,9 @@ extern void rspSetDoSystemMode(	// Returns nothing.
 //
 ////////////////////////////////////////////////////////////////////////////////
 extern int16_t rspGetQuitStatus(void)				// Returns TRUE if quit detected, FALSE otherwise
-	{
+{
 	return ms_sQuit;
-	}
+}
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -193,68 +193,68 @@ extern int16_t rspGetQuitStatus(void)				// Returns TRUE if quit detected, FALSE
 ////////////////////////////////////////////////////////////////////////////////
 extern void rspSetQuitStatus(
 	int16_t sStatus)										// In:  New status
-	{
+{
 	ms_sQuit = sStatus;
-	}
+}
 
 extern int _argc;
-extern char **_argv;
-extern int rspCommandLine(const char *cmd)
+extern char** _argv;
+extern int rspCommandLine(const char* cmd)
 {
-    for (int i = 1; i < _argc; i++)
-    {
-        const char *arg = _argv[i];
-        if (*arg == '-') arg++;
-        if (*arg == '-') arg++;
+	for (int i = 1; i < _argc; i++)
+	{
+		const char* arg = _argv[i];
+		if (*arg == '-') arg++;
+		if (*arg == '-') arg++;
 
-        if (strcasecmp(cmd, arg) == 0)
-            return i;
-    }
+		if (strcasecmp(cmd, arg) == 0)
+			return i;
+	}
 
-    return 0;
+	return 0;
 }
 
 extern void rspPlatformInit(void)
 {
 #if PLATFORM_MACOSX
-    // MacOS X has this concept of "Application Bundles" which makes the whole
-    //  install tree look like a single icon in the Finder, which, when
-    //  launched, loads the game binary. They, however, totally fuck up your
-    //  game's filesystem...best thing to do is see if the binary is running
-    //  in a dir that appears to be embedded in an Application Bundle and
-    //  chdir to the game's System dir...  --ryan.
-    //
-    //  (FIXME: There _are_ Carbon APIs to determine this via process info...)
-    const char *argv0 = _argv[0];
-    char buf[MAXPATHLEN];
-    if ((argv0 != NULL) && (strchr(argv0, '/') != NULL)) // no path specifed?
-        strncpy(buf, argv0, sizeof (buf));
-    else
-    {
-        // From the Finder, current working directory is "/", which sucks.
-        if ((getcwd(buf, sizeof (buf)) == NULL) || (strcmp(buf, "/") == 0))
-            return;  // hail mary...probably fail elsewhere.
-    }
+	// MacOS X has this concept of "Application Bundles" which makes the whole
+	//  install tree look like a single icon in the Finder, which, when
+	//  launched, loads the game binary. They, however, totally fuck up your
+	//  game's filesystem...best thing to do is see if the binary is running
+	//  in a dir that appears to be embedded in an Application Bundle and
+	//  chdir to the game's System dir...  --ryan.
+	//
+	//  (FIXME: There _are_ Carbon APIs to determine this via process info...)
+	const char* argv0 = _argv[0];
+	char buf[MAXPATHLEN];
+	if ((argv0 != NULL) && (strchr(argv0, '/') != NULL)) // no path specifed?
+		strncpy(buf, argv0, sizeof(buf));
+	else
+	{
+		// From the Finder, current working directory is "/", which sucks.
+		if ((getcwd(buf, sizeof(buf)) == NULL) || (strcmp(buf, "/") == 0))
+			return;  // hail mary...probably fail elsewhere.
+	}
 
-    buf[sizeof (buf) - 1] = '\0';  // null terminate, just in case.
+	buf[sizeof(buf) - 1] = '\0';  // null terminate, just in case.
 
-    char realbuf[MAXPATHLEN];
-    if (realpath(buf, realbuf) == NULL)
-        return;
+	char realbuf[MAXPATHLEN];
+	if (realpath(buf, realbuf) == NULL)
+		return;
 
-    char *ptr = strstr(realbuf, "/Contents/MacOS/");
-    if (ptr != NULL)
-        *ptr = '\0';  // chop off bundle bin dirs...
-    else
-    {
-        // not an application bundle, but might be a symlink to elsewhere,
-        //  so chdir to there, just in case.
-        ptr = strrchr(realbuf, '/');  // chop off binary name.
-        if (ptr != NULL)
-            *ptr = '\0';
-    }
+	char* ptr = strstr(realbuf, "/Contents/MacOS/");
+	if (ptr != NULL)
+		*ptr = '\0';  // chop off bundle bin dirs...
+	else
+	{
+		// not an application bundle, but might be a symlink to elsewhere,
+		//  so chdir to there, just in case.
+		ptr = strrchr(realbuf, '/');  // chop off binary name.
+		if (ptr != NULL)
+			*ptr = '\0';
+	}
 
-    chdir(realbuf);  // go there.
+	chdir(realbuf);  // go there.
 #endif
 }
 

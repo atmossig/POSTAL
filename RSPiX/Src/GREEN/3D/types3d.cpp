@@ -46,96 +46,96 @@
 
 // Allocate specified number of indices and colors
 void RTexture::Alloc(int16_t sNum)
-	{
+{
 	m_sNum = sNum;
 	AllocIndices();
 	AllocColors();
-	}
+}
 
 
 // Allocate same number of indices as current number of colors
 void RTexture::AllocIndices(void)
-	{
+{
 	FreeIndices();
 	m_pIndices = (uint8_t*)calloc(m_sNum, 1);
 	ASSERT(m_pIndices != 0);
-	}
+}
 
 
 // Allocate same number of colors as current number of indices
 void RTexture::AllocColors(void)
-	{
+{
 	FreeColors();
 	m_pColors = (RPixel32*)calloc(m_sNum, sizeof(RPixel32));
 	ASSERT(m_pColors != 0);
-	}
+}
 
 
 // Free indices and colors
 void RTexture::Free(void)
-	{
+{
 	FreeIndices();
 	FreeColors();
 	Init();
-	}
+}
 
 
 // Free indices only
 void RTexture::FreeIndices(void)
-	{
+{
 	if (m_pIndices)
-		{
+	{
 		free(m_pIndices);
 		m_pIndices = 0;
-		}
 	}
+}
 
 
 // Free colors only
 void RTexture::FreeColors(void)
-	{
+{
 	if (m_pColors)
-		{
+	{
 		free(m_pColors);
 		m_pColors = 0;
-		}
 	}
+}
 
 
 int16_t RTexture::Load(RFile* fp)
-	{
+{
 	Free();
 
 	int16_t sResult = 0;
 	if (fp->Read(&m_sNum) == 1)
-		{
+	{
 		int16_t sFlags;
 		if (fp->Read(&sFlags) == 1)
-			{
+		{
 			if (sFlags & HasIndices)
-				{
+			{
 				AllocIndices();
 				fp->Read(m_pIndices, m_sNum);
-				}
+			}
 			if (sFlags & HasColors)
-				{
+			{
 				AllocColors();
 				fp->Read(m_pColors, m_sNum);
-				}
 			}
 		}
+	}
 
 	if (fp->Error())
-		{
+	{
 		sResult = -1;
 		TRACE("RTexture::Load(): Error reading from file!\n");
-		}
-	return sResult;
 	}
+	return sResult;
+}
 
 
 int16_t RTexture::Save(RFile* fp)
-	{
+{
 	int16_t sResult = 0;
 
 	fp->Write(&m_sNum);
@@ -153,12 +153,12 @@ int16_t RTexture::Save(RFile* fp)
 		fp->Write(m_pColors, m_sNum);
 
 	if (fp->Error())
-		{
+	{
 		sResult = -1;
 		TRACE("RTexture::Save(): Error writing to file!\n");
-		}
-	return sResult;
 	}
+	return sResult;
+}
 
 
 // Map colors onto the specified palette.  For each color, the best
@@ -172,53 +172,53 @@ void RTexture::Remap(
 	uint8_t* pg,
 	uint8_t* pb,
 	int32_t linc)
-	{
+{
 	ASSERT(m_pColors);
-		
+
 	if (m_pIndices == 0)
 		AllocIndices();
 
 	for (int16_t i = 0; i < m_sNum; i++)
-		{
+	{
 		m_pIndices[i] = rspMatchColorRGB(
 			int32_t(m_pColors[i].u8Red),
 			int32_t(m_pColors[i].u8Green),
 			int32_t(m_pColors[i].u8Blue),
-			sStartIndex,sNumIndex,
-			pr,pg,pb,linc);
-		}
+			sStartIndex, sNumIndex,
+			pr, pg, pb, linc);
 	}
+}
 
 
 ////////////////////////////////////////////////////////////////////////////////
 // Unmap colors from the specified palette and put them into the colors
 // array.  If the array of colors doesn't exist, it will be created.
 ////////////////////////////////////////////////////////////////////////////////
-void 
+void
 RTexture::Unmap(
 	uint8_t* pr,
 	uint8_t* pg,
 	uint8_t* pb,
 	int32_t lInc)
-	{
+{
 	ASSERT(m_pIndices);
-		
+
 	if (m_pColors == 0)
 		AllocColors();
 
-	U8*			pu8	= m_pIndices;
-	RPixel32*	ppix	= m_pColors;
-	int16_t	sCount		= m_sNum;
+	U8* pu8 = m_pIndices;
+	RPixel32* ppix = m_pColors;
+	int16_t	sCount = m_sNum;
 	while (sCount--)
-		{
-		ppix->u8Red		= pr[*pu8];
-		ppix->u8Green	= pg[*pu8];
-		ppix->u8Blue	= pb[*pu8];
+	{
+		ppix->u8Red = pr[*pu8];
+		ppix->u8Green = pg[*pu8];
+		ppix->u8Blue = pb[*pu8];
 
 		ppix++;
 		pu8++;
-		}
 	}
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 // Muddy or brighten or darken.  Applies the specified brightness value
@@ -228,136 +228,136 @@ void
 RTexture::Adjust(
 	float fAdjustment,	// In:  Adjustment factor (1.0 == same, < 1 == dimmer, > 1 == brighter).
 	int32_t lInc)				// In:  Number of colors to skip.
-	{
+{
 	ASSERT(m_pColors);
 	ASSERT(fAdjustment >= 0.0f);
 
 #define CLAMP255(u8Color, fColor)	( (u8Color) = ( (fColor) < 255) ? (fColor) + 0.5f : 255)
 
-	RPixel32*	ppix	= m_pColors;
-	int16_t	sCount		= m_sNum / lInc;
+	RPixel32* ppix = m_pColors;
+	int16_t	sCount = m_sNum / lInc;
 	float	fColor;
 	while (sCount--)
-		{
-		fColor	= ppix->u8Red		* fAdjustment;
+	{
+		fColor = ppix->u8Red * fAdjustment;
 		CLAMP255(ppix->u8Red, fColor);
 
-		fColor	= ppix->u8Green	* fAdjustment;
+		fColor = ppix->u8Green * fAdjustment;
 		CLAMP255(ppix->u8Green, fColor);
 
-		fColor	= ppix->u8Blue		* fAdjustment;
+		fColor = ppix->u8Blue * fAdjustment;
 		CLAMP255(ppix->u8Blue, fColor);
 
 		ppix += lInc;
-		}
 	}
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 // RMesh Functions
 ////////////////////////////////////////////////////////////////////////////////
 void RMesh::Alloc(int16_t sNum)
-	{
+{
 	Free();
 	m_sNum = sNum;
 	m_pArray = (uint16_t*)calloc((int32_t)m_sNum * 3, sizeof(uint16_t));
 	ASSERT(m_pArray != 0);
-	}
+}
 
 
 void RMesh::Free(void)
-	{
+{
 	if (m_pArray)
 		free(m_pArray);
 	Init();
-	}
+}
 
 
 int16_t RMesh::Load(RFile* fp)
-	{
+{
 	Free();
 
 	int16_t sResult = 0;
 	if (fp->Read(&m_sNum) == 1)
-		{
+	{
 		Alloc(m_sNum);
 		fp->Read(m_pArray, (int32_t)m_sNum * 3);
-		}
+	}
 	if (fp->Error())
-		{
+	{
 		sResult = -1;
 		TRACE("RMesh::Load(): Error reading from file!\n");
-		}
-	return sResult;
 	}
+	return sResult;
+}
 
 
 int16_t RMesh::Save(RFile* fp)
-	{
+{
 	int16_t sResult = 0;
 	fp->Write(&m_sNum);
 	fp->Write(m_pArray, (int32_t)m_sNum * 3);
 	if (fp->Error())
-		{
+	{
 		sResult = -1;
 		TRACE("RMesh::Save(): Error writing to file!\n");
-		}
-	return sResult;
 	}
+	return sResult;
+}
 
 
 ////////////////////////////////////////////////////////////////////////////////
 // RSop Functions
 ////////////////////////////////////////////////////////////////////////////////
 void RSop::Alloc(int32_t lNum)
-	{
+{
 	Free();
 	m_lNum = lNum;
 	m_pArray = (RP3d*)calloc(m_lNum, sizeof(RP3d));
 	ASSERT(m_pArray != 0);
-	}
+}
 
 
 void RSop::Free(void)
-	{
+{
 	if (m_pArray)
 		free(m_pArray);
 	Init();
-	}
+}
 
 
 int16_t RSop::Load(RFile* fp)
-	{
+{
 	Free();
 
 	int16_t sResult = 0;
 	if (fp->Read(&m_lNum) == 1)
-		{
+	{
 		Alloc(m_lNum);
 		ASSERT(sizeof(RP3d) == (sizeof(REAL) * 4));
 		fp->Read((REAL*)m_pArray, m_lNum * 4);
-		}
+	}
 	if (fp->Error())
-		{
+	{
 		sResult = -1;
 		TRACE("RSop::Load(): Error reading from file!\n");
-		}
-	return sResult;
 	}
+	return sResult;
+}
 
 
 int16_t RSop::Save(RFile* fp)
-	{
+{
 	int16_t sResult = 0;
 	fp->Write(&m_lNum);
 	ASSERT(sizeof(RP3d) == (sizeof(REAL) * 4));
 	fp->Write((REAL*)m_pArray, m_lNum * 4);
 	if (fp->Error())
-		{
+	{
 		sResult = -1;
 		TRACE("RSop::Save(): Error writing to file!\n");
-		}
-	return sResult;
 	}
+	return sResult;
+}
 
 
 ////////////////////////////////////////////////////////////////////////////////

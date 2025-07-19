@@ -96,10 +96,10 @@
 // also the most limited.
 //====================================================================
 extern	void rspAlphaBlit(
-					RAlpha* pX,			// Set for current palette and alpha level
-					RImage* pimSrc,	//	BMP8 source
-					RImage* pimDst,	//	BMP8 destination
-					int16_t sDstX,int16_t sDstY);
+	RAlpha* pX,			// Set for current palette and alpha level
+	RImage* pimSrc,	//	BMP8 source
+	RImage* pimDst,	//	BMP8 destination
+	int16_t sDstX, int16_t sDstY);
 
 //====================================================================
 //	rspAlphaBlitT - "transparent blit" which uses a single RAlpha
@@ -114,10 +114,10 @@ extern	void rspAlphaBlit(
 // also the most limited.
 //====================================================================
 extern	void rspAlphaBlitT(
-					RAlpha* pX,			// Set for current palette and alpha level
-					RImage* pimSrc,	//	BMP8 source
-					RImage* pimDst,	//	BMP8 destination
-					int16_t sDstX,int16_t sDstY);
+	RAlpha* pX,			// Set for current palette and alpha level
+	RImage* pimSrc,	//	BMP8 source
+	RImage* pimDst,	//	BMP8 destination
+	int16_t sDstX, int16_t sDstY);
 
 //====================================================================
 //	rspAlphaBlitT - "transparent blit" which uses a single alpha level
@@ -133,12 +133,12 @@ extern	void rspAlphaBlitT(
 //
 //====================================================================
 extern	void rspAlphaBlitT(
-						int16_t sAlphaLevel,		// 255 = opaque
-						RMultiAlpha* pMultiX,	// For current palette
-						RImage* pimSrc,			// BMP8 source image
-						RImage* pimDst,			// BMP8 destination
-						int16_t sDstX,int16_t sDstY,
-						RRect* prDst = NULL);
+	int16_t sAlphaLevel,		// 255 = opaque
+	RMultiAlpha* pMultiX,	// For current palette
+	RImage* pimSrc,			// BMP8 source image
+	RImage* pimDst,			// BMP8 destination
+	int16_t sDstX, int16_t sDstY,
+	RRect* prDst = NULL);
 
 //====================================================================
 //	rspGeneralAlphaBlit - "opaque blit" which uses a BMP8 per pixel
@@ -147,13 +147,13 @@ extern	void rspAlphaBlitT(
 //									by it's COLOR - sheet of glass effect.
 //====================================================================
 extern	void rspGeneralAlphaBlit(
-								RMultiAlpha* pX,	// For current palette
-								RImage* pimMask,	// BMP8 alpha channel mask
-								RImage* pimSrc,	// BMP8 source image
-								RImage* pimDst,	// BMP8 destination
-								int16_t sDstX,
-								int16_t sDstY,
-								RRect &rDstClip);
+	RMultiAlpha* pX,	// For current palette
+	RImage* pimMask,	// BMP8 alpha channel mask
+	RImage* pimSrc,	// BMP8 source image
+	RImage* pimDst,	// BMP8 destination
+	int16_t sDstX,
+	int16_t sDstY,
+	RRect& rDstClip);
 
 //====================================================================
 //	rspGeneralAlphaBlit - "opaque blit" which uses a BMP8 per pixel
@@ -167,14 +167,14 @@ extern	void rspGeneralAlphaBlit(
 //
 //====================================================================
 extern	void rspGeneralAlphaBlit(
-							int16_t sLevel,		// 0-255, 255 = unchanged
-							RMultiAlpha* pX,	// for current palette
-							RImage* pimMask,	// BMP8 alpha channel mask
-							RImage* pimSrc,	// BMP8 source
-							RImage* pimDst,	// BMP8 destination
-							int16_t sDstX,
-							int16_t sDstY,
-							RRect &rDstClip);
+	int16_t sLevel,		// 0-255, 255 = unchanged
+	RMultiAlpha* pX,	// for current palette
+	RImage* pimMask,	// BMP8 alpha channel mask
+	RImage* pimSrc,	// BMP8 source
+	RImage* pimDst,	// BMP8 destination
+	int16_t sDstX,
+	int16_t sDstY,
+	RRect& rDstClip);
 
 //====================================================================
 //	rspGeneralAlphaBlitT - "transparent blit" which uses a BMP8 per pixel
@@ -192,14 +192,14 @@ extern	void rspGeneralAlphaBlit(
 //
 //====================================================================
 extern	void rspGeneralAlphaBlitT(
-							int16_t sLevel,		// 0-255, 255 = unchanged
-							RMultiAlpha* pX,	// for current palette
-							RImage* pimMask,	// BMP8 alpha channel mask
-							RImage* pimSrc,	// BMP8 source
-							RImage* pimDst,	// BMP8 destination
-							int16_t sDstX,
-							int16_t sDstY,
-							RRect &rDstClip);
+	int16_t sLevel,		// 0-255, 255 = unchanged
+	RMultiAlpha* pX,	// for current palette
+	RImage* pimMask,	// BMP8 alpha channel mask
+	RImage* pimSrc,	// BMP8 source
+	RImage* pimDst,	// BMP8 destination
+	int16_t sDstX,
+	int16_t sDstY,
+	RRect& rDstClip);
 
 //********************************************************************
 //------------------------- FAST ALPHA BLiTs -------------------------
@@ -224,13 +224,13 @@ extern	void rspGeneralAlphaBlitT(
 // there's no alpha mask to describe the sprite shape with.
 //
 //====================================================================
-extern	void rspFastAlphaBlitT(			
-						int16_t sAlphaLevel,	// 0-255, 255 = unchanged
-						uint8_t*** pMultiX,		// A fast multialpha table
-						RImage* pimSrc,		// BMP8 source	
-						RImage* pimDst,		// BMP8 destination
-						int16_t sDstX,int16_t sDstY,
-						RRect* prDst = NULL);
+extern	void rspFastAlphaBlitT(
+	int16_t sAlphaLevel,	// 0-255, 255 = unchanged
+	uint8_t*** pMultiX,		// A fast multialpha table
+	RImage* pimSrc,		// BMP8 source	
+	RImage* pimDst,		// BMP8 destination
+	int16_t sDstX, int16_t sDstY,
+	RRect* prDst = NULL);
 
 
 //====================================================================
@@ -240,13 +240,13 @@ extern	void rspFastAlphaBlitT(
 //									by it's COLOR - sheet of glass effect.
 //====================================================================
 extern	void rspFastMaskAlphaBlit(
-						uint8_t*** pfaX,		// A fast multialpha table
-						RImage* pimMask,	// BMP8 source alpha channel mask
-						RImage* pimSrc,	// BMP8 source	
-						RImage* pimDst,	// BMP8 destination
-						int16_t sDstX,	
-						int16_t sDstY,
-						RRect &rDstClip);
+	uint8_t*** pfaX,		// A fast multialpha table
+	RImage* pimMask,	// BMP8 source alpha channel mask
+	RImage* pimSrc,	// BMP8 source	
+	RImage* pimDst,	// BMP8 destination
+	int16_t sDstX,
+	int16_t sDstY,
+	RRect& rDstClip);
 
 //====================================================================
 //	rspFastMaskAlphaBlitT - "transparent blit" which uses a BMP8 per pixel
@@ -256,12 +256,12 @@ extern	void rspFastMaskAlphaBlit(
 //									the alpha mask (which could be useful)
 //====================================================================
 extern	void rspFastMaskAlphaBlitT(
-						uint8_t*** pfaX,		// A fast multialpha table	
-						RImage* pimMask,	// BMP8 source alpha channel mask	
-						RImage* pimSrc,	// BMP8 source		
-						RImage* pimDst,	// BMP8 destination		
-						int16_t sDstX,int16_t sDstY,
-						RRect &rDstClip);
+	uint8_t*** pfaX,		// A fast multialpha table	
+	RImage* pimMask,	// BMP8 source alpha channel mask	
+	RImage* pimSrc,	// BMP8 source		
+	RImage* pimDst,	// BMP8 destination		
+	int16_t sDstX, int16_t sDstY,
+	RRect& rDstClip);
 
 
 
@@ -271,11 +271,11 @@ extern	void rspFastMaskAlphaBlitT(
 
 // THIS SHOULD MOVE TO OFFICIAL BLIT STATUS and not staty in alpha
 //
-inline int16_t rspSimpleClip(int16_t &sSrcX,int16_t &sSrcY,int16_t &sDstX,int16_t &sDstY,
-						 int16_t &sDstW,int16_t &sDstH,
-						 int16_t sClipX,int16_t sClipY,int16_t sClipW,int16_t sClipH)
-	{
-	int16_t sClipL,sClipR,sClipT,sClipB;
+inline int16_t rspSimpleClip(int16_t& sSrcX, int16_t& sSrcY, int16_t& sDstX, int16_t& sDstY,
+	int16_t& sDstW, int16_t& sDstH,
+	int16_t sClipX, int16_t sClipY, int16_t sClipW, int16_t sClipH)
+{
+	int16_t sClipL, sClipR, sClipT, sClipB;
 
 	//-------- Do the clipping:
 	sClipL = sClipX - sDstX; if (sClipL < 0) sClipL = 0;
@@ -283,10 +283,10 @@ inline int16_t rspSimpleClip(int16_t &sSrcX,int16_t &sSrcY,int16_t &sDstX,int16_
 	sClipR = (sDstX + sDstW - sClipX - sClipW); if (sClipR < 0) sClipR = 0;
 	sClipB = (sDstY + sDstH - sClipY - sClipH); if (sClipB < 0) sClipB = 0;
 
-	if ( ((sClipL + sClipR) >= sDstW) || ((sClipT + sClipB) >= sDstH) )
-		{
+	if (((sClipL + sClipR) >= sDstW) || ((sClipT + sClipB) >= sDstH))
+	{
 		return -1; // fully clipped out
-		}
+	}
 
 	sSrcX += sClipL; sDstX += sClipL;
 	sSrcY += sClipT; sDstY += sClipT;
@@ -294,7 +294,7 @@ inline int16_t rspSimpleClip(int16_t &sSrcX,int16_t &sSrcY,int16_t &sDstX,int16_
 	sDstH -= (sClipT + sClipB);
 
 	return 0;
-	}
+}
 
 //====================================================================
 //	rspScaleAlphaMask - you can adjust an existing alpha mask
@@ -307,8 +307,8 @@ inline int16_t rspSimpleClip(int16_t &sSrcX,int16_t &sSrcY,int16_t &sDstX,int16_
 //			original source mask each time.
 //====================================================================
 extern	void rspScaleAlphaMask(RImage* pimSrcMask, // BMP8 alpha mask
-										  double dScale,		 // 1.0 = no change
-										  RImage* pimDstMask);// BMP8 alpha mask
+	double dScale,		 // 1.0 = no change
+	RImage* pimDstMask);// BMP8 alpha mask
 
 
 //===========================================================================
@@ -324,18 +324,18 @@ extern	void rspScaleAlphaMask(RImage* pimSrcMask, // BMP8 alpha mask
 // WARNING:  will not bounds check so be careful:
 // sLeve will range from 255 (solid) to 0 (transparent)
 //===========================================================================
-inline uint8_t	rspBlendColor(int16_t sLevel,RMultiAlpha* pX,uint8_t ucSrc,uint8_t ucDst)
-	{
+inline uint8_t	rspBlendColor(int16_t sLevel, RMultiAlpha* pX, uint8_t ucSrc, uint8_t ucDst)
+{
 	ASSERT(pX);
 
 	if (sLevel > *(pX->m_pLevelOpacity))
-		{
-		uint8_t** ppucAlpha = pX->m_pGeneralAlpha[sLevel]; 
+	{
+		uint8_t** ppucAlpha = pX->m_pGeneralAlpha[sLevel];
 		if (ppucAlpha) return ppucAlpha[ucSrc][ucDst]; // alpha'ed
 		return ucSrc; // opaque
-		}
-	return ucDst; // transparent
 	}
+	return ucDst; // transparent
+}
 
 //===========================================================================
 //
@@ -346,28 +346,28 @@ inline uint8_t	rspBlendColor(int16_t sLevel,RMultiAlpha* pX,uint8_t ucSrc,uint8_
 // RETURN:	ppuc, a short cut to the fast blend function, or NULL if you hit the
 //				extreme cases of fully opaque of fully transparent.
 //===========================================================================
-inline uint8_t**	rspFindBlend(int16_t sLevel,RMultiAlpha* pX,int16_t* psOpaque)
-	{
+inline uint8_t** rspFindBlend(int16_t sLevel, RMultiAlpha* pX, int16_t* psOpaque)
+{
 	ASSERT(pX);
 	ASSERT(psOpaque);
 	*psOpaque = FALSE;
-	
+
 	if (sLevel <= *(pX->m_pLevelOpacity)) return NULL;	// fully transparent
-	uint8_t** ppucAlpha = pX->m_pGeneralAlpha[sLevel]; 
+	uint8_t** ppucAlpha = pX->m_pGeneralAlpha[sLevel];
 
 	if (ppucAlpha) return ppucAlpha;
 	*psOpaque = TRUE;
 	return NULL;
-	}
+}
 
 // A fast way to do repeated blits of the same alpha level, once you've used rspFindBlend:
-inline	uint8_t	rspBlendColor(uint8_t** ppucAlpha,RMultiAlpha* pX,uint8_t ucSrc,uint8_t ucDst)
-	{
+inline	uint8_t	rspBlendColor(uint8_t** ppucAlpha, RMultiAlpha* pX, uint8_t ucSrc, uint8_t ucDst)
+{
 	ASSERT(ppucAlpha);
 	ASSERT(pX);
 
 	return ppucAlpha[ucSrc][ucDst];
-	}
+}
 
 //********************************************************************
 //-----------  SPECIAL BLITs used in creation of X-RAY effect  -------
@@ -384,9 +384,9 @@ inline	uint8_t	rspBlendColor(uint8_t** ppucAlpha,RMultiAlpha* pX,uint8_t ucSrc,u
 // NOTE: THIS BLiT Will clip to the destination
 //====================================================================
 extern	void rspMaskBlit(
-					RImage* pimSrc,	// BMP8
-					RImage* pimDst,
-					int16_t sDstX,int16_t sDstY);
+	RImage* pimSrc,	// BMP8
+	RImage* pimDst,
+	int16_t sDstX, int16_t sDstY);
 
 //====================================================================
 //	rspMakeMask - a blit used to dynamically create an alpha mask
@@ -396,7 +396,7 @@ extern	void rspMaskBlit(
 // alpha mask of a set homogeneous opacity level.
 //====================================================================
 extern	void rspMakeMask(RImage* pimSrc,	// SOURCE AND DESTINATION
-								  uint8_t ucVal);
+	uint8_t ucVal);
 //====================================================================
 //	rspCopyAsMask - a blit used to dynamically create an alpha mask
 //--------------------------------------------------------------------
@@ -407,9 +407,9 @@ extern	void rspMakeMask(RImage* pimSrc,	// SOURCE AND DESTINATION
 // This does the same as rspMakeMask, but does not alter the original
 //====================================================================
 extern	void rspCopyAsMask(
-					RImage* pimSrc,
-					RImage* pimDst,
-					uint8_t ucVal);
+	RImage* pimSrc,
+	RImage* pimDst,
+	uint8_t ucVal);
 
 
 //===========================================================================

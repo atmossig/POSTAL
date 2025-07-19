@@ -16,96 +16,96 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 //
 #ifdef PATHS_IN_INCLUDES
-	#include "GREEN/BLiT/BLIT.H"
+#include "GREEN/BLiT/BLIT.H"
 #else
-	#include "BLIT.H"
+#include "BLIT.H"
 #endif
 
 #ifdef PATHS_IN_INCLUDES
-	#include "GREEN/BLiT/_BlitInt.H"
+#include "GREEN/BLiT/_BlitInt.H"
 #else
-	#include "_BlitInt.H" 
+#include "_BlitInt.H" 
 #endif
 #ifdef PATHS_IN_INCLUDES
-	#include "ORANGE/QuickMath/Fractions.h"
+#include "ORANGE/QuickMath/Fractions.h"
 #else
-	#include "Fractions.h" 
+#include "Fractions.h" 
 #endif
 
 // Now, 1 bit scaled BLiTting into an BMP1 from an FSPR1
 // NO CLIPPING, no colro info!
 //
 int16_t rspBlitToMono(
-				  RImage* pimSrc,
-				  RImage* pimDst,
-				  int16_t sDstX,
-				  int16_t sDstY,
-				  int16_t sDstW,
-				  int16_t sDstH
-				  )
-	{
+	RImage* pimSrc,
+	RImage* pimDst,
+	int16_t sDstX,
+	int16_t sDstY,
+	int16_t sDstW,
+	int16_t sDstH
+)
+{
 #ifdef _DEBUG
 
 	if ((pimSrc == NULL) || (pimDst == NULL))
-		{
+	{
 		TRACE("BLiT: null CImage* passed\n");
 		return -1;
-		}
+	}
 
 	if (pimSrc->m_type != RImage::FSPR1)
-		{
+	{
 		TRACE("BLiT: This form of BLiT is designed for FSPR1 type images!\n");
 		return -1;
-		}
+	}
 
 	if (pimDst->m_type != RImage::BMP1)
-		{
+	{
 		TRACE("BLiT: This functions only BLiTs to BMP1 images.\n");
 		return -1;
-		}
+	}
 
 #endif
 
-	if ( (sDstW < 1) || (sDstH < 1))
-		{
+	if ((sDstW < 1) || (sDstH < 1))
+	{
 		TRACE("BLiT: Zero or negative area passed.\n");
 		return -1;
-		}
+	}
 
 	int32_t	lDstP = pimDst->m_lPitch;
 
-	if ( (sDstX < 0) || (sDstY < 0) ||
-		( (sDstX + sDstW) > pimDst->m_sWidth) ||
-		( (sDstY + sDstH) > pimDst->m_sHeight) )
-		{
+	if ((sDstX < 0) || (sDstY < 0) ||
+		((sDstX + sDstW) > pimDst->m_sWidth) ||
+		((sDstY + sDstH) > pimDst->m_sHeight))
+	{
 		TRACE("BLiT: This BLiT does not yet clip!\n");
 		return -1;
-		}
+	}
 
 
-	uint8_t	*pDst,*pDstLine,*pCode,ucCount;
-	pDstLine = pimDst->m_pData + lDstP * sDstY + (sDstX>>3);
-	RSpecialFSPR1*	pHead = (RSpecialFSPR1*)(pimSrc->m_pSpecial);
+	uint8_t* pDst, * pDstLine, * pCode, ucCount;
+	pDstLine = pimDst->m_pData + lDstP * sDstY + (sDstX >> 3);
+	RSpecialFSPR1* pHead = (RSpecialFSPR1*)(pimSrc->m_pSpecial);
 	pCode = pHead->m_pCode;
 	const uint8_t FF = (uint8_t)255;
 
 	// Let's scale it, baby! (pre-clipping)
-	int16_t sDenX = pimSrc->m_sWidth; 
-	int16_t sDenY = pimSrc->m_sHeight; 
-	RFracU16 frX = {0};
-	RFracU16 frInitX = {0};
-	RFracU16 frOldX = {0};
-	RFracU16 frOldY = {0},frY = {0};
+	int16_t sDenX = pimSrc->m_sWidth;
+	int16_t sDenY = pimSrc->m_sHeight;
+	RFracU16 frX = { 0 };
+	RFracU16 frInitX = { 0 };
+	RFracU16 frOldX = { 0 };
+	RFracU16 frOldY = { 0 }, frY = { 0 };
 
-	RFracU16 *afrSkipX=NULL,*afrSkipY=NULL;
-	afrSkipX = rspfrU16Strafe256(sDstW,sDenX);
-	afrSkipY = rspfrU16Strafe256(sDstH,sDenY);
+	RFracU16* afrSkipX = NULL, * afrSkipY = NULL;
+	afrSkipX = rspfrU16Strafe256(sDstW, sDenX);
+	afrSkipY = rspfrU16Strafe256(sDstH, sDenY);
 	// Make magnification possible:
 	int16_t i;
-	int32_t *alDstSkip = (int32_t*)calloc(sizeof(int32_t),afrSkipY[1].mod + 2);
-	for (i=1;i<(afrSkipY[1].mod + 2);i++) 
-		alDstSkip[i] = alDstSkip[i-1] + lDstP;
-	uint8_t	bits[] = {128,64,32,16,8,4,2,1};
+	int32_t* alDstSkip = (int32_t*)calloc(sizeof(int32_t), afrSkipY[1].mod + 2);
+	for (i = 1; i < (afrSkipY[1].mod + 2); i++)
+		alDstSkip[i] = alDstSkip[i - 1] + lDstP;
+	uint8_t	bits[] = { 128,64,32,16,8,4,2,1 };
 	int16_t sBit;
 	frInitX.mod = (sDstX & 7);
 
@@ -113,55 +113,55 @@ int16_t rspBlitToMono(
 	//*****************  AT LAST!   CODE!  **********************
 	//***********************************************************
 	while (TRUE)
-		{
+	{
 		if ((*pCode) == FF) // vertical run
-			{	// end of sprite?
-			if ( (ucCount = *(++pCode)) == FF) break; 
-			rspfrAdd(frY,afrSkipY[ucCount],sDenY);
+		{	// end of sprite?
+			if ((ucCount = *(++pCode)) == FF) break;
+			rspfrAdd(frY, afrSkipY[ucCount], sDenY);
 			pDstLine += lDstP * (frY.mod - frOldY.mod);
 			pCode++; // open stack
 			continue; // next line
-			}
+		}
 
 		if (frOldY.mod == frY.mod) // do a quick skip of a line:
-			{
-			while ( (*(pCode++)) != FF) ; // skip line!
-			rspfrAdd(frY,afrSkipY[1],sDenY);
+		{
+			while ((*(pCode++)) != FF); // skip line!
+			rspfrAdd(frY, afrSkipY[1], sDenY);
 			pDstLine += alDstSkip[frY.mod - frOldY.mod];
-			}
+		}
 		else // actually draw it!
-			{
+		{
 			frOldY = frY;
 			pDst = pDstLine;
 			frX.set = frInitX.set; // start of line!
-			while ( (ucCount = *(pCode++)) != FF) // EOL
-				{
+			while ((ucCount = *(pCode++)) != FF) // EOL
+			{
 				frOldX = frX;
-				rspfrAdd(frX,afrSkipX[ucCount],sDenX);
+				rspfrAdd(frX, afrSkipX[ucCount], sDenX);
 				//pDst += (frX.mod - frOldX.mod); // skip
 				ucCount = *(pCode++);
 				frOldX = frX;
-				rspfrAdd(frX,afrSkipX[ucCount],sDenX);
+				rspfrAdd(frX, afrSkipX[ucCount], sDenX);
 				ucCount = uint8_t(frX.mod - frOldX.mod);
 				// Modify this to a rect for solid VMagnification.
-				pDst = pDstLine + ((frOldX.mod)>>3);
+				pDst = pDstLine + ((frOldX.mod) >> 3);
 				sBit = frOldX.mod & 7;
 
-				while (ucCount--) 
-					{
+				while (ucCount--)
+				{
 					(*pDst) |= bits[sBit]; // watch this!
 					sBit++;
 					if (sBit > 7)
-						{
+					{
 						sBit = 0;
 						pDst++;
-						}
 					}
 				}
-			rspfrAdd(frY,afrSkipY[1],sDenY);
-			pDstLine += alDstSkip[frY.mod - frOldY.mod];
 			}
+			rspfrAdd(frY, afrSkipY[1], sDenY);
+			pDstLine += alDstSkip[frY.mod - frOldY.mod];
 		}
+	}
 
 	free(alDstSkip);
 	free(afrSkipX);
@@ -181,40 +181,40 @@ int16_t rspBlitToMono(
 	*/
 
 	return 0;
-	}
+}
 
 // mono rect ....
 //
-int16_t rspRectToMono(uint32_t ulColor,RImage* pimDst,int16_t sX,int16_t sY,
-						int16_t sW,int16_t sH)
-	{
+int16_t rspRectToMono(uint32_t ulColor, RImage* pimDst, int16_t sX, int16_t sY,
+	int16_t sW, int16_t sH)
+{
 #ifdef _DEBUG
 
 	if (pimDst->m_type != RImage::BMP1)
-		{
+	{
 		TRACE("rspRectMono: Only BMP1 images supported.\n");
 		return -1;
-		}
+	}
 
-	if ( (sW < 1) || (sH < 1) )
-		{
+	if ((sW < 1) || (sH < 1))
+	{
 		TRACE("rspRectMono: Zero or negative area passed.\n");
 		return -1;
-		}
+	}
 #endif
 
-	if ( (sX < 0) || (sY < 0) || ( (sX + sW) > pimDst->m_sWidth) ||
-		( (sY + sH) > pimDst->m_sHeight) )
-		{
+	if ((sX < 0) || (sY < 0) || ((sX + sW) > pimDst->m_sWidth) ||
+		((sY + sH) > pimDst->m_sHeight))
+	{
 		TRACE("rspRectMono:Clipping not yet supported.\n");
 		return -1;
-		}
+	}
 
 	int32_t lP = pimDst->m_lPitch;
 
-	uint8_t	ucStart = 0,ucEnd = 0;
-	uint8_t *pDst,*pDstLine;
-	int16_t sMidCount,sStart,sEnd,i,j;
+	uint8_t	ucStart = 0, ucEnd = 0;
+	uint8_t* pDst, * pDstLine;
+	int16_t sMidCount, sStart, sEnd, i, j;
 
 	uint8_t ucBits[] = { 128,64,32,16,8,4,2,1 };
 	uint8_t ucStartBits[] = { 255,127,63,31,15,7,3,1 };
@@ -227,38 +227,38 @@ int16_t rspRectToMono(uint32_t ulColor,RImage* pimDst,int16_t sX,int16_t sY,
 	if (sMidCount < 1) sMidCount = 0;
 
 	if (sStart == sEndB) // very thin:
-		for (i= (sX&7);i<=(sEnd&7);i++) ucStart += ucBits[i];
+		for (i = (sX & 7); i <= (sEnd & 7); i++) ucStart += ucBits[i];
 	else // more normal run:
-		{
-		ucStart = ucStartBits[sX&7];
-		ucEnd = ucEndBits[ sEnd & 7 ];
-		}
-	
+	{
+		ucStart = ucStartBits[sX & 7];
+		ucEnd = ucEndBits[sEnd & 7];
+	}
+
 	pDstLine = pimDst->m_pData + lP * sY + sStart;
 
 	if (ulColor) // copy a rect of 1 bits:
+	{
+		for (j = sH; j != 0; j--)
 		{
-		for (j=sH;j!=0;j--)
-			{
 			pDst = pDstLine;
 			(*pDst++) |= ucStart;
-			for (i=sMidCount;i!=0;i--) *(pDst++) = 255;
+			for (i = sMidCount; i != 0; i--) *(pDst++) = 255;
 			(*pDst++) |= ucEnd;
 			pDstLine += lP;
-			}
 		}
+	}
 	else // copy color 0 rect of bits:
-		{
+	{
 		ucStart = ~ucStart;
 		ucEnd = ~ucEnd;
-		for (j=sH;j!=0;j--)
-			{
- 			pDst = pDstLine;
+		for (j = sH; j != 0; j--)
+		{
+			pDst = pDstLine;
 			(*pDst++) &= ucStart;
-			for (i=sMidCount;i!=0;i--) *(pDst++) = 0;
+			for (i = sMidCount; i != 0; i--) *(pDst++) = 0;
 			(*pDst++) &= ucEnd;
 			pDstLine += lP;
-			}
 		}
-	return 0;
 	}
+	return 0;
+}

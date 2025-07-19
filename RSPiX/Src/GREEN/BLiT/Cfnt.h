@@ -19,11 +19,11 @@
 #define CFNT_H
 //====================
 #ifdef PATHS_IN_INCLUDES
-	#include "GREEN/BLiT/BLIT.H"
-	#include "GREEN/BLiT/_BlitInt.H"
+#include "GREEN/BLiT/BLIT.H"
+#include "GREEN/BLiT/_BlitInt.H"
 #else
-	#include "BLIT.H"
-	#include "_BlitInt.H" 
+#include "BLIT.H"
+#include "_BlitInt.H" 
 #endif 
 //====================
 
@@ -35,7 +35,7 @@
 // Fonts are stored in a singly linked list, largest first.
 
 class RFont
-	{
+{
 public:
 	//---------------
 	RFont();
@@ -44,7 +44,7 @@ public:
 	//---------------
 	//---------------
 	class RFontSet
-		{
+	{
 	public:
 		//---------------
 		RFontSet();
@@ -55,7 +55,7 @@ public:
 		int16_t	m_sCellHeight;
 		int16_t m_sMaxWidth;
 		RFontSet* m_pNext;
-		};
+	};
 	//--------------- USER STUFF
 	int16_t Save(char* pszFileName);
 	int16_t Save(RFile* pcf);
@@ -66,9 +66,9 @@ public:
 	int16_t Add(char* pszFileName);
 	int16_t Add(RFile* pcf);
 	int16_t AddLetter(RImage* pimLetter, // if FSPR1, don't need other arguements
-		int16_t sASCII=-1,int16_t sKernL=0,int16_t sKernR=0);
+		int16_t sASCII = -1, int16_t sKernL = 0, int16_t sKernR = 0);
 	// pdScale will be <= 1.0
-	RFontSet* FindSize(int16_t sCellH,double *pdScale);
+	RFontSet* FindSize(int16_t sCellH, double* pdScale);
 
 	int16_t	DeleteSet(RFontSet* pRemove); // will NOT delete the last FontSet!
 	//---------------
@@ -76,7 +76,7 @@ public:
 	int16_t m_sMaxCellWidth;
 	int16_t m_sNumberOfScales;
 	RFontSet* m_pFontSets;
-	};
+};
 
 
 //====================

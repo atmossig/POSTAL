@@ -34,19 +34,19 @@
 
 #include "ORANGE/CDT/QUEUE.H"
 
-extern SDL_Window *sdlWindow;
-extern SDL_Surface *sdlShadowSurface;
+extern SDL_Window* sdlWindow;
+extern SDL_Surface* sdlShadowSurface;
 extern int sdlWindowWidth;
 extern int sdlWindowHeight;
 
 typedef struct
-	{
+{
 	int16_t	sX;
 	int16_t	sY;
 	int16_t	sButton;
 	int32_t	lTime;
 	int16_t	sType;
-	} RSP_MOUSE_EVENT, *PRSP_MOUSE_EVENT;
+} RSP_MOUSE_EVENT, * PRSP_MOUSE_EVENT;
 
 #define MAX_EVENTS	256
 // Only set value if not NULL.
@@ -62,7 +62,7 @@ extern bool mouse_grabbed;
 ///////////////////////////////////////////////////////////////////////////////
 // Module specific (static) globals.
 ///////////////////////////////////////////////////////////////////////////////
-static int16_t				ms_sCursorShowLevel	= 0;
+static int16_t				ms_sCursorShowLevel = 0;
 
 ///////////////////////////////////////////////////////////////////////////////
 // Functions.
@@ -79,114 +79,114 @@ static int MouseWheelState = 0;
 // 
 ///////////////////////////////////////////////////////////////////////////////
 extern void rspGetMouse(
-		int16_t* psX,				// Current x position is returned here (unless NULL)
-		int16_t* psY,				// Current y position is returned here (unless NULL)
-		int16_t* psButton)		// Current button status is returned here (unless NULL)
+	int16_t* psX,				// Current x position is returned here (unless NULL)
+	int16_t* psY,				// Current y position is returned here (unless NULL)
+	int16_t* psButton)		// Current button status is returned here (unless NULL)
+{
+
+	if (!mouse_grabbed)
 	{
-
-    if (!mouse_grabbed)
-    {
-        int w, h;
-        SET(psX, 0);
-        SET(psY, 0);
-        SET(psButton, 0);
-        return;  // drop mouse events if input isn't grabbed.
-    }
-
-    int x, y;
-    const Uint32 buttons = SDL_GetMouseState(&x, &y);
-    SET(psX, x);
-    SET(psY, y);
-    // TRACE("x = %d, y = %d\n");
-
-	if (psButton != NULL)
-		{
-            *psButton = (buttons & SDL_BUTTON_LMASK) ? 0x0001 : 0;
-            *psButton |= (buttons & SDL_BUTTON_RMASK) ? 0x0002 : 0;
-            *psButton |= (buttons & SDL_BUTTON_MMASK) ? 0x0004 : 0;
-			*psButton |= (buttons & SDL_BUTTON_X1MASK) ? 0x0008 : 0;
-			*psButton |= (buttons & SDL_BUTTON_X2MASK) ? 0x0010 : 0;
-			*psButton |= (MouseWheelState & 0x0020) ? 0x0020 : 0;
-			*psButton |= (MouseWheelState & 0x0040) ? 0x0040 : 0;
-		}
-
-	MouseWheelState = 0;
+		int w, h;
+		SET(psX, 0);
+		SET(psY, 0);
+		SET(psButton, 0);
+		return;  // drop mouse events if input isn't grabbed.
 	}
 
+	int x, y;
+	const Uint32 buttons = SDL_GetMouseState(&x, &y);
+	SET(psX, x);
+	SET(psY, y);
+	// TRACE("x = %d, y = %d\n");
 
-extern void Mouse_Event(SDL_Event *event)
+	if (psButton != NULL)
+	{
+		*psButton = (buttons & SDL_BUTTON_LMASK) ? 0x0001 : 0;
+		*psButton |= (buttons & SDL_BUTTON_RMASK) ? 0x0002 : 0;
+		*psButton |= (buttons & SDL_BUTTON_MMASK) ? 0x0004 : 0;
+		*psButton |= (buttons & SDL_BUTTON_X1MASK) ? 0x0008 : 0;
+		*psButton |= (buttons & SDL_BUTTON_X2MASK) ? 0x0010 : 0;
+		*psButton |= (MouseWheelState & 0x0020) ? 0x0020 : 0;
+		*psButton |= (MouseWheelState & 0x0040) ? 0x0040 : 0;
+	}
+
+	MouseWheelState = 0;
+}
+
+
+extern void Mouse_Event(SDL_Event* event)
 {
-	static int16_t	sEventIndex	= 0;
+	static int16_t	sEventIndex = 0;
 
 
-    if (!mouse_grabbed)
-        return;  // drop mouse events if input isn't grabbed.
+	if (!mouse_grabbed)
+		return;  // drop mouse events if input isn't grabbed.
 
 	// Get next event.  We do not "new" a RSP_MOUSE_EVENT here to avoid 
 	// memory fragmentation.
 	PRSP_MOUSE_EVENT	pme = ms_ameEvents + INC_N_WRAP(sEventIndex, MAX_EVENTS);
-    pme->lTime = SDL_GetTicks();
+	pme->lTime = SDL_GetTicks();
 
 	//In short there's some mouse handling stuff for gui
 	//that relies on event type being in rsp notation
 	//which means that passing sdl code is a no-no
 	//See if anything breaks
 
-    //pme->sType = event->type;
+	//pme->sType = event->type;
 
-    static int16_t buttonState = 0;
+	static int16_t buttonState = 0;
 
 	bool bQueueMouseWheelRelease = false;
 
 	buttonState &= ~(0x0020 | 0x0040);
 
-    switch (event->type)
-    {
-        case SDL_MOUSEBUTTONDOWN:
-        case SDL_MOUSEBUTTONUP:
-        {
-            pme->sX = event->button.x;
-            pme->sY = event->button.y;
-            int val;
-            switch (event->button.button)
-            {
-                case SDL_BUTTON_LEFT: val = 0x0001; break;
-                case SDL_BUTTON_RIGHT: val = 0x0002; break;
-                case SDL_BUTTON_MIDDLE: val = 0x0004; break;
-				case SDL_BUTTON_X1MASK: val = 0x0008; break;
-				case SDL_BUTTON_X2MASK: val = 0x0010; break;
-                default: val = 0; break;
-            }
-
-            if (event->button.state == SDL_PRESSED)
-                buttonState |= val;
-            else
-                buttonState &= ~val;
-
-            pme->sButton = buttonState;
-            break;
-        }
-		case SDL_MOUSEWHEEL:
+	switch (event->type)
+	{
+	case SDL_MOUSEBUTTONDOWN:
+	case SDL_MOUSEBUTTONUP:
+	{
+		pme->sX = event->button.x;
+		pme->sY = event->button.y;
+		int val;
+		switch (event->button.button)
 		{
-			int val;
-			if (event->wheel.y > 0)
-				val = 0x0020;
-			else if (event->wheel.y < 0)
-				val = 0x0040;
-			else
-				val = 0;
-
-			buttonState |= val;
-			MouseWheelState = val;
-			pme->sButton = buttonState;
-			bQueueMouseWheelRelease = true;
-			break;
+		case SDL_BUTTON_LEFT: val = 0x0001; break;
+		case SDL_BUTTON_RIGHT: val = 0x0002; break;
+		case SDL_BUTTON_MIDDLE: val = 0x0004; break;
+		case SDL_BUTTON_X1MASK: val = 0x0008; break;
+		case SDL_BUTTON_X2MASK: val = 0x0010; break;
+		default: val = 0; break;
 		}
 
-        default:  // uh?
-            ASSERT(0 && "unexpected mouse event!");
-            return;
-    }
+		if (event->button.state == SDL_PRESSED)
+			buttonState |= val;
+		else
+			buttonState &= ~val;
+
+		pme->sButton = buttonState;
+		break;
+	}
+	case SDL_MOUSEWHEEL:
+	{
+		int val;
+		if (event->wheel.y > 0)
+			val = 0x0020;
+		else if (event->wheel.y < 0)
+			val = 0x0040;
+		else
+			val = 0;
+
+		buttonState |= val;
+		MouseWheelState = val;
+		pme->sButton = buttonState;
+		bQueueMouseWheelRelease = true;
+		break;
+	}
+
+	default:  // uh?
+		ASSERT(0 && "unexpected mouse event!");
+		return;
+	}
 
 	//Convert mouse event from sdl to rsp format
 	//Needed for gui mouse event stuff in guiitem.cpp
@@ -194,45 +194,45 @@ extern void Mouse_Event(SDL_Event *event)
 	//Ignoring doubleclick because there aren't any sdl codes for it
 	switch (event->type) {
 
-		case SDL_MOUSEBUTTONDOWN:
-			switch (event->button.button) {
-				case SDL_BUTTON_LEFT:
-					pme->sType = RSP_MB0_PRESSED;
-					break;
-				case SDL_BUTTON_RIGHT:
-					pme->sType = RSP_MB1_PRESSED;
-					break;
-			}
+	case SDL_MOUSEBUTTONDOWN:
+		switch (event->button.button) {
+		case SDL_BUTTON_LEFT:
+			pme->sType = RSP_MB0_PRESSED;
 			break;
-		case SDL_MOUSEBUTTONUP:
-			switch (event->button.button) {
-				case SDL_BUTTON_LEFT:
-					pme->sType = RSP_MB0_RELEASED;
-					break;
-				case SDL_BUTTON_RIGHT:
-					pme->sType = RSP_MB1_RELEASED;
-					break;
-			}
+		case SDL_BUTTON_RIGHT:
+			pme->sType = RSP_MB1_PRESSED;
 			break;
+		}
+		break;
+	case SDL_MOUSEBUTTONUP:
+		switch (event->button.button) {
+		case SDL_BUTTON_LEFT:
+			pme->sType = RSP_MB0_RELEASED;
+			break;
+		case SDL_BUTTON_RIGHT:
+			pme->sType = RSP_MB1_RELEASED;
+			break;
+		}
+		break;
 
 	}
 
 	if (ms_qmeEvents.IsFull() != FALSE)
-		{
+	{
 		// Discard oldest event.
 		ms_qmeEvents.DeQ();
-		}
+	}
 
 	// Enqueue event . . .
 	if (ms_qmeEvents.EnQ(pme) == 0)
-		{
+	{
 		// Success.
-		}
+	}
 	else
-		{
+	{
 		TRACE("Mouse_Message(): Unable to enqueue mouse event.\n");
-		}
-	
+	}
+
 	// Add "dummy" mouse wheel button release event.
 	if (bQueueMouseWheelRelease)
 	{
@@ -251,13 +251,13 @@ extern void Mouse_Event(SDL_Event *event)
 // 
 ///////////////////////////////////////////////////////////////////////////////
 extern void rspSetMouse(
-		int16_t sX,				// New x position.
-		int16_t sY)				// New y position.
-	{
-        if (!mouse_grabbed)
-            return;  // drop mouse events if input isn't grabbed.
-        SDL_WarpMouseInWindow(sdlWindow, sX, sY);
-	}
+	int16_t sX,				// New x position.
+	int16_t sY)				// New y position.
+{
+	if (!mouse_grabbed)
+		return;  // drop mouse events if input isn't grabbed.
+	SDL_WarpMouseInWindow(sdlWindow, sX, sY);
+}
 
 //////////////////////////////////////////////////////////////////////////////
 //
@@ -266,46 +266,46 @@ extern void rspSetMouse(
 // 
 ///////////////////////////////////////////////////////////////////////////////
 extern int16_t rspGetLastMouseEvent(	// Returns 0 if no event was available, non-zero otherwise
-	int16_t*	psX,						// Event's X position is returned here (unless NULL)
-	int16_t*	psY,						// Event's Y position is returned here (unless NULL)
-	int16_t*	psButton,				// Event's button status is returned here (unless NULL)
-	int32_t*		plTime,					// Event's time stamp returned here (unless NULL)
-	int16_t*	psType /*= NULL*/)	// Event's type (as per OS) is returned here (unless NULL)
-	{
-	int16_t	sRes	= TRUE;	// Assume success.
+	int16_t* psX,						// Event's X position is returned here (unless NULL)
+	int16_t* psY,						// Event's Y position is returned here (unless NULL)
+	int16_t* psButton,				// Event's button status is returned here (unless NULL)
+	int32_t* plTime,					// Event's time stamp returned here (unless NULL)
+	int16_t* psType /*= NULL*/)	// Event's type (as per OS) is returned here (unless NULL)
+{
+	int16_t	sRes = TRUE;	// Assume success.
 
 	PRSP_MOUSE_EVENT	peEvent;
-	int16_t					sNumEvents	= ms_qmeEvents.NumItems();
+	int16_t					sNumEvents = ms_qmeEvents.NumItems();
 
 	// Are there any events?
 	if (sNumEvents > 0)
-		{
+	{
 		while (sNumEvents-- > 0)
-			{
-			peEvent	= ms_qmeEvents.DeQ();
-			}
+		{
+			peEvent = ms_qmeEvents.DeQ();
+		}
 
 		if (peEvent != NULL)
-			{
-			SET(psX,			peEvent->sX);
-			SET(psY,			peEvent->sY);
-			SET(psButton,	peEvent->sButton);
-			SET(plTime,		peEvent->lTime);
-			SET(psType,		peEvent->sType);
-			}
+		{
+			SET(psX, peEvent->sX);
+			SET(psY, peEvent->sY);
+			SET(psButton, peEvent->sButton);
+			SET(plTime, peEvent->lTime);
+			SET(psType, peEvent->sType);
+		}
 		else
-			{
+		{
 			TRACE("rspGetLastMouseEvent(): Unable to dequeue last event.\n");
 			sRes = FALSE;
-			}
 		}
+	}
 	else
-		{
-		sRes	= FALSE;
-		}
+	{
+		sRes = FALSE;
+	}
 
 	return sRes;
-	}
+}
 
 //////////////////////////////////////////////////////////////////////////////
 //
@@ -314,30 +314,30 @@ extern int16_t rspGetLastMouseEvent(	// Returns 0 if no event was available, non
 // 
 ///////////////////////////////////////////////////////////////////////////////
 extern int16_t rspGetMouseEvent(	// Returns 0 if no event was available, non-zero otherwise
-	int16_t*	psX,						// Event's X position is returned here (unless NULL)
-	int16_t*	psY,						// Event's Y position is returned here (unless NULL)
-	int16_t*	psButton,				// Event's button status is returned here (unless NULL)
-	int32_t*		plTime,					// Event's time stamp returned here (unless NULL)
-	int16_t*	psType /*= NULL*/)	// Event's type (as per OS) is returned here (unless NULL)
-	{
-	int16_t	sRes	= TRUE;	// Assume success.
+	int16_t* psX,						// Event's X position is returned here (unless NULL)
+	int16_t* psY,						// Event's Y position is returned here (unless NULL)
+	int16_t* psButton,				// Event's button status is returned here (unless NULL)
+	int32_t* plTime,					// Event's time stamp returned here (unless NULL)
+	int16_t* psType /*= NULL*/)	// Event's type (as per OS) is returned here (unless NULL)
+{
+	int16_t	sRes = TRUE;	// Assume success.
 
-	PRSP_MOUSE_EVENT	peEvent	= ms_qmeEvents.DeQ();
+	PRSP_MOUSE_EVENT	peEvent = ms_qmeEvents.DeQ();
 	if (peEvent != NULL)
-		{
-		SET(psX,			peEvent->sX);
-		SET(psY,			peEvent->sY);
-		SET(psButton,	peEvent->sButton);
-		SET(plTime,		peEvent->lTime);
-		SET(psType,		peEvent->sType);
-		}
+	{
+		SET(psX, peEvent->sX);
+		SET(psY, peEvent->sY);
+		SET(psButton, peEvent->sButton);
+		SET(plTime, peEvent->lTime);
+		SET(psType, peEvent->sType);
+	}
 	else
-		{
+	{
 		sRes = FALSE;
-		}
+	}
 
 	return sRes;
-	}
+}
 
 //////////////////////////////////////////////////////////////////////////////
 //
@@ -346,9 +346,9 @@ extern int16_t rspGetMouseEvent(	// Returns 0 if no event was available, non-zer
 // 
 ///////////////////////////////////////////////////////////////////////////////
 extern void rspClearMouseEvents(void)
-	{
+{
 	while (ms_qmeEvents.DeQ() != NULL);
-	}
+}
 
 //////////////////////////////////////////////////////////////////////////////
 //
@@ -357,11 +357,11 @@ extern void rspClearMouseEvents(void)
 // 
 ///////////////////////////////////////////////////////////////////////////////
 extern void rspHideMouseCursor(void)
-	{
+{
 	// Decrement show cursor count.
-    if (--ms_sCursorShowLevel < 0)
-	    SDL_ShowCursor(0);
-	}
+	if (--ms_sCursorShowLevel < 0)
+		SDL_ShowCursor(0);
+}
 
 //////////////////////////////////////////////////////////////////////////////
 //
@@ -370,11 +370,11 @@ extern void rspHideMouseCursor(void)
 // 
 ///////////////////////////////////////////////////////////////////////////////
 extern void rspShowMouseCursor(void)
-	{
+{
 	// Increment show cursor count.
 	if (++ms_sCursorShowLevel >= 0)
-	    SDL_ShowCursor(1);
-	}
+		SDL_ShowCursor(1);
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 // 
@@ -390,8 +390,8 @@ extern void rspShowMouseCursor(void)
 // 
 ///////////////////////////////////////////////////////////////////////////////
 extern void rspShieldMouseCursor(void)
-	{
-	}
+{
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 // 
@@ -402,8 +402,8 @@ extern void rspShieldMouseCursor(void)
 // 
 ///////////////////////////////////////////////////////////////////////////////
 extern void rspUnshieldMouseCursor(void)
-	{
-	}
+{
+}
 
 
 
@@ -413,11 +413,11 @@ extern void rspUnshieldMouseCursor(void)
 // 
 ///////////////////////////////////////////////////////////////////////////////
 int16_t rspGetMouseCursorShowLevel(void)	// Returns current mouse cursor show level:
-													// Positive indicates cursor is shown.
-													// Non-positive indicates cursor is hidden.
-	{
+// Positive indicates cursor is shown.
+// Non-positive indicates cursor is hidden.
+{
 	return ms_sCursorShowLevel;
-	}
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 // 
@@ -426,19 +426,19 @@ int16_t rspGetMouseCursorShowLevel(void)	// Returns current mouse cursor show le
 ///////////////////////////////////////////////////////////////////////////////
 void rspSetMouseCursorShowLevel(	// Returns nothing.
 	int16_t sNewShowLevel)				// In:  Current mouse cursor show level:        
-											// Positive indicates cursor is shown.     
-											// Non-positive indicates cursor is hidden.
-	{
+	// Positive indicates cursor is shown.     
+	// Non-positive indicates cursor is hidden.
+{
 	while (ms_sCursorShowLevel < sNewShowLevel)
-		{
+	{
 		rspShowMouseCursor();
-		}
+	}
 
 	while (ms_sCursorShowLevel > sNewShowLevel)
-		{
+	{
 		rspHideMouseCursor();
-		}
 	}
+}
 
 //////////////////////////////////////////////////////////////////////////////
 // EOF

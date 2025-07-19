@@ -35,17 +35,17 @@
 //================================================== 
 #include "System.h"
 #ifdef PATHS_IN_INCLUDES
-	#include "ORANGE/QuickMath/VectorMath.h"
-	#include "GREEN/3D/types3d.h"
-	#include "GREEN/3D/zbuffer.h"
-	#include "GREEN/3D/render.h"
-	#include "ORANGE/color/colormatch.h" 
+#include "ORANGE/QuickMath/VectorMath.h"
+#include "GREEN/3D/types3d.h"
+#include "GREEN/3D/zbuffer.h"
+#include "GREEN/3D/render.h"
+#include "ORANGE/color/colormatch.h" 
 #else
-	#include "vectormath.h"
-	#include "types3d.h"
-	#include "zbuffer.h"
-	#include "render.h"
-	#include "ColorMatch.h" 
+#include "vectormath.h"
+#include "types3d.h"
+#include "zbuffer.h"
+#include "render.h"
+#include "ColorMatch.h" 
 #endif
 //================================================== 
 
@@ -53,31 +53,31 @@
 // scratch space for doing trsnaformations
 //
 class RPipeLine
-	{
+{
 public:
 	//-------------------------------------
 	RPipeLine();
 	~RPipeLine();
-	int16_t Create(int32_t lScratchSpace=0,int16_t sZBufWidth=0);
-	int16_t CreateShadow(int16_t sAngleY,double dTanDeclension,int16_t sBufSize = -1);
+	int16_t Create(int32_t lScratchSpace = 0, int16_t sZBufWidth = 0);
+	int16_t CreateShadow(int16_t sAngleY, double dTanDeclension, int16_t sBufSize = -1);
 	void Destroy(); // will NOT kill transform scratch space
 	void Init();
 	//-------------------------------------
-	int16_t NotCulled(RP3d *p1,RP3d *p2,RP3d *p3);
-	void Transform(RSop* pPts,RTransform& tObj);
-	void TransformShadow(RSop* pPts,RTransform& tObj,
-		int16_t sHeight = 0,int16_t *psOffX = NULL,int16_t *psOffY = NULL);
+	int16_t NotCulled(RP3d* p1, RP3d* p2, RP3d* p3);
+	void Transform(RSop* pPts, RTransform& tObj);
+	void TransformShadow(RSop* pPts, RTransform& tObj,
+		int16_t sHeight = 0, int16_t* psOffX = NULL, int16_t* psOffY = NULL);
 
 	// Do NOT use a z-buffer.  Return offset to current position to
 	// draw the image m_pimShadowBuf
-	void	RenderShadow(RImage* pimDst,RMesh* pMesh,uint8_t ucColor); // Unicolored!
+	void	RenderShadow(RImage* pimDst, RMesh* pMesh, uint8_t ucColor); // Unicolored!
 
-	void Render(RImage* pimDst,int16_t sDstX,int16_t sDstY,
-		RMesh* pMesh,uint8_t ucColor); // wire frame!
+	void Render(RImage* pimDst, int16_t sDstX, int16_t sDstY,
+		RMesh* pMesh, uint8_t ucColor); // wire frame!
 
 	// Flat shaded
-	void Render(RImage* pimDst,int16_t sDstX,int16_t sDstY,
-		RMesh* pMesh,RZBuffer* pZB,RTexture* pColors,
+	void Render(RImage* pimDst, int16_t sDstX, int16_t sDstY,
+		RMesh* pMesh, RZBuffer* pZB, RTexture* pColors,
 		int16_t sOffsetX = 0,		// In: 2D offset for pimDst and pZB.
 		int16_t sOffsetY = 0); 	// In: 2D offset for pimDst and pZB.
 
@@ -85,18 +85,18 @@ public:
 	// the offset value moves the fog towards 
 	// the front of the z-buffer
 	//
-	void Render(RImage* pimDst,int16_t sDstX,int16_t sDstY,
-		RMesh* pMesh,RZBuffer* pZB,RTexture* pColors,
-		int16_t sFogOffset,RAlpha* pFog,
+	void Render(RImage* pimDst, int16_t sDstX, int16_t sDstY,
+		RMesh* pMesh, RZBuffer* pZB, RTexture* pColors,
+		int16_t sFogOffset, RAlpha* pFog,
 		int16_t sOffsetX = 0,		// In: 2D offset for pimDst and pZB.
 		int16_t sOffsetY = 0); 	// In: 2D offset for pimDst and pZB.
 
 	// WARNING: May be inhomogeneous!
 	void GetScreenXF(RTransform& tDst)
-		{
+	{
 		tDst.Make1();
-		tDst.Mul(m_tScreen.T,m_tView.T);
-		}
+		tDst.Mul(m_tScreen.T, m_tView.T);
+	}
 
 	// Strictly for convenience:
 	//
@@ -104,30 +104,30 @@ public:
 	void ClearShadowBuffer();
 
 	// Project a point onto a screen.
-	void PointToScreen(RTransform& tObj,RP3d& v3d,int16_t &sDstX,int16_t &sDstY)
-		{
+	void PointToScreen(RTransform& tObj, RP3d& v3d, int16_t& sDstX, int16_t& sDstY)
+	{
 		RTransform tFull;
 		RP3d ptDst;
 
 		tFull.Make1();
-		tFull.Mul(m_tView.T,tObj.T);
+		tFull.Mul(m_tView.T, tObj.T);
 		tFull.PreMulBy(m_tScreen.T);
 
-		tFull.TransformInto(v3d,ptDst);
+		tFull.TransformInto(v3d, ptDst);
 		sDstX = int16_t(ptDst.x);
 		sDstY = int16_t(ptDst.y);
-		}
-	
+	}
+
 	// THIS WILL CHANGE WITH TIME:
 	// Currently the bounding sphere is described by two points:
 	//
-	void BoundingSphereToScreen(RP3d& ptCenter, RP3d& ptRadius, 
+	void BoundingSphereToScreen(RP3d& ptCenter, RP3d& ptRadius,
 		RTransform& tObj);
 
 	//-------------------------------------
 	// Configurable by instance:
 	RZBuffer* m_pZB;
-	RImage*	m_pimClipBuf; // For clipping (2 pass rendering)
+	RImage* m_pimClipBuf; // For clipping (2 pass rendering)
 	RTransform m_tScreen; // map to window
 	RTransform m_tView; // lens
 
@@ -159,7 +159,7 @@ public:
 	static int32_t ms_lNumPts;
 	static RP3d* ms_pPts;
 	static int32_t	ms_lNumPipes; // used to free ms_pPts
-	};
+};
 
 //================================================== 
 //================================================== 

@@ -43,9 +43,9 @@ static Uint32 MicrosecondsBase = 0;
 //
 //////////////////////////////////////////////////////////////////////////////
 extern void Time_Init(void)
-	{
-    MicrosecondsBase = SDL_GetTicks();
-	}
+{
+	MicrosecondsBase = SDL_GetTicks();
+}
 
 
 //////////////////////////////////////////////////////////////////////////////
@@ -55,9 +55,9 @@ extern void Time_Init(void)
 //
 //////////////////////////////////////////////////////////////////////////////
 extern int32_t rspGetMilliseconds(void)
-	{
-        return (int32_t) (SDL_GetTicks());
-	}
+{
+	return (int32_t)(SDL_GetTicks());
+}
 
 //////////////////////////////////////////////////////////////////////////////
 //
@@ -69,20 +69,20 @@ extern int32_t rspGetMilliseconds(void)
 //
 //////////////////////////////////////////////////////////////////////////////
 extern int32_t rspGetMicroseconds(	// Returns microseconds between now and
-											// last
+	// last
 	int16_t sReset /*= FALSE*/)		// Set to TRUE to reset timer.  If you never
-											// reset the timer, it will wrap within
-											// just over 35 minutes.
-	{
-    Uint32 microsecs = SDL_GetTicks();
-    int32_t lTime = (int32_t) (microsecs - MicrosecondsBase);
+	// reset the timer, it will wrap within
+	// just over 35 minutes.
+{
+	Uint32 microsecs = SDL_GetTicks();
+	int32_t lTime = (int32_t)(microsecs - MicrosecondsBase);
 
-		// If reset requested . . .
+	// If reset requested . . .
 	if (sReset != FALSE)
 		MicrosecondsBase = microsecs;
 
 	return lTime * 1000;
-	}
+}
 
 //////////////////////////////////////////////////////////////////////////////
 //
@@ -97,9 +97,9 @@ extern int32_t rspGetMicroseconds(	// Returns microseconds between now and
 //
 //////////////////////////////////////////////////////////////////////////////
 extern S64 rspGetAppMicroseconds()
-	{
-        return ((S64) SDL_GetTicks()) * 1000;
-	}
+{
+	return ((S64)SDL_GetTicks()) * 1000;
+}
 
 //////////////////////////////////////////////////////////////////////////////
 // EOF

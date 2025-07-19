@@ -22,67 +22,67 @@
 #include <string.h>
 
 #ifdef PATHS_IN_INCLUDES
-	#include "GREEN/BLiT/BLIT.H"
-	#include "GREEN/BLiT/_BlitInt.H"
+#include "GREEN/BLiT/BLIT.H"
+#include "GREEN/BLiT/_BlitInt.H"
 #else
-	#include "BLIT.H"
-	#include "_BlitInt.H" 
+#include "BLIT.H"
+#include "_BlitInt.H" 
 #endif
 
 #include "Cfnt.h"
 
 //========================================================
 RFont::RFont()
-	{
+{
 	m_pFontSets = NULL;
 	m_sMaxCellHeight = m_sMaxCellWidth = m_sNumberOfScales = 0;
-	}
+}
 
 void	RFont::EraseAll()
-	{
-	RFontSet *pfsn,*pfs = m_pFontSets;
+{
+	RFontSet* pfsn, * pfs = m_pFontSets;
 
 	while (pfs)
-		{
+	{
 		pfsn = pfs->m_pNext;
 		delete pfs;
 		pfs = pfsn;
-		}
+	}
 
 	m_sMaxCellHeight = m_sMaxCellWidth = m_sNumberOfScales = 0;
-	}
+}
 
 RFont::~RFont()
-	{
+{
 	EraseAll();
-	}
+}
 //========================================================
 int16_t RFont::Add(char* pszFileName)
-	{
+{
 	RFile rfTemp;
 
-	if (rfTemp.Open(pszFileName,"rb",RFile::LittleEndian/*,RFile::Ascii*/))
-		{	
-		TRACE("RFont::AddFont: Couldn't open %s\n",pszFileName);
+	if (rfTemp.Open(pszFileName, "rb", RFile::LittleEndian/*,RFile::Ascii*/))
+	{
+		TRACE("RFont::AddFont: Couldn't open %s\n", pszFileName);
 		return -1;
-		}
+	}
 
 	Add(&rfTemp);
 	rfTemp.Close();
 
 	return 0;
-	}
+}
 
 int16_t RFont::Add(RFile* pcf)
-	{
+{
 
 #ifdef _DEBUG
 
 	if (!pcf)
-		{
+	{
 		TRACE("RFont::AddFont:null CNFile passed.\n");
 		return -1;
-		}
+	}
 
 #endif
 
@@ -90,114 +90,114 @@ int16_t RFont::Add(RFile* pcf)
 
 	// Read the basic header and verify
 	pcf->Read(szCommand);
-	if (strcmp(szCommand,"FONTFILE"))
-		{
+	if (strcmp(szCommand, "FONTFILE"))
+	{
 		TRACE("RFont::AddFont:Not a valid font file.\n");
 		return -1;
-		}
+	}
 
 	int16_t sVersion;
 
 	pcf->Read(&sVersion);
 	if (sVersion != 8)
-		{
+	{
 		TRACE("RFont::AddFont:Wrong version of font file!\n");
 		return -1;
-		}
+	}
 
-	int16_t sW,sH,sN;
+	int16_t sW, sH, sN;
 	pcf->Read(&sH);
 	pcf->Read(&sW);
 	pcf->Read(&sN);
 
-	TRACE("Loading Font, %hd by %hd, %hd scales\n",sW,sH,sN);
+	TRACE("Loading Font, %hd by %hd, %hd scales\n", sW, sH, sN);
 
 	int16_t sDone = FALSE;
 	while (!sDone)
-		{	
+	{
 		pcf->Read(szCommand);
-		if (!strcmp(szCommand,"ENDFONT"))
-			{
+		if (!strcmp(szCommand, "ENDFONT"))
+		{
 			sDone = TRUE;
 			break;
-			}
+		}
 
-		if (!strcmp(szCommand,"FONTSET"))
-			{
-			int16_t sH,sW;
+		if (!strcmp(szCommand, "FONTSET"))
+		{
+			int16_t sH, sW;
 			pcf->Read(&sH);
 			pcf->Read(&sW);
-			TRACE("FontSet: %hd by %hd\n",sW,sH);
+			TRACE("FontSet: %hd by %hd\n", sW, sH);
 			continue;
-			}
+		}
 
-		if (!strcmp(szCommand,"LETTER_"))
-			{
+		if (!strcmp(szCommand, "LETTER_"))
+		{
 			uint8_t ucASCII;
 			RImage* pim = new RImage;
 
 			pcf->Read(&ucASCII);
 			pim->Load(pcf);
-			AddLetter(pim,(int16_t)ucASCII);
+			AddLetter(pim, (int16_t)ucASCII);
 			int32_t lBogus = pcf->Tell();
-			}
 		}
+	}
 
 	return 0;
-	}
+}
 
 // For FSPR1, you don't need the parameters
 // Will return a +1 if overwriting an old letter!
 //
-int16_t RFont::AddLetter(RImage* pimLetter,int16_t sASCII,
-							  int16_t sKernL,int16_t sKernR)
-	{
+int16_t RFont::AddLetter(RImage* pimLetter, int16_t sASCII,
+	int16_t sKernL, int16_t sKernR)
+{
 
 #ifdef _DEBUG
 
 	if (!pimLetter)
-		{
+	{
 		TRACE("RFont::AddLetter: null image!\n");
 		return -1;
-		}
+	}
 
 #endif
 
 	// First find if a font exists:
 	RFontSet* pFont = m_pFontSets;
-	RSpecialFSPR1*	pInfo = NULL;
+	RSpecialFSPR1* pInfo = NULL;
 
 	// try to handle a generic type efficiently:
 	if (pimLetter->m_type == RImage::FSPR1)
-		{
+	{
 		pInfo = (RSpecialFSPR1*)pimLetter->m_pSpecialMem;
 
 		if (!pInfo)
-			{
+		{
 			TRACE("RFont::AddLetter: Bad FSPR1 format!\n");
 			return -1;
-			}
+		}
 
 		if (sASCII != -1) // FSPR1 case only
-			{
+		{
 			pInfo->m_u16ASCII = sASCII; // translate it...
-			}
 		}
+	}
 
 	while (pFont)
-		{
+	{
 		if (pFont->m_sCellHeight == pimLetter->m_sHeight) break;
 		pFont = pFont->m_pNext;
-		}
+	}
 
 	if (!pFont) // no match exists -> make a new font set..
-		{
+	{
 		pFont = new RFontSet;
 		if (!pFont)
-			{
+		{
 			TRACE("RFont::AddLetter: Memory alloc error!\n");
 			return -1;
-			}
+		}
 		pFont->m_sCellHeight = pimLetter->m_sHeight;
 		pFont->m_sMaxWidth = pimLetter->m_sWidth;
 
@@ -207,20 +207,20 @@ int16_t RFont::AddLetter(RImage* pimLetter,int16_t sASCII,
 
 		if (!pInsertFont) m_pFontSets = pFont; // first one
 		else
-			{
+		{
 			RFontSet* pLastFont = pInsertFont;
 
 			while (pInsertFont)
-				{
+			{
 				if (pInsertFont->m_sCellHeight < pFont->m_sCellHeight)
-					{
+				{
 					pLastFont = pInsertFont; // save last position
 					pInsertFont = pInsertFont->m_pNext; // keep looking
 
 					if (pInsertFont) continue;
 					// insert it at the end:
 					pLastFont->m_pNext = pFont;
-					}
+				}
 
 				// insert before!
 				pFont->m_pNext = pInsertFont; // stick before...
@@ -229,19 +229,19 @@ int16_t RFont::AddLetter(RImage* pimLetter,int16_t sASCII,
 				else // link to previous;
 					pLastFont->m_pNext = pFont;
 				break;
-				}
 			}
 		}
+	}
 
 	// Insert it into the font set:
 	int16_t sRet = 0;
 
 	if (pFont->m_ppimCharacters[pInfo->m_u16ASCII])
-		{
+	{
 		//TRACE("RFont::AddLetter: WARNING! Overwriting old letter!\n");
 		sRet = 1;
 		delete pFont->m_ppimCharacters[pInfo->m_u16ASCII];
-		}
+	}
 
 	pFont->m_ppimCharacters[pInfo->m_u16ASCII] = pimLetter;
 	//=====================================================
@@ -262,65 +262,65 @@ int16_t RFont::AddLetter(RImage* pimLetter,int16_t sASCII,
 		m_sMaxCellHeight = pimLetter->m_sHeight;
 
 	return sRet;
-	}
+}
 
 int16_t RFont::Save(char* pszFileName)
-	{
+{
 	RFile rfTemp;
 
-	if (rfTemp.Open(pszFileName,"wb",RFile::LittleEndian/*,RFile::Ascii*/))
-		{	
-		TRACE("RFont::SaveFont: Couldn't open %s\n",pszFileName);
+	if (rfTemp.Open(pszFileName, "wb", RFile::LittleEndian/*,RFile::Ascii*/))
+	{
+		TRACE("RFont::SaveFont: Couldn't open %s\n", pszFileName);
 		return -1;
-		}
+	}
 
-	if (Save(&rfTemp)==0)
-		{
-		TRACE("RFont::SaveFont: %s saved!\n",pszFileName);
-		}
+	if (Save(&rfTemp) == 0)
+	{
+		TRACE("RFont::SaveFont: %s saved!\n", pszFileName);
+	}
 
 	rfTemp.Close();
 
 	return 0;
-	}
+}
 
 // THIS is the font we are loading!
 //
 int16_t RFont::Load(char* pszFileName)
-	{
+{
 	RFile* pfileTemp = new RFile;
 
-	if (pfileTemp->Open(pszFileName,"rb",RFile::LittleEndian/*,RFile::Ascii*/))
-		{	
-		TRACE("RFont::LoadFont: Couldn't open %s\n",pszFileName);
+	if (pfileTemp->Open(pszFileName, "rb", RFile::LittleEndian/*,RFile::Ascii*/))
+	{
+		TRACE("RFont::LoadFont: Couldn't open %s\n", pszFileName);
 		delete pfileTemp;
 		return -1;
-		}
+	}
 
 	if (Load(pfileTemp) == 0)
-		{
+	{
 		// TRACE("RFont::LoadFont: %s loaded!\n",pszFileName);
 		pfileTemp->Close();
 		delete pfileTemp;
 
 		return 0;
-		}
+	}
 
 	pfileTemp->Close();
 	delete pfileTemp;
 
 	return -1;
-	}
+}
 
 int16_t RFont::Save(RFile* pcf)
-	{
+{
 
 #ifdef _DEBUG
-	if (!pcf) 
-		{
+	if (!pcf)
+	{
 		TRACE("RFont::SaveFont:Null Font passed!\n");
 		return -1;
-		}
+	}
 #endif
 
 	// Write the basic header
@@ -334,64 +334,64 @@ int16_t RFont::Save(RFile* pcf)
 	// Save each font set:
 	RFontSet* pfs = m_pFontSets;
 	while (pfs)
-		{
+	{
 		pcf->Write("FONTSET");
 		// Write overall font set info..
 		pcf->Write(&pfs->m_sCellHeight);
 		pcf->Write(&pfs->m_sMaxWidth);
 
-		for (int16_t i=0;i<256;i++)
-			{
+		for (int16_t i = 0; i < 256; i++)
+		{
 			if (pfs->m_ppimCharacters[i])
-				{
+			{
 				pcf->Write("LETTER_");
 				pcf->Write((uint8_t*)&i);
 				pfs->m_ppimCharacters[i]->Save(pcf);
-				}
 			}
-		pfs = pfs->m_pNext;
 		}
+		pfs = pfs->m_pNext;
+	}
 
 	pcf->Write("ENDFONT");
 
 	return 0;
-	}
+}
 
 // We are in a RFont, so it should exits...
 //
 int16_t RFont::Load(RFile* pcf)
-	{
+{
 
 #ifdef _DEBUG
 
-	if (!pcf) 
-		{
+	if (!pcf)
+	{
 		TRACE("RFont::LoadFont:Null File passed!\n");
 		return -1;
-		}
+	}
 
 #endif
 
-	char string[20] = {0,};
+	char string[20] = { 0, };
 
 	//------------------------------
 	// Read the basic header
 	//------------------------------
-	pcf->Read(&string[0],9);
-	if (strcmp(&string[0],"FONTFILE")) // not equal
-		{
+	pcf->Read(&string[0], 9);
+	if (strcmp(&string[0], "FONTFILE")) // not equal
+	{
 		TRACE("RFont::Load: Bad font file!\n");
 		return -1;
-		}; // type
+	}; // type
 
 	int16_t sVersion;
 	pcf->Read(&sVersion);
 
 	if (sVersion != 8)
-		{
+	{
 		TRACE("RFont::Load: This version not supported\n");
 		return -1;
-		}
+	}
 
 	//------------------------------
 	// Write overall font info..
@@ -406,39 +406,39 @@ int16_t RFont::Load(RFile* pcf)
 
 	// Load & Instantiate each font set by adding letters:
 	while (!pcf->IsEOF())
-		{
+	{
 		pcf->Read(&string[0]);
-		if (!strcmp(&string[0],"FONTSET")) // equal
-			{
+		if (!strcmp(&string[0], "FONTSET")) // equal
+		{
 			// Don't need overall font set info..
 			pcf->Read(&sDummy);
 			pcf->Read(&sDummy);
-			}
+		}
 
-		else if (!strcmp(&string[0],"LETTER_")) // equal
-			{
+		else if (!strcmp(&string[0], "LETTER_")) // equal
+		{
 			uint8_t c;
 			pcf->Read((uint8_t*)&c);
 			RImage* pimLetter = new RImage;
 			pimLetter->Load(pcf);
 			if (pimLetter == NULL)
-				{
-				TRACE("RFont::Load: Bad Letter %c in file!\n",char(c));
-				}
+			{
+				TRACE("RFont::Load: Bad Letter %c in file!\n", char(c));
+			}
 			else
 				AddLetter(pimLetter); // create the font!
-			}
-
-		else if (!strcmp(&string[0],"ENDFONT")) break; // equal
-		else
-			{
-			TRACE("RFont::Load: Bad font file!\n");
-			return -1;
-			}
 		}
 
-	return 0;
+		else if (!strcmp(&string[0], "ENDFONT")) break; // equal
+		else
+		{
+			TRACE("RFont::Load: Bad font file!\n");
+			return -1;
+		}
 	}
+
+	return 0;
+}
 
 // This selects the cached font closest in size to
 // your request that is greater than or equal to the
@@ -449,32 +449,32 @@ int16_t RFont::Load(RFile* pcf)
 // It returns null if no cached font was found larger than 
 // the request size.
 //
-RFont::RFontSet* RFont::FindSize(int16_t sCellH,double *pdScale)
-	{
+RFont::RFontSet* RFont::FindSize(int16_t sCellH, double* pdScale)
+{
 	RFontSet* pFont = NULL;
 	RFontSet* pfntRet = NULL;
 	*pdScale = 0.0;
 
 	// Assumes fonts are stored largest first.
 	if (m_pFontSets == NULL)
-		{
+	{
 		TRACE("RFont::FindSize: No fonts cached!\n");
 		return NULL;
-		}
+	}
 
 	pFont = m_pFontSets;
 
 	// Assume font's are ordered smallest to biggest:
 	while ((pFont->m_sCellHeight < sCellH))
-		{
+	{
 		pFont = pFont->m_pNext;
 		if (!pFont) break;
-		}
+	}
 	pfntRet = pFont;
 
-	if (pfntRet) *pdScale = double(sCellH)/pfntRet->m_sCellHeight;
+	if (pfntRet) *pdScale = double(sCellH) / pfntRet->m_sCellHeight;
 	return pfntRet;
-	}
+}
 
 // This allows an editor to remove vertain FontSets out of a
 // loaded font.  It will NOT allow you to delete the final
@@ -482,7 +482,7 @@ RFont::RFontSet* RFont::FindSize(int16_t sCellH,double *pdScale)
 // the fontset to remove.  It returns SUCCESS or FAILURE.
 //
 int16_t	RFont::DeleteSet(RFontSet* pRemove)
-	{
+{
 	RFontSet* pFont = m_pFontSets;
 	// Must not degenerate the font:
 	if (m_sNumberOfScales < 2) return FAILURE;
@@ -492,60 +492,60 @@ int16_t	RFont::DeleteSet(RFontSet* pRemove)
 	RFontSet* pPrevFont = NULL;
 
 	while (pFont)
-		{
+	{
 		if (pFont == pRemove)
-			{
+		{
 			sMatch = TRUE;
 			break;
-			}
+		}
 
 		pPrevFont = pFont;
 		pFont = pFont->m_pNext;
-		}
+	}
 
 	if (!sMatch) return FAILURE;
 	// Found a match:
 
 	// Handle special cases:
 	if (!pRemove->m_pNext)
-		{
+	{
 		// remove the tail
 		pPrevFont->m_pNext = NULL;
 		m_sMaxCellHeight = pPrevFont->m_sCellHeight;
 		m_sMaxCellWidth = pPrevFont->m_sMaxWidth;
-		}
+	}
 	else if (!pPrevFont)
-		{
+	{
 		// remove the head
 		m_pFontSets = pRemove->m_pNext;
-		}
+	}
 	else
-		{
+	{
 		// remove from center.
 		pPrevFont->m_pNext = pRemove->m_pNext;
-		}
+	}
 
 	m_sNumberOfScales--;
 	delete pRemove;
 
 	return SUCCESS;
-	}
+}
 
 //========================================================
 RFont::RFontSet::RFontSet()
-	{
+{
 	m_sMaxWidth = m_sCellHeight = 0;
 	m_pNext = NULL;
-	m_ppimCharacters = (RImage**) calloc(256,sizeof(RImage*));
-	}
+	m_ppimCharacters = (RImage**)calloc(256, sizeof(RImage*));
+}
 
 RFont::RFontSet::~RFontSet()
-	{
+{
 	int16_t i;
-	for (i=0;i<256;i++) if(m_ppimCharacters[i]) 
+	for (i = 0; i < 256; i++) if (m_ppimCharacters[i])
 		delete m_ppimCharacters[i];
 	m_sMaxWidth = m_sCellHeight = 0;
 	m_pNext = NULL;
 	free(m_ppimCharacters);
-	}
+}
 //========================================================

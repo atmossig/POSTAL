@@ -19,23 +19,23 @@
 #include <stdlib.h>
 #include "System.h"
 #ifdef PATHS_IN_INCLUDES
-	#include "GREEN/BLiT/BLIT.H"
-	//#include <math.h>
-	//#include "numbers.h" // allow
-	//#include "_QuickTrig.h"  
-	//#include "_line.h"
-	#include "ORANGE/QuickMath/QuickMath.h"
-	#include "ORANGE/QuickMath/FixedPoint.h"
-	#include "ORANGE/QuickMath/Fractions.h"
+#include "GREEN/BLiT/BLIT.H"
+//#include <math.h>
+//#include "numbers.h" // allow
+//#include "_QuickTrig.h"  
+//#include "_line.h"
+#include "ORANGE/QuickMath/QuickMath.h"
+#include "ORANGE/QuickMath/FixedPoint.h"
+#include "ORANGE/QuickMath/Fractions.h"
 #else
-	#include "BLIT.H"
-	//#include <math.h>
-	//#include "numbers.h" // allow
-	//#include "_QuickTrig.h"  
-	//#include "_line.h"
-	#include "QuickMath.h"
-	#include "FixedPoint.h"
-	#include "Fractions.h"
+#include "BLIT.H"
+//#include <math.h>
+//#include "numbers.h" // allow
+//#include "_QuickTrig.h"  
+//#include "_line.h"
+#include "QuickMath.h"
+#include "FixedPoint.h"
+#include "Fractions.h"
 #endif
 
 #ifdef MOBILE //Arm RAND_MAX is a full int, code expecting a short!!
@@ -47,8 +47,8 @@
 // (It sure doesn't clip!)
 // VERY cheezy implementation!  For drawing, should do IC stuff inline with pDst
 //
-void rspLine(uint8_t ucColor,RImage* pimDst,int16_t sX1,int16_t sY1,int16_t sX2,int16_t sY2,const RRect* prClip)
-	{
+void rspLine(uint8_t ucColor, RImage* pimDst, int16_t sX1, int16_t sY1, int16_t sX2, int16_t sY2, const RRect* prClip)
+{
 	/*
 #ifdef _DEBUG
 	if ((sX1 < 0) || (sY1 < 0) || (sX2 >= pimDst->lWidth) || (sY2 >= pimDst->lHeight))
@@ -59,37 +59,37 @@ void rspLine(uint8_t ucColor,RImage* pimDst,int16_t sX1,int16_t sY1,int16_t sX2,
 #endif
 		*/
 
-	// use the cheap 3D technique with signed fractions:
+		// use the cheap 3D technique with signed fractions:
 	int16_t sDelX = sX2 - sX1; // signed
 	int16_t sDelY = sY2 - sY1; // signed
-	int16_t sDelZ = MAX(ABS(sDelX),ABS(sDelY)); // a slow trick for now...
+	int16_t sDelZ = MAX(ABS(sDelX), ABS(sDelY)); // a slow trick for now...
 	if (sDelZ == 0) // a single point
-		{
-		rspClipPlot(ucColor,pimDst,sX1,sY1,prClip);
+	{
+		rspClipPlot(ucColor, pimDst, sX1, sY1, prClip);
 		return;
-		}
+	}
 
-	RFracS16 frIncX,frIncY;
-	rspfrDiv(frIncX,sDelX,sDelZ); // Magnitude < 1
-	rspfrDiv(frIncY,sDelY,sDelZ); // Magnitude < 1
+	RFracS16 frIncX, frIncY;
+	rspfrDiv(frIncX, sDelX, sDelZ); // Magnitude < 1
+	rspfrDiv(frIncY, sDelY, sDelZ); // Magnitude < 1
 
-	RFracS16 frX,frY;
+	RFracS16 frX, frY;
 
 	frX.mod = sX1; frY.mod = sY1;
 	frX.frac = frY.frac = (sDelZ >> 1); // for pixel rounding
 
-	for (int16_t i=0;i < sDelZ;i++)
-		{
-		rspClipPlot(ucColor,pimDst,frX.mod,frY.mod,prClip);
-		rspfrAdd(frX,frIncX,sDelZ);
-		rspfrAdd(frY,frIncY,sDelZ);
-		}
+	for (int16_t i = 0; i < sDelZ; i++)
+	{
+		rspClipPlot(ucColor, pimDst, frX.mod, frY.mod, prClip);
+		rspfrAdd(frX, frIncX, sDelZ);
+		rspfrAdd(frY, frIncY, sDelZ);
 	}
+}
 
 // returns a short random number between 0 and N-1
 //
 int16_t rspRand(int16_t sMax)
-	{
+{
 	return (int16_t)((rand() * sMax) / RAND_MAX);
 
-	}
+}

@@ -41,257 +41,257 @@
 /////////////////////////////////////////////////////////////////////////////////////
 //
 void rspScaleAlphaMask(RImage* pimSrc, double dScale, RImage* pimDst)
-	{
-	int16_t i,j;
+{
+	int16_t i, j;
 
 	int32_t lSrcP = pimSrc->m_lPitch;
 	int32_t lDstP = pimDst->m_lPitch;
-	uint8_t* pSrc,*pSrcLine = pimSrc->m_pData;
-	uint8_t* pDst,*pDstLine = pimDst->m_pData;
+	uint8_t* pSrc, * pSrcLine = pimSrc->m_pData;
+	uint8_t* pDst, * pDstLine = pimDst->m_pData;
 
-	for (j=0;j<pimSrc->m_sHeight;j++,pSrcLine += lSrcP,pDstLine += lDstP)
-		{
+	for (j = 0; j < pimSrc->m_sHeight; j++, pSrcLine += lSrcP, pDstLine += lDstP)
+	{
 		pSrc = pSrcLine;
 		pDst = pDstLine;
-		for (i=0;i<pimSrc->m_sWidth;i++,pSrc++,pDst++)
-			{
+		for (i = 0; i < pimSrc->m_sWidth; i++, pSrc++, pDst++)
+		{
 			double dVal = double(*pSrc);
 			dVal *= dScale;
 			if (dVal < 256.0)
 				*pDst = uint8_t(dVal);
 			else
 				*pDst = uint8_t(255);
-			}
 		}
 	}
+}
 
 
 // The mask must be as big as the source
 // Should work on both main types.
 //
-void rspGeneralAlphaBlit(RMultiAlpha* pX,RImage* pimMask,
-									RImage* pimSrc,RImage* pimDst,int16_t sDstX,int16_t sDstY,
-									RRect &rDstClip)
-	{
-	int16_t sSrcX = 0,sSrcY = 0,sDstW = pimSrc->m_sWidth,sDstH = pimSrc->m_sHeight;
+void rspGeneralAlphaBlit(RMultiAlpha* pX, RImage* pimMask,
+	RImage* pimSrc, RImage* pimDst, int16_t sDstX, int16_t sDstY,
+	RRect& rDstClip)
+{
+	int16_t sSrcX = 0, sSrcY = 0, sDstW = pimSrc->m_sWidth, sDstH = pimSrc->m_sHeight;
 
 	// right here adjust things if you need to clip to other thatn the full dst im
-	if (rspSimpleClip(sSrcX,sSrcY,sDstX,sDstY,sDstW,sDstH,
-		rDstClip.sX,rDstClip.sY,rDstClip.sW,rDstClip.sH) == -1) return ; // clipped out
-	
-	int16_t i,j;
+	if (rspSimpleClip(sSrcX, sSrcY, sDstX, sDstY, sDstW, sDstH,
+		rDstClip.sX, rDstClip.sY, rDstClip.sW, rDstClip.sH) == -1) return; // clipped out
+
+	int16_t i, j;
 	int32_t lSrcP = pimSrc->m_lPitch;
 	int32_t lDstP = pimDst->m_lPitch;
 	int32_t lMaskP = pimMask->m_lPitch;
-	uint8_t* pSrc,*pSrcLine = pimSrc->m_pData + sSrcX + sSrcY * lSrcP;
-	uint8_t* pMask,*pMaskLine = pimMask->m_pData + sSrcX + sSrcY * lSrcP;
-	uint8_t* pDst,*pDstLine = pimDst->m_pData + sDstX + lDstP * sDstY;
+	uint8_t* pSrc, * pSrcLine = pimSrc->m_pData + sSrcX + sSrcY * lSrcP;
+	uint8_t* pMask, * pMaskLine = pimMask->m_pData + sSrcX + sSrcY * lSrcP;
+	uint8_t* pDst, * pDstLine = pimDst->m_pData + sDstX + lDstP * sDstY;
 	uint8_t*** pppucAlphaList = pX->m_pGeneralAlpha;
 	uint8_t ucTransparent = *(pX->m_pLevelOpacity);
 	// set clip off at half lowest level value!
 	// MUST ROUND UP!
-	ucTransparent = (ucTransparent+1) >> 1; 
+	ucTransparent = (ucTransparent + 1) >> 1;
 
-	for (j=0;j<sDstH;j++,pSrcLine += lSrcP,pDstLine += lDstP,pMaskLine += lMaskP)
-		{
+	for (j = 0; j < sDstH; j++, pSrcLine += lSrcP, pDstLine += lDstP, pMaskLine += lMaskP)
+	{
 		pSrc = pSrcLine;
 		pDst = pDstLine;
 		pMask = pMaskLine;
 		uint8_t ucMask;
 		uint8_t** pucTable;
 
-		for (i=0;i<sDstW;i++,pSrc++,pDst++,pMask++)
-			{
+		for (i = 0; i < sDstW; i++, pSrc++, pDst++, pMask++)
+		{
 			ucMask = *pMask;
 			if (ucMask >= ucTransparent)
-				{
+			{
 				pucTable = pppucAlphaList[ucMask];
 				if (pucTable) // There is an alpha channel
-					{
+				{
 					*pDst = pucTable[*pSrc][*pDst];
-					}
+				}
 				else // it is opaque
-					{
+				{
 					*pDst = *pSrc;
-					}
 				}
 			}
 		}
 	}
+}
 
 // The mask must be as big as the source
 // Should work on both main types.
 // This does a pre-dimming of the mask based on sLevel -> 255 = as is!
 //
-void rspGeneralAlphaBlit(int16_t sLevel,RMultiAlpha* pX,RImage* pimMask,
-									RImage* pimSrc,RImage* pimDst,int16_t sDstX,int16_t sDstY,
-									RRect &rDstClip)
-	{
-	ASSERT( (sLevel >= 0 ) && (sLevel < 256) );
+void rspGeneralAlphaBlit(int16_t sLevel, RMultiAlpha* pX, RImage* pimMask,
+	RImage* pimSrc, RImage* pimDst, int16_t sDstX, int16_t sDstY,
+	RRect& rDstClip)
+{
+	ASSERT((sLevel >= 0) && (sLevel < 256));
 
-	int16_t sSrcX = 0,sSrcY = 0,sDstW = pimSrc->m_sWidth,sDstH = pimSrc->m_sHeight;
+	int16_t sSrcX = 0, sSrcY = 0, sDstW = pimSrc->m_sWidth, sDstH = pimSrc->m_sHeight;
 
 	// right here adjust things if you need to clip to other thatn the full dst im
-	if (rspSimpleClip(sSrcX,sSrcY,sDstX,sDstY,sDstW,sDstH,
-		rDstClip.sX,rDstClip.sY,rDstClip.sW,rDstClip.sH) == -1) return ; // clipped out
-	
-	int16_t i,j;
+	if (rspSimpleClip(sSrcX, sSrcY, sDstX, sDstY, sDstW, sDstH,
+		rDstClip.sX, rDstClip.sY, rDstClip.sW, rDstClip.sH) == -1) return; // clipped out
+
+	int16_t i, j;
 	int32_t lSrcP = pimSrc->m_lPitch;
 	int32_t lDstP = pimDst->m_lPitch;
 	int32_t lMaskP = pimMask->m_lPitch;
-	uint8_t* pSrc,*pSrcLine = pimSrc->m_pData + sSrcX + sSrcY * lSrcP;
-	uint8_t* pMask,*pMaskLine = pimMask->m_pData + sSrcX + sSrcY * lSrcP;
-	uint8_t* pDst,*pDstLine = pimDst->m_pData + sDstX + lDstP * sDstY;
+	uint8_t* pSrc, * pSrcLine = pimSrc->m_pData + sSrcX + sSrcY * lSrcP;
+	uint8_t* pMask, * pMaskLine = pimMask->m_pData + sSrcX + sSrcY * lSrcP;
+	uint8_t* pDst, * pDstLine = pimDst->m_pData + sDstX + lDstP * sDstY;
 	uint8_t*** pppucAlphaList = pX->m_pGeneralAlpha;
 	uint8_t ucTransparent = *(pX->m_pLevelOpacity);
 	// set clip off at half lowest level value!
 	// MUST ROUND UP!
-	ucTransparent = (ucTransparent+1) >> 1; 
+	ucTransparent = (ucTransparent + 1) >> 1;
 	// Set up the dimming parameter
-	uint8_t*	pucDim = &RMultiAlpha::ms_aucLiveDimming[sLevel*256];
+	uint8_t* pucDim = &RMultiAlpha::ms_aucLiveDimming[sLevel * 256];
 
-	for (j=0;j<sDstH;j++,pSrcLine += lSrcP,pDstLine += lDstP,pMaskLine += lMaskP)
-		{
+	for (j = 0; j < sDstH; j++, pSrcLine += lSrcP, pDstLine += lDstP, pMaskLine += lMaskP)
+	{
 		pSrc = pSrcLine;
 		pDst = pDstLine;
 		pMask = pMaskLine;
 		uint8_t ucMask;
 		uint8_t** pucTable;
 
-		for (i=0;i<sDstW;i++,pSrc++,pDst++,pMask++)
-			{
+		for (i = 0; i < sDstW; i++, pSrc++, pDst++, pMask++)
+		{
 			ucMask = pucDim[*pMask]; // do the dynamic dimming!
 			if (ucMask >= ucTransparent)
-				{
+			{
 				pucTable = pppucAlphaList[ucMask];
 				if (pucTable) // There is an alpha channel
-					{
+				{
 					*pDst = pucTable[*pSrc][*pDst];
-					}
+				}
 				else // it is opaque
-					{
+				{
 					*pDst = *pSrc;
-					}
 				}
 			}
 		}
 	}
+}
 
 // The mask must be as big as the source
 // Should work on both main types.
 // This does a pre-dimming of the mask based on sLevel -> 255 = as is!
 //
-extern void rspGeneralAlphaBlitT(int16_t sLevel,RMultiAlpha* pX,RImage* pimMask,
-									RImage* pimSrc,RImage* pimDst,int16_t sDstX,int16_t sDstY,
-									RRect &rDstClip)
-	{
-	ASSERT( (sLevel >= 0 ) && (sLevel < 256) );
+extern void rspGeneralAlphaBlitT(int16_t sLevel, RMultiAlpha* pX, RImage* pimMask,
+	RImage* pimSrc, RImage* pimDst, int16_t sDstX, int16_t sDstY,
+	RRect& rDstClip)
+{
+	ASSERT((sLevel >= 0) && (sLevel < 256));
 
-	int16_t sSrcX = 0,sSrcY = 0,sDstW = pimSrc->m_sWidth,sDstH = pimSrc->m_sHeight;
+	int16_t sSrcX = 0, sSrcY = 0, sDstW = pimSrc->m_sWidth, sDstH = pimSrc->m_sHeight;
 
 	// right here adjust things if you need to clip to other thatn the full dst im
-	if (rspSimpleClip(sSrcX,sSrcY,sDstX,sDstY,sDstW,sDstH,
-		rDstClip.sX,rDstClip.sY,rDstClip.sW,rDstClip.sH) == -1) return ; // clipped out
-	
-	int16_t i,j;
+	if (rspSimpleClip(sSrcX, sSrcY, sDstX, sDstY, sDstW, sDstH,
+		rDstClip.sX, rDstClip.sY, rDstClip.sW, rDstClip.sH) == -1) return; // clipped out
+
+	int16_t i, j;
 	int32_t lSrcP = pimSrc->m_lPitch;
 	int32_t lDstP = pimDst->m_lPitch;
 	int32_t lMaskP = pimMask->m_lPitch;
-	uint8_t* pSrc,*pSrcLine = pimSrc->m_pData + sSrcX + sSrcY * lSrcP;
-	uint8_t* pMask,*pMaskLine = pimMask->m_pData + sSrcX + sSrcY * lSrcP;
-	uint8_t* pDst,*pDstLine = pimDst->m_pData + sDstX + lDstP * sDstY;
+	uint8_t* pSrc, * pSrcLine = pimSrc->m_pData + sSrcX + sSrcY * lSrcP;
+	uint8_t* pMask, * pMaskLine = pimMask->m_pData + sSrcX + sSrcY * lSrcP;
+	uint8_t* pDst, * pDstLine = pimDst->m_pData + sDstX + lDstP * sDstY;
 	uint8_t*** pppucAlphaList = pX->m_pGeneralAlpha;
 	uint8_t ucTransparent = *(pX->m_pLevelOpacity);
 	// set clip off at half lowest level value!
 	// MUST ROUND UP!
-	ucTransparent = (ucTransparent+1) >> 1; 
+	ucTransparent = (ucTransparent + 1) >> 1;
 	// Set up the dimming parameter
-	uint8_t*	pucDim = &RMultiAlpha::ms_aucLiveDimming[sLevel*256];
+	uint8_t* pucDim = &RMultiAlpha::ms_aucLiveDimming[sLevel * 256];
 
-	for (j=0;j<sDstH;j++,pSrcLine += lSrcP,pDstLine += lDstP,pMaskLine += lMaskP)
-		{
+	for (j = 0; j < sDstH; j++, pSrcLine += lSrcP, pDstLine += lDstP, pMaskLine += lMaskP)
+	{
 		pSrc = pSrcLine;
 		pDst = pDstLine;
 		pMask = pMaskLine;
 		uint8_t ucMask;
 		uint8_t** pucTable;
 
-		for (i=0;i<sDstW;i++,pSrc++,pDst++,pMask++)
-			{
+		for (i = 0; i < sDstW; i++, pSrc++, pDst++, pMask++)
+		{
 			uint8_t ucSrc = *pSrc;
 			if (ucSrc)
-				{
+			{
 				ucMask = pucDim[*pMask]; // do the dynamic dimming!
 				if (ucMask >= ucTransparent)
-					{
+				{
 					pucTable = pppucAlphaList[ucMask];
 					if (pucTable) // There is an alpha channel
-						{
+					{
 						*pDst = pucTable[*pSrc][*pDst];
-						}
+					}
 					else // it is opaque
-						{
+					{
 						*pDst = *pSrc;
-						}
 					}
 				}
 			}
 		}
 	}
+}
 
 // The mask must be as big as the source
 // This Uses a Fast Multi Alpha, which leave NO ROOM for the SLIGHTEST error!
 // In release mode, this will likely crash if a blit occurs which
 // leaves the range of source or destination colors.
 //
-void rspFastMaskAlphaBlit(uint8_t*** pfaX,RImage* pimMask,
-									RImage* pimSrc,RImage* pimDst,int16_t sDstX,int16_t sDstY,
-									RRect &rDstClip)
-	{
-	int16_t sSrcX = 0,sSrcY = 0,sDstW = pimSrc->m_sWidth,sDstH = pimSrc->m_sHeight;
+void rspFastMaskAlphaBlit(uint8_t*** pfaX, RImage* pimMask,
+	RImage* pimSrc, RImage* pimDst, int16_t sDstX, int16_t sDstY,
+	RRect& rDstClip)
+{
+	int16_t sSrcX = 0, sSrcY = 0, sDstW = pimSrc->m_sWidth, sDstH = pimSrc->m_sHeight;
 
 	// right here adjust things if you need to clip to other thatn the full dst im
-	if (rspSimpleClip(sSrcX,sSrcY,sDstX,sDstY,sDstW,sDstH,
-		rDstClip.sX,rDstClip.sY,rDstClip.sW,rDstClip.sH) == -1) return ; // clipped out
-	
-	int16_t i,j;
+	if (rspSimpleClip(sSrcX, sSrcY, sDstX, sDstY, sDstW, sDstH,
+		rDstClip.sX, rDstClip.sY, rDstClip.sW, rDstClip.sH) == -1) return; // clipped out
+
+	int16_t i, j;
 	int32_t lSrcP = pimSrc->m_lPitch;
 	int32_t lDstP = pimDst->m_lPitch;
 	int32_t lMaskP = pimMask->m_lPitch;
 
-	uint8_t* pSrc,*pSrcLine = pimSrc->m_pData + sSrcX + sSrcY * lSrcP;
-	uint8_t* pMask,*pMaskLine = pimMask->m_pData + sSrcX + sSrcY * lSrcP;
-	uint8_t* pDst,*pDstLine = pimDst->m_pData + sDstX + lDstP * sDstY;
+	uint8_t* pSrc, * pSrcLine = pimSrc->m_pData + sSrcX + sSrcY * lSrcP;
+	uint8_t* pMask, * pMaskLine = pimMask->m_pData + sSrcX + sSrcY * lSrcP;
+	uint8_t* pDst, * pDstLine = pimDst->m_pData + sDstX + lDstP * sDstY;
 
-	uint8_t ucTransparent = *( (uint8_t*)pfaX ); // secret code!
+	uint8_t ucTransparent = *((uint8_t*)pfaX); // secret code!
 
-	for (j=0;j<sDstH;j++,pSrcLine += lSrcP,pDstLine += lDstP,pMaskLine += lMaskP)
-		{
+	for (j = 0; j < sDstH; j++, pSrcLine += lSrcP, pDstLine += lDstP, pMaskLine += lMaskP)
+	{
 		pSrc = pSrcLine;
 		pDst = pDstLine;
 		pMask = pMaskLine;
 		uint8_t ucMask;
 		uint8_t** pucTable;
 
-		for (i=0;i<sDstW;i++,pSrc++,pDst++,pMask++)
-			{
+		for (i = 0; i < sDstW; i++, pSrc++, pDst++, pMask++)
+		{
 			ucMask = *pMask;
 			if (ucMask >= ucTransparent)
-				{
+			{
 				pucTable = pfaX[ucMask];
 				if (pucTable) // There is an alpha channel
-					{
+				{
 					ASSERT(pucTable[*pSrc]); // catch source errors
 					*pDst = *(pucTable[*pSrc] + *pDst);
-					}
+				}
 				else // it is opaque
-					{
+				{
 					*pDst = *pSrc;
-					}
 				}
 			}
 		}
 	}
+}
 
 // The mask must be as big as the source
 // This Uses a Fast Multi Alpha, which leave NO ROOM for the SLIGHTEST error!
@@ -300,58 +300,58 @@ void rspFastMaskAlphaBlit(uint8_t*** pfaX,RImage* pimMask,
 //
 // One exception here is that 
 //
-void rspFastMaskAlphaBlitT(uint8_t*** pfaX,RImage* pimMask,
-									RImage* pimSrc,RImage* pimDst,int16_t sDstX,int16_t sDstY,
-									RRect &rDstClip)
-	{
-	int16_t sSrcX = 0,sSrcY = 0,sDstW = pimSrc->m_sWidth,sDstH = pimSrc->m_sHeight;
+void rspFastMaskAlphaBlitT(uint8_t*** pfaX, RImage* pimMask,
+	RImage* pimSrc, RImage* pimDst, int16_t sDstX, int16_t sDstY,
+	RRect& rDstClip)
+{
+	int16_t sSrcX = 0, sSrcY = 0, sDstW = pimSrc->m_sWidth, sDstH = pimSrc->m_sHeight;
 
 	// right here adjust things if you need to clip to other thatn the full dst im
-	if (rspSimpleClip(sSrcX,sSrcY,sDstX,sDstY,sDstW,sDstH,
-		rDstClip.sX,rDstClip.sY,rDstClip.sW,rDstClip.sH) == -1) return ; // clipped out
-	
-	int16_t i,j;
+	if (rspSimpleClip(sSrcX, sSrcY, sDstX, sDstY, sDstW, sDstH,
+		rDstClip.sX, rDstClip.sY, rDstClip.sW, rDstClip.sH) == -1) return; // clipped out
+
+	int16_t i, j;
 	int32_t lSrcP = pimSrc->m_lPitch;
 	int32_t lDstP = pimDst->m_lPitch;
 	int32_t lMaskP = pimMask->m_lPitch;
 
-	uint8_t* pSrc,*pSrcLine = pimSrc->m_pData + sSrcX + sSrcY * lSrcP;
-	uint8_t* pMask,*pMaskLine = pimMask->m_pData + sSrcX + sSrcY * lSrcP;
-	uint8_t* pDst,*pDstLine = pimDst->m_pData + sDstX + lDstP * sDstY;
+	uint8_t* pSrc, * pSrcLine = pimSrc->m_pData + sSrcX + sSrcY * lSrcP;
+	uint8_t* pMask, * pMaskLine = pimMask->m_pData + sSrcX + sSrcY * lSrcP;
+	uint8_t* pDst, * pDstLine = pimDst->m_pData + sDstX + lDstP * sDstY;
 
-	uint8_t ucTransparent = *( (uint8_t*)pfaX ); // secret code!
+	uint8_t ucTransparent = *((uint8_t*)pfaX); // secret code!
 
-	for (j=0;j<sDstH;j++,pSrcLine += lSrcP,pDstLine += lDstP,pMaskLine += lMaskP)
-		{
+	for (j = 0; j < sDstH; j++, pSrcLine += lSrcP, pDstLine += lDstP, pMaskLine += lMaskP)
+	{
 		pSrc = pSrcLine;
 		pDst = pDstLine;
 		pMask = pMaskLine;
 		uint8_t ucMask;
 		uint8_t** pucTable;
 
-		for (i=0;i<sDstW;i++,pSrc++,pDst++,pMask++)
-			{
+		for (i = 0; i < sDstW; i++, pSrc++, pDst++, pMask++)
+		{
 			uint8_t ucPix = *pSrc;
 			if (ucPix)
-				{
+			{
 				ucMask = *pMask;
 				if (ucMask >= ucTransparent)
-					{
+				{
 					pucTable = pfaX[ucMask];
 					if (pucTable) // There is an alpha channel
-						{
+					{
 						ASSERT(pucTable[ucPix]); // catch source errors
 						*pDst = *(pucTable[ucPix] + *pDst);
-						}
+					}
 					else // it is opaque
-						{
+					{
 						*pDst = ucPix;
-						}
 					}
 				}
 			}
 		}
 	}
+}
 
 
 // The mask must be as big as the source
@@ -368,7 +368,7 @@ extern void rspAlphaMaskBlit(RMultiAlpha* pX,RImage* pimMask,
 	// right here adjust things if you need to clip to other thatn the full dst im
 	if (rspSimpleClip(sSrcX,sSrcY,sDstX,sDstY,sDstW,sDstH,
 		rDstClip.sX,rDstClip.sY,rDstClip.sW,rDstClip.sH) == -1) return ; // clipped out
-	
+
 	short i,j;
 	long lSrcP = pimSrc->m_lPitch;
 	long lDstP = pimDst->m_lPitch;
@@ -408,82 +408,82 @@ extern void rspAlphaMaskBlit(RMultiAlpha* pX,RImage* pimMask,
 // sAlphaLevel goes from 0 (you see background) to 255 (you see the sprite)
 // As the name implies, this does not consider source colors of index zero.
 //
-void rspAlphaBlitT(int16_t sAlphaLevel,RMultiAlpha* pMultiX,RImage* pimSrc,RImage* pimDst,int16_t sDstX,int16_t sDstY,
-						 RRect* prDst)
-	{
-	int16_t sSrcX = 0,sSrcY = 0,sDstW = pimSrc->m_sWidth,sDstH = pimSrc->m_sHeight;
+void rspAlphaBlitT(int16_t sAlphaLevel, RMultiAlpha* pMultiX, RImage* pimSrc, RImage* pimDst, int16_t sDstX, int16_t sDstY,
+	RRect* prDst)
+{
+	int16_t sSrcX = 0, sSrcY = 0, sDstW = pimSrc->m_sWidth, sDstH = pimSrc->m_sHeight;
 
 	// right here adjust things if you need to clip to other thatn the full dst im
 	if (prDst == NULL)
-		{
-		if (rspSimpleClip(sSrcX,sSrcY,sDstX,sDstY,sDstW,sDstH,0,0,
-			pimDst->m_sWidth,pimDst->m_sHeight) == -1) return ; // clipped out
-		}
+	{
+		if (rspSimpleClip(sSrcX, sSrcY, sDstX, sDstY, sDstW, sDstH, 0, 0,
+			pimDst->m_sWidth, pimDst->m_sHeight) == -1) return; // clipped out
+	}
 	else
-		{
-		if (rspSimpleClip(sSrcX,sSrcY,sDstX,sDstY,sDstW,sDstH,prDst->sX,prDst->sY,
-			prDst->sW,prDst->sH) == -1) return ; // clipped out
-		}
-	
-	int16_t i,j;
+	{
+		if (rspSimpleClip(sSrcX, sSrcY, sDstX, sDstY, sDstW, sDstH, prDst->sX, prDst->sY,
+			prDst->sW, prDst->sH) == -1) return; // clipped out
+	}
+
+	int16_t i, j;
 	int32_t lSrcP = pimSrc->m_lPitch;
 	int32_t lDstP = pimDst->m_lPitch;
-	uint8_t* pSrc,*pSrcLine = pimSrc->m_pData + sSrcX + sSrcY * lSrcP;
-	uint8_t* pDst,*pDstLine = pimDst->m_pData + sDstX + lDstP * sDstY;
+	uint8_t* pSrc, * pSrcLine = pimSrc->m_pData + sSrcX + sSrcY * lSrcP;
+	uint8_t* pDst, * pDstLine = pimDst->m_pData + sDstX + lDstP * sDstY;
 	uint8_t ucTransparent = *(pMultiX->m_pLevelOpacity);
 
 	// Test out trivial conditions:
 	// Check on 1/2 the lowest vales as a cross over point!
 	// Must round up!
-	if (sAlphaLevel <= int16_t((ucTransparent+1)>>1)) return;
+	if (sAlphaLevel <= int16_t((ucTransparent + 1) >> 1)) return;
 
 	uint8_t** ppucAlpha = pMultiX->m_pGeneralAlpha[sAlphaLevel];
 	if (!ppucAlpha) // it is opaque!
-		{
-		rspBlitT(0,pimSrc,pimDst,sSrcX,sSrcY,sDstX,sDstY,sDstW,sDstH,NULL,NULL);
+	{
+		rspBlitT(0, pimSrc, pimDst, sSrcX, sSrcY, sDstX, sDstY, sDstW, sDstH, NULL, NULL);
 		return;
-		}
+	}
 
-	for (j=0;j<sDstH;j++,pSrcLine += lSrcP,pDstLine += lDstP)
-		{
+	for (j = 0; j < sDstH; j++, pSrcLine += lSrcP, pDstLine += lDstP)
+	{
 		pSrc = pSrcLine;
 		pDst = pDstLine;
 
-		for (i=0;i<sDstW;i++,pSrc++,pDst++)
-			{
+		for (i = 0; i < sDstW; i++, pSrc++, pDst++)
+		{
 			uint8_t ucPix = *pSrc;
 			if (ucPix) *pDst = ppucAlpha[ucPix][*pDst];
-			}
 		}
 	}
+}
 
 
 // Here is a wrapper so that the homogenous alpha blit can use a multialpha:
 // sAlphaLevel goes from 0 (you see background) to 255 (you see the sprite)
 // As the name implies, this does not consider source colors of index zero.
 //
-void rspFastAlphaBlitT(int16_t sAlphaLevel,uint8_t*** pMultiX,RImage* pimSrc,RImage* pimDst,int16_t sDstX,int16_t sDstY,
-						 RRect* prDst)
-	{
-	int16_t sSrcX = 0,sSrcY = 0,sDstW = pimSrc->m_sWidth,sDstH = pimSrc->m_sHeight;
+void rspFastAlphaBlitT(int16_t sAlphaLevel, uint8_t*** pMultiX, RImage* pimSrc, RImage* pimDst, int16_t sDstX, int16_t sDstY,
+	RRect* prDst)
+{
+	int16_t sSrcX = 0, sSrcY = 0, sDstW = pimSrc->m_sWidth, sDstH = pimSrc->m_sHeight;
 
 	// right here adjust things if you need to clip to other thatn the full dst im
 	if (prDst == NULL)
-		{
-		if (rspSimpleClip(sSrcX,sSrcY,sDstX,sDstY,sDstW,sDstH,0,0,
-			pimDst->m_sWidth,pimDst->m_sHeight) == -1) return ; // clipped out
-		}
+	{
+		if (rspSimpleClip(sSrcX, sSrcY, sDstX, sDstY, sDstW, sDstH, 0, 0,
+			pimDst->m_sWidth, pimDst->m_sHeight) == -1) return; // clipped out
+	}
 	else
-		{
-		if (rspSimpleClip(sSrcX,sSrcY,sDstX,sDstY,sDstW,sDstH,prDst->sX,prDst->sY,
-			prDst->sW,prDst->sH) == -1) return ; // clipped out
-		}
-	
-	int16_t i,j;
+	{
+		if (rspSimpleClip(sSrcX, sSrcY, sDstX, sDstY, sDstW, sDstH, prDst->sX, prDst->sY,
+			prDst->sW, prDst->sH) == -1) return; // clipped out
+	}
+
+	int16_t i, j;
 	int32_t lSrcP = pimSrc->m_lPitch;
 	int32_t lDstP = pimDst->m_lPitch;
-	uint8_t* pSrc,*pSrcLine = pimSrc->m_pData + sSrcX + sSrcY * lSrcP;
-	uint8_t* pDst,*pDstLine = pimDst->m_pData + sDstX + lDstP * sDstY;
+	uint8_t* pSrc, * pSrcLine = pimSrc->m_pData + sSrcX + sSrcY * lSrcP;
+	uint8_t* pDst, * pDstLine = pimDst->m_pData + sDstX + lDstP * sDstY;
 	uint8_t ucTransparent = *((uint8_t*)pMultiX); // Secret Code
 
 	// Test out trivial conditions:
@@ -491,149 +491,149 @@ void rspFastAlphaBlitT(int16_t sAlphaLevel,uint8_t*** pMultiX,RImage* pimSrc,RIm
 
 	uint8_t** ppucAlpha = pMultiX[sAlphaLevel];
 	if (!ppucAlpha) // it is opaque!
-		{
-		rspBlitT(0,pimSrc,pimDst,sSrcX,sSrcY,sDstX,sDstY,sDstW,sDstH,NULL,NULL);
+	{
+		rspBlitT(0, pimSrc, pimDst, sSrcX, sSrcY, sDstX, sDstY, sDstW, sDstH, NULL, NULL);
 		return;
-		}
+	}
 
-	for (j=0;j<sDstH;j++,pSrcLine += lSrcP,pDstLine += lDstP)
-		{
+	for (j = 0; j < sDstH; j++, pSrcLine += lSrcP, pDstLine += lDstP)
+	{
 		pSrc = pSrcLine;
 		pDst = pDstLine;
 
-		for (i=0;i<sDstW;i++,pSrc++,pDst++)
-			{
+		for (i = 0; i < sDstW; i++, pSrc++, pDst++)
+		{
 			uint8_t ucPix = *pSrc;
 			if (ucPix) *pDst = ppucAlpha[ucPix][*pDst];
-			}
 		}
 	}
+}
 
 
-void rspAlphaBlit(RAlpha* pX,RImage* pimSrc,RImage* pimDst,int16_t sDstX,int16_t sDstY)
-	{
-	int16_t sSrcX = 0,sSrcY = 0,sDstW = pimSrc->m_sWidth,sDstH = pimSrc->m_sHeight;
+void rspAlphaBlit(RAlpha* pX, RImage* pimSrc, RImage* pimDst, int16_t sDstX, int16_t sDstY)
+{
+	int16_t sSrcX = 0, sSrcY = 0, sDstW = pimSrc->m_sWidth, sDstH = pimSrc->m_sHeight;
 
 	// right here adjust things if you need to clip to other thatn the full dst im
-	if (rspSimpleClip(sSrcX,sSrcY,sDstX,sDstY,sDstW,sDstH,0,0,
-		pimDst->m_sWidth,pimDst->m_sHeight) == -1) return ; // clipped out
-	
-	int16_t i,j;
+	if (rspSimpleClip(sSrcX, sSrcY, sDstX, sDstY, sDstW, sDstH, 0, 0,
+		pimDst->m_sWidth, pimDst->m_sHeight) == -1) return; // clipped out
+
+	int16_t i, j;
 	int32_t lSrcP = pimSrc->m_lPitch;
 	int32_t lDstP = pimDst->m_lPitch;
-	uint8_t* pSrc,*pSrcLine = pimSrc->m_pData + sSrcX + sSrcY * lSrcP;
-	uint8_t* pDst,*pDstLine = pimDst->m_pData + sDstX + lDstP * sDstY;
+	uint8_t* pSrc, * pSrcLine = pimSrc->m_pData + sSrcX + sSrcY * lSrcP;
+	uint8_t* pDst, * pDstLine = pimDst->m_pData + sDstX + lDstP * sDstY;
 
-	for (j=0;j<sDstH;j++,pSrcLine += lSrcP,pDstLine += lDstP)
-		{
+	for (j = 0; j < sDstH; j++, pSrcLine += lSrcP, pDstLine += lDstP)
+	{
 		pSrc = pSrcLine;
 		pDst = pDstLine;
 
-		for (i=0;i<sDstW;i++,pSrc++,pDst++)
-			{
+		for (i = 0; i < sDstW; i++, pSrc++, pDst++)
+		{
 			*pDst = pX->m_pAlphas[*pSrc][*pDst];
-			}
 		}
 	}
+}
 
-void rspAlphaBlitT(RAlpha* pX,RImage* pimSrc,RImage* pimDst,int16_t sDstX,int16_t sDstY)
-	{
-	int16_t sSrcX = 0,sSrcY = 0,sDstW = pimSrc->m_sWidth,sDstH = pimSrc->m_sHeight;
+void rspAlphaBlitT(RAlpha* pX, RImage* pimSrc, RImage* pimDst, int16_t sDstX, int16_t sDstY)
+{
+	int16_t sSrcX = 0, sSrcY = 0, sDstW = pimSrc->m_sWidth, sDstH = pimSrc->m_sHeight;
 
 	// right here adjust things if you need to clip to other thatn the full dst im
-	if (rspSimpleClip(sSrcX,sSrcY,sDstX,sDstY,sDstW,sDstH,0,0,
-		pimDst->m_sWidth,pimDst->m_sHeight) == -1) return ; // clipped out
-	
-	int16_t i,j;
+	if (rspSimpleClip(sSrcX, sSrcY, sDstX, sDstY, sDstW, sDstH, 0, 0,
+		pimDst->m_sWidth, pimDst->m_sHeight) == -1) return; // clipped out
+
+	int16_t i, j;
 	int32_t lSrcP = pimSrc->m_lPitch;
 	int32_t lDstP = pimDst->m_lPitch;
-	uint8_t* pSrc,*pSrcLine = pimSrc->m_pData + sSrcX + sSrcY * lSrcP;
-	uint8_t* pDst,*pDstLine = pimDst->m_pData + sDstX + lDstP * sDstY;
+	uint8_t* pSrc, * pSrcLine = pimSrc->m_pData + sSrcX + sSrcY * lSrcP;
+	uint8_t* pDst, * pDstLine = pimDst->m_pData + sDstX + lDstP * sDstY;
 
-	for (j=0;j<sDstH;j++,pSrcLine += lSrcP,pDstLine += lDstP)
-		{
+	for (j = 0; j < sDstH; j++, pSrcLine += lSrcP, pDstLine += lDstP)
+	{
 		pSrc = pSrcLine;
 		pDst = pDstLine;
 
-		for (i=0;i<sDstW;i++,pSrc++,pDst++)
-			{
+		for (i = 0; i < sDstW; i++, pSrc++, pDst++)
+		{
 			uint8_t ucSrc = *pSrc;
 			if (ucSrc)
 				*pDst = pX->m_pAlphas[ucSrc][*pDst];
-			}
 		}
 	}
+}
 
 // This draws source to destination with clipping only if destination is not zero!
 // NOTE that this technique is only valid for adding to fully opaque masks.
 // For more deluxe compound masking, you need to only change if source < dest!
 //
-void rspMaskBlit(RImage* pimSrc,RImage* pimDst,int16_t sDstX,int16_t sDstY)
-	{
-	int16_t sSrcX = 0,sSrcY = 0,sDstW = pimSrc->m_sWidth,sDstH = pimSrc->m_sHeight;
+void rspMaskBlit(RImage* pimSrc, RImage* pimDst, int16_t sDstX, int16_t sDstY)
+{
+	int16_t sSrcX = 0, sSrcY = 0, sDstW = pimSrc->m_sWidth, sDstH = pimSrc->m_sHeight;
 
 	// right here adjust things if you need to clip to other thatn the full dst im
-	if (rspSimpleClip(sSrcX,sSrcY,sDstX,sDstY,sDstW,sDstH,0,0,
-		pimDst->m_sWidth,pimDst->m_sHeight) == -1) return ; // clipped out
-	
-	int16_t i,j;
+	if (rspSimpleClip(sSrcX, sSrcY, sDstX, sDstY, sDstW, sDstH, 0, 0,
+		pimDst->m_sWidth, pimDst->m_sHeight) == -1) return; // clipped out
+
+	int16_t i, j;
 	int32_t lSrcP = pimSrc->m_lPitch;
 	int32_t lDstP = pimDst->m_lPitch;
-	uint8_t* pSrc,*pSrcLine = pimSrc->m_pData + sSrcX + sSrcY * lSrcP;
-	uint8_t* pDst,*pDstLine = pimDst->m_pData + sDstX + lDstP * sDstY;
+	uint8_t* pSrc, * pSrcLine = pimSrc->m_pData + sSrcX + sSrcY * lSrcP;
+	uint8_t* pDst, * pDstLine = pimDst->m_pData + sDstX + lDstP * sDstY;
 
-	for (j=0;j<sDstH;j++,pSrcLine += lSrcP,pDstLine += lDstP)
-		{
+	for (j = 0; j < sDstH; j++, pSrcLine += lSrcP, pDstLine += lDstP)
+	{
 		pSrc = pSrcLine;
 		pDst = pDstLine;
 
-		for (i=0;i<sDstW;i++,pSrc++,pDst++)
-			{
+		for (i = 0; i < sDstW; i++, pSrc++, pDst++)
+		{
 			if (*pDst) *pDst = *pSrc;
-			}
 		}
 	}
+}
 
 // Takes a BMP8 and converts it to a mask of 0 and ucVal
-void rspMakeMask(RImage* pimSrc,uint8_t ucVal)
-	{
-	int16_t i,j;
+void rspMakeMask(RImage* pimSrc, uint8_t ucVal)
+{
+	int16_t i, j;
 	int32_t lSrcP = pimSrc->m_lPitch;
-	uint8_t* pSrc,*pSrcLine = pimSrc->m_pData;
+	uint8_t* pSrc, * pSrcLine = pimSrc->m_pData;
 
-	for (j=0;j<pimSrc->m_sHeight;j++,pSrcLine += lSrcP)
-		{
+	for (j = 0; j < pimSrc->m_sHeight; j++, pSrcLine += lSrcP)
+	{
 		pSrc = pSrcLine;
-		for (i=0;i<pimSrc->m_sWidth;i++,pSrc++)
-			{
+		for (i = 0; i < pimSrc->m_sWidth; i++, pSrc++)
+		{
 			if (*pSrc) *pSrc = ucVal; // replace all as mask
-			}
 		}
 	}
+}
 
 // Takes a BMP8 and converts it to a mask of 0 and ucVal
 // Currently, no clipping or positioning possible
-void rspCopyAsMask(RImage* pimSrc,RImage* pimDst,uint8_t ucVal)
-	{
-	int16_t i,j;
+void rspCopyAsMask(RImage* pimSrc, RImage* pimDst, uint8_t ucVal)
+{
+	int16_t i, j;
 	int32_t lSrcP = pimSrc->m_lPitch;
 	int32_t lDstP = pimDst->m_lPitch;
-	uint8_t* pSrc,*pSrcLine = pimSrc->m_pData;
-	uint8_t* pDst,*pDstLine = pimDst->m_pData;
+	uint8_t* pSrc, * pSrcLine = pimSrc->m_pData;
+	uint8_t* pDst, * pDstLine = pimDst->m_pData;
 
 	int16_t sDstW = pimSrc->m_sWidth;
 	int16_t sDstH = pimSrc->m_sHeight;
 
-	for (j=0;j<sDstH;j++,pSrcLine += lSrcP,pDstLine += lDstP)
-		{
+	for (j = 0; j < sDstH; j++, pSrcLine += lSrcP, pDstLine += lDstP)
+	{
 		pSrc = pSrcLine;
 		pDst = pDstLine;
 
-		for (i=0;i<sDstW;i++,pSrc++,pDst++)
-			{
+		for (i = 0; i < sDstW; i++, pSrc++, pDst++)
+		{
 			if (*pSrc) *pDst = ucVal; // replace all as mask
-			else 
+			else
 				*pDst = 0;
-			}
 		}
 	}
+}

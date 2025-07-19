@@ -21,11 +21,11 @@
 //================================================== 
 #include "Blue.h"
 #ifdef PATHS_IN_INCLUDES
-	#include "ORANGE/QuickMath/FixedPoint.h" // for RFixedS32
-	#include "ORANGE/color/colormatch.h" // for RFixedS32
+#include "ORANGE/QuickMath/FixedPoint.h" // for RFixedS32
+#include "ORANGE/color/colormatch.h" // for RFixedS32
 #else
-	#include "FixedPoint.h" // for RFixedS32
-	#include "ColorMatch.h" // for RFixedS32
+#include "FixedPoint.h" // for RFixedS32
+#include "ColorMatch.h" // for RFixedS32
 #endif
 //================================================== 
 // Note that z-buffer assumes that positive z is
@@ -34,7 +34,7 @@
 const int16_t ZB_MIN_Z = -32768;
 
 class	RZBuffer // a 16-bit signed z-buffer
-	{
+{
 public:
 	int16_t m_sW;
 	int16_t m_sH;
@@ -43,19 +43,19 @@ public:
 	//----------------------------------------------
 	void	Init();
 	RZBuffer();
-	RZBuffer(int16_t sW,int16_t sH);
-	int16_t Create(int16_t sW,int16_t sH);
+	RZBuffer(int16_t sW, int16_t sH);
+	int16_t Create(int16_t sW, int16_t sH);
 	~RZBuffer();
 	int16_t Destroy();
 	//----------------------------------------------
 	void Clear(int16_t sVal = ZB_MIN_Z);
 	//----------------------------------------------
 	// debugging stuff
-	int16_t* GetZPtr(int16_t sX,int16_t sY){return (m_pBuf + sX + m_lP*sY);}
-	void TestHeight(RImage* pimDst,int16_t sDepth,
-		int16_t sX,int16_t sY,int16_t sW,int16_t sH);
-	void Dump(RImage* pimDst,int16_t sX,int16_t sY,int16_t sW,int16_t sH,uint8_t* pZCol);
-	};
+	int16_t* GetZPtr(int16_t sX, int16_t sY) { return (m_pBuf + sX + m_lP * sY); }
+	void TestHeight(RImage* pimDst, int16_t sDepth,
+		int16_t sX, int16_t sY, int16_t sW, int16_t sH);
+	void Dump(RImage* pimDst, int16_t sX, int16_t sY, int16_t sW, int16_t sH, uint8_t* pZCol);
+};
 
 
 
@@ -63,6 +63,6 @@ public:
 //================================================== 
 //================================================== 
 //================================================== 
- 
+
 //================================================== 
 #endif
