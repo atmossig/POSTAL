@@ -1,368 +1,22 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Things">
-      <UniqueIdentifier>{abd90cd5-9a16-4402-bb56-cc14889119ce}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Non-Things">
-      <UniqueIdentifier>{4853be5d-16b0-402d-b713-22c497d16049}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Non-Things\Non-Thing Headers">
-      <UniqueIdentifier>{0a5cf1a4-cf7d-466a-98f9-51da134e52ed}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{206aa645-5ad9-43b8-b86d-3c73bba1e939}</UniqueIdentifier>
     </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="AnimThing.cpp">
-      <Filter>Things</Filter>
-    </ClCompile>
-    <ClCompile Include="ball.cpp">
-      <Filter>Things</Filter>
-    </ClCompile>
-    <ClCompile Include="barrel.cpp">
-      <Filter>Things</Filter>
-    </ClCompile>
-    <ClCompile Include="bouy.cpp">
-      <Filter>Things</Filter>
-    </ClCompile>
-    <ClCompile Include="character.cpp">
-      <Filter>Things</Filter>
-    </ClCompile>
-    <ClCompile Include="chunk.cpp">
-      <Filter>Things</Filter>
-    </ClCompile>
-    <ClCompile Include="deathWad.cpp">
-      <Filter>Things</Filter>
-    </ClCompile>
-    <ClCompile Include="demon.cpp">
-      <Filter>Things</Filter>
-    </ClCompile>
-    <ClCompile Include="dispenser.cpp">
-      <Filter>Things</Filter>
-    </ClCompile>
-    <ClCompile Include="doofus.cpp">
-      <Filter>Things</Filter>
-    </ClCompile>
-    <ClCompile Include="dude.cpp">
-      <Filter>Things</Filter>
-    </ClCompile>
-    <ClCompile Include="explode.cpp">
-      <Filter>Things</Filter>
-    </ClCompile>
-    <ClCompile Include="fire.cpp">
-      <Filter>Things</Filter>
-    </ClCompile>
-    <ClCompile Include="fireball.cpp">
-      <Filter>Things</Filter>
-    </ClCompile>
-    <ClCompile Include="firebomb.cpp">
-      <Filter>Things</Filter>
-    </ClCompile>
-    <ClCompile Include="flag.cpp">
-      <Filter>Things</Filter>
-    </ClCompile>
-    <ClCompile Include="flagbase.cpp">
-      <Filter>Things</Filter>
-    </ClCompile>
-    <ClCompile Include="grenade.cpp">
-      <Filter>Things</Filter>
-    </ClCompile>
-    <ClCompile Include="heatseeker.cpp">
-      <Filter>Things</Filter>
-    </ClCompile>
-    <ClCompile Include="hood.cpp">
-      <Filter>Things</Filter>
-    </ClCompile>
-    <ClCompile Include="item3d.cpp">
-      <Filter>Things</Filter>
-    </ClCompile>
-    <ClCompile Include="mine.cpp">
-      <Filter>Things</Filter>
-    </ClCompile>
-    <ClCompile Include="napalm.cpp">
-      <Filter>Things</Filter>
-    </ClCompile>
-    <ClCompile Include="navnet.cpp">
-      <Filter>Things</Filter>
-    </ClCompile>
-    <ClCompile Include="ostrich.cpp">
-      <Filter>Things</Filter>
-    </ClCompile>
-    <ClCompile Include="person.cpp">
-      <Filter>Things</Filter>
-    </ClCompile>
-    <ClCompile Include="PowerUp.cpp">
-      <Filter>Things</Filter>
-    </ClCompile>
-    <ClCompile Include="pylon.cpp">
-      <Filter>Things</Filter>
-    </ClCompile>
-    <ClCompile Include="rocket.cpp">
-      <Filter>Things</Filter>
-    </ClCompile>
-    <ClCompile Include="sentry.cpp">
-      <Filter>Things</Filter>
-    </ClCompile>
-    <ClCompile Include="SndRelay.cpp">
-      <Filter>Things</Filter>
-    </ClCompile>
-    <ClCompile Include="SoundThing.cpp">
-      <Filter>Things</Filter>
-    </ClCompile>
-    <ClCompile Include="thing.cpp">
-      <Filter>Things</Filter>
-    </ClCompile>
-    <ClCompile Include="Thing3d.cpp">
-      <Filter>Things</Filter>
-    </ClCompile>
-    <ClCompile Include="trigger.cpp">
-      <Filter>Things</Filter>
-    </ClCompile>
-    <ClCompile Include="warp.cpp">
-      <Filter>Things</Filter>
-    </ClCompile>
-    <ClCompile Include="weapon.cpp">
-      <Filter>Things</Filter>
-    </ClCompile>
-    <ClCompile Include="alphablitforpostal.cpp">
-      <Filter>Non-Things</Filter>
-    </ClCompile>
-    <ClCompile Include="Anim3D.cpp">
-      <Filter>Non-Things</Filter>
-    </ClCompile>
-    <ClCompile Include="BufQ.cpp">
-      <Filter>Non-Things</Filter>
-    </ClCompile>
-    <ClCompile Include="bulletFest.cpp">
-      <Filter>Non-Things</Filter>
-    </ClCompile>
-    <ClCompile Include="camera.cpp">
-      <Filter>Non-Things</Filter>
-    </ClCompile>
-    <ClCompile Include="crawler.cpp">
-      <Filter>Non-Things</Filter>
-    </ClCompile>
-    <ClCompile Include="cutscene.cpp">
-      <Filter>Non-Things</Filter>
-    </ClCompile>
-    <ClCompile Include="encrypt.cpp">
-      <Filter>Non-Things</Filter>
-    </ClCompile>
-    <ClCompile Include="gameedit.cpp">
-      <Filter>Non-Things</Filter>
-    </ClCompile>
-    <ClCompile Include="GameSettings.cpp">
-      <Filter>Non-Things</Filter>
-    </ClCompile>
-    <ClCompile Include="grip.cpp">
-      <Filter>Non-Things</Filter>
-    </ClCompile>
-    <ClCompile Include="IdBank.cpp">
-      <Filter>Non-Things</Filter>
-    </ClCompile>
-    <ClCompile Include="InputSettings.cpp">
-      <Filter>Non-Things</Filter>
-    </ClCompile>
-    <ClCompile Include="InputSettingsDlg.cpp">
-      <Filter>Non-Things</Filter>
-    </ClCompile>
-    <ClCompile Include="keys.cpp">
-      <Filter>Non-Things</Filter>
-    </ClCompile>
-    <ClCompile Include="Log.cpp">
-      <Filter>Non-Things</Filter>
-    </ClCompile>
-    <ClCompile Include="logtab.cpp">
-      <Filter>Non-Things</Filter>
-    </ClCompile>
-    <ClCompile Include="MemFileFest.cpp">
-      <Filter>Non-Things</Filter>
-    </ClCompile>
-    <ClCompile Include="MenuSettings.cpp">
-      <Filter>Non-Things</Filter>
-    </ClCompile>
-    <ClCompile Include="MenuTrans.cpp">
-      <Filter>Non-Things</Filter>
-    </ClCompile>
-    <ClCompile Include="net.cpp">
-      <Filter>Non-Things</Filter>
-    </ClCompile>
-    <ClCompile Include="NetBrowse.cpp">
-      <Filter>Non-Things</Filter>
-    </ClCompile>
-    <ClCompile Include="NetClient.cpp">
-      <Filter>Non-Things</Filter>
-    </ClCompile>
-    <ClCompile Include="NetDlg.cpp">
-      <Filter>Non-Things</Filter>
-    </ClCompile>
-    <ClCompile Include="netmsgr.cpp">
-      <Filter>Non-Things</Filter>
-    </ClCompile>
-    <ClCompile Include="NetServer.cpp">
-      <Filter>Non-Things</Filter>
-    </ClCompile>
-    <ClCompile Include="organ.cpp">
-      <Filter>Non-Things</Filter>
-    </ClCompile>
-    <ClCompile Include="Personatorium.cpp">
-      <Filter>Non-Things</Filter>
-    </ClCompile>
-    <ClCompile Include="ProtoBSDIP.cpp">
-      <Filter>Non-Things</Filter>
-    </ClCompile>
-    <ClCompile Include="realm.cpp">
-      <Filter>Non-Things</Filter>
-    </ClCompile>
-    <ClCompile Include="scene.cpp">
-      <Filter>Non-Things</Filter>
-    </ClCompile>
-    <ClCompile Include="score.cpp">
-      <Filter>Non-Things</Filter>
-    </ClCompile>
-    <ClCompile Include="settings.cpp">
-      <Filter>Non-Things</Filter>
-    </ClCompile>
-    <ClCompile Include="smash.cpp">
-      <Filter>Non-Things</Filter>
-    </ClCompile>
-    <ClCompile Include="socket.cpp">
-      <Filter>Non-Things</Filter>
-    </ClCompile>
-    <ClCompile Include="StockPile.cpp">
-      <Filter>Non-Things</Filter>
-    </ClCompile>
-    <ClCompile Include="TexEdit.cpp">
-      <Filter>Non-Things</Filter>
-    </ClCompile>
-    <ClCompile Include="toolbar.cpp">
-      <Filter>Non-Things</Filter>
-    </ClCompile>
-    <ClCompile Include="TriggerRegions.cpp">
-      <Filter>Non-Things</Filter>
-    </ClCompile>
-    <ClCompile Include="update.cpp">
-      <Filter>Non-Things</Filter>
-    </ClCompile>
-    <ClCompile Include="yatime.cpp">
-      <Filter>Non-Things</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="alpha.h">
-      <Filter>Non-Things\Non-Thing Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Average.h">
-      <Filter>Non-Things\Non-Thing Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="CapFlag_Gskirts.h">
-      <Filter>Non-Things\Non-Thing Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="collision.h">
-      <Filter>Non-Things\Non-Thing Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="CompileOptions.h">
-      <Filter>Non-Things\Non-Thing Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="CtrlBuf.h">
-      <Filter>Non-Things\Non-Thing Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Econsite.h">
-      <Filter>Non-Things\Non-Thing Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="encrypt.h">
-      <Filter>Non-Things\Non-Thing Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Gconsite.h">
-      <Filter>Non-Things\Non-Thing Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Goal_Gskirts.h">
-      <Filter>Non-Things\Non-Thing Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Hconsite.h">
-      <Filter>Non-Things\Non-Thing Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Hskirts.h">
-      <Filter>Non-Things\Non-Thing Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="InputSettingsDlg.h">
-      <Filter>Non-Things\Non-Thing Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Log.h">
-      <Filter>Non-Things\Non-Thing Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="MacVideo.h">
-      <Filter>Non-Things\Non-Thing Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Mconsite.h">
-      <Filter>Non-Things\Non-Thing Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="MemFileFest.h">
-      <Filter>Non-Things\Non-Thing Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="MPathStuff.h">
-      <Filter>Non-Things\Non-Thing Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Mpskirts.h">
-      <Filter>Non-Things\Non-Thing Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Mskirts.h">
-      <Filter>Non-Things\Non-Thing Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="netbrowse.h">
-      <Filter>Non-Things\Non-Thing Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="netclient.h">
-      <Filter>Non-Things\Non-Thing Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="NetInput.h">
-      <Filter>Non-Things\Non-Thing Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="netserver.h">
-      <Filter>Non-Things\Non-Thing Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="organ.h">
-      <Filter>Non-Things\Non-Thing Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Pconsite.h">
-      <Filter>Non-Things\Non-Thing Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="PostalAttrib.h">
-      <Filter>Non-Things\Non-Thing Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="ProtoBSDIP.h">
-      <Filter>Non-Things\Non-Thing Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="ProtoIPX.h">
-      <Filter>Non-Things\Non-Thing Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="ProtoTAPI.h">
-      <Filter>Non-Things\Non-Thing Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="sprites.h">
-      <Filter>Non-Things\Non-Thing Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="TexEdit.h">
-      <Filter>Non-Things\Non-Thing Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="title.h">
-      <Filter>Non-Things\Non-Thing Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="toolbar.h">
-      <Filter>Non-Things\Non-Thing Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="WinVideo.h">
-      <Filter>Non-Things\Non-Thing Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="yatime.h">
-      <Filter>Non-Things\Non-Thing Headers</Filter>
-    </ClInclude>
+    <Filter Include="Src">
+      <UniqueIdentifier>{231acf55-0e92-455f-aaca-66282dcc00a4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\cursor1.cur">
       <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Postal\Common\ladder.cpp">
+      <Filter>Src</Filter>
+    </None>
+    <None Include="Postal\Common\ladder.h">
+      <Filter>Src</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -393,5 +47,606 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="res\Postal.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Postal\Common\alpha.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\AlphaAnimType.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\alphablitforpostal.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\Anim3D.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\AnimThing.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\Average.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\ball.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\barrel.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\bouy.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\BufQ.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\bulletFest.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\camera.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\CapFlag_Gskirts.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\character.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\chunk.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\collision.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\CompileOptions.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\crawler.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\CtrlBuf.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\cutscene.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\deathWad.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\demon.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\dispenser.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\doofus.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\dude.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\Econsite.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\encrypt.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\Eskirts.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\explode.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\fire.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\fireball.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\firebomb.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\flag.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\flagbase.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\forceinclude.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\gameedit.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\GameSettings.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\Gconsite.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\Goal_Gskirts.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\goaltimer.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\grenade.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\grip.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\Hconsite.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\heatseeker.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\hood.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\Hskirts.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\IdBank.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\InputSettings.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\InputSettingsDlg.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\item3d.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\keys.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\Log.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\logtab.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\Mconsite.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\MemFileFest.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\MenuSettings.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\MenuTrans.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\message.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\mine.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\Mpskirts.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\Mskirts.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\napalm.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\navnet.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\net.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\netbrowse.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\netclient.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\NetDlg.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\NetInput.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\netmsgr.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\netserver.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\organ.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\ostrich.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\Pconsite.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\person.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\personatorium.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\PostalAttrib.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\PostalPrefix.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\PostalPrefixD.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\PostalPrefixFrench.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\PostalPrefixFrenchD.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\PostalPrefixGerman.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\PostalPrefixGermanD.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\PostalPrefixUK.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\PostalPrefixUKD.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\PostalPrefixUS.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\PostalPrefixUSD.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\PowerUp.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\ProtoBSDIP.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\pylon.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\reality.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\realm.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\rocket.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\RSPiXPrefix.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\RSPiXPrefixD.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\scene.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\score.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\sentry.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\settings.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\smash.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\SndRelay.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\socket.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\SoundThing.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\sprites.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\StockPile.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\TexEdit.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\thing.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\Thing3d.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\toolbar.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\trigger.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\TriggerRegions.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\TriggerRgn.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\update.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\w_dirent.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\warp.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\weapon.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Postal\Common\yatime.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Postal\Common\saktool.c">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\alpha.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\alphablitforpostal.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\Anim3D.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\AnimThing.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\ball.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\barrel.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\bouy.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\BufQ.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\bulletFest.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\camera.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\character.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\chunk.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\crawler.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\cutscene.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\deathWad.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\demon.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\dispenser.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\doofus.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\dude.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\encrypt.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\explode.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\fire.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\fireball.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\firebomb.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\flag.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\flagbase.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\gameedit.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\GameSettings.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\goaltimer.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\grenade.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\grip.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\heatseeker.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\hood.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\IdBank.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\InputSettings.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\InputSettingsDlg.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\item3d.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\keys.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\Log.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\logtab.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\malphagen.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\MemFileFest.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\MenuSettings.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\MenuTrans.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\mine.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\napalm.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\navnet.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\net.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\NetBrowse.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\NetClient.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\NetDlg.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\netmsgr.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\NetServer.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\organ.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\ostrich.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\person.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\Personatorium.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\PowerUp.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\ProtoBSDIP.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\pylon.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\realm.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\rocket.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\RSPiX.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\scene.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\score.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\sentry.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\settings.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\smash.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\SndRelay.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\socket.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\SoundThing.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\StockPile.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\TexEdit.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\thing.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\Thing3d.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\toolbar.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\trigger.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\TriggerRegions.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\update.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\warp.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\weapon.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Postal\Common\yatime.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

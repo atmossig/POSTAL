@@ -121,15 +121,15 @@
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>.\SDL2\include;.\RSPiX\Src;.\RSPiX\Src\Blue;.\RSPiX\Inc;.\steamworks\sdk\public;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\SDL2\include;.\RSPiX\Src;.\RSPiX\Src\Blue;.\RSPiX\Inc;.\steamworks\sdk\public;.;%(AdditionalIncludeDirectories);.\Postal;.\Postal\Common</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>TRACENASSERT;_DEBUG;NOSHMALLOC;TRACENASSERT;WIN32;_WINDOWS;LOCALE=US;TARGET=POSTAL_2015;WITH_STEAMWORKS=0;ALLOW_TWINSTICK;DEBUG_LEVEL_CHEAT;RSP_DEBUG_OUT_FILE;RSP_TRACE_LOG_NAME="Postal.log";%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <PrecompiledHeader />
       <PrecompiledHeaderFile>RSPiX.H</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>.\Build\Postal Plus\Debug/Postal Plus.pch</PrecompiledHeaderOutputFile>
-      <AssemblerListingLocation>.\Build\Postal Plus\Debug/</AssemblerListingLocation>
-      <ObjectFileName>.\Build\Postal Plus\Debug/</ObjectFileName>
-      <ProgramDataBaseFileName>.\Build\Postal Plus\Debug/</ProgramDataBaseFileName>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ProgramDataBaseFileName>$(OutDir)</ProgramDataBaseFileName>
       <BrowseInformation>true</BrowseInformation>
       <WarningLevel>Level3</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
@@ -166,16 +166,16 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>.\SDL2\include;.\RSPiX\Src;.\RSPiX\Src\Blue;.\RSPiX\Inc;.\steamworks\sdk\public;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\SDL2\include;.\RSPiX\Src;.\RSPiX\Src\Blue;.\RSPiX\Inc;.\steamworks\sdk\public;.;%(AdditionalIncludeDirectories);.\Postal;.\Postal\Common</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>NDEBUG;WIN32;_WINDOWS;LOCALE=US;TARGET=POSTAL_2015;WITH_STEAMWORKS=0;ALLOW_TWINSTICK;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <PrecompiledHeader />
       <PrecompiledHeaderOutputFile>.\Build\Postal Plus\Release/Postal Plus.pch</PrecompiledHeaderOutputFile>
-      <AssemblerListingLocation>.\Build\Postal Plus\Release/</AssemblerListingLocation>
-      <ObjectFileName>.\Build\Postal Plus\Release/</ObjectFileName>
-      <ProgramDataBaseFileName>.\Build\Postal Plus\Release/</ProgramDataBaseFileName>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ProgramDataBaseFileName>$(OutDir)</ProgramDataBaseFileName>
       <WarningLevel>Level3</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <CompileAs>Default</CompileAs>
@@ -210,7 +210,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>.\SDL2\include;.\RSPiX\Src;.\RSPiX\Src\Blue;.\RSPiX\Inc;.\steamworks\sdk\public;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\SDL2\include;.\RSPiX\Src;.\RSPiX\Src\Blue;.\RSPiX\Inc;.\steamworks\sdk\public;.;%(AdditionalIncludeDirectories);.\Postal;.\Postal\Common</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>NDEBUG;WIN32;_WINDOWS;LOCALE=US;TARGET=POSTAL_2015;WITH_STEAMWORKS=1;ALLOW_TWINSTICK;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
@@ -218,9 +218,9 @@
       <PrecompiledHeader>
       </PrecompiledHeader>
       <PrecompiledHeaderOutputFile>.\Build\Postal Plus\Release/Postal Plus.pch</PrecompiledHeaderOutputFile>
-      <AssemblerListingLocation>.\Build\Postal Plus\Release/</AssemblerListingLocation>
-      <ObjectFileName>.\Build\Postal Plus\Release/</ObjectFileName>
-      <ProgramDataBaseFileName>.\Build\Postal Plus\Release/</ProgramDataBaseFileName>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ProgramDataBaseFileName>$(OutDir)</ProgramDataBaseFileName>
       <WarningLevel>Level3</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <CompileAs>Default</CompileAs>
@@ -255,7 +255,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>.\SDL2\include;.\RSPiX\Src;.\RSPiX\Src\Blue;.\RSPiX\Inc;.\steamworks\sdk\public;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\SDL2\include;.\RSPiX\Src;.\RSPiX\Src\Blue;.\RSPiX\Inc;.\steamworks\sdk\public;.;%(AdditionalIncludeDirectories);.\Postal;.\Postal\Common</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>NDEBUG;WIN32;_WINDOWS;LOCALE=US;TARGET=POSTAL_PLUS;WITH_STEAMWORKS=0;ALLOW_TWINSTICK;TRACENASSERT;RSP_DEBUG_OUT_FILE;RSP_TRACE_LOG_NAME="Postal Plus.log";%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
@@ -263,9 +263,9 @@
       <PrecompiledHeader>
       </PrecompiledHeader>
       <PrecompiledHeaderOutputFile>.\Build\Postal Plus\Release/Postal Plus.pch</PrecompiledHeaderOutputFile>
-      <AssemblerListingLocation>.\Build\Postal Plus\Release/</AssemblerListingLocation>
-      <ObjectFileName>.\Build\Postal Plus\Release/</ObjectFileName>
-      <ProgramDataBaseFileName>.\Build\Postal Plus\Release/</ProgramDataBaseFileName>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ProgramDataBaseFileName>$(OutDir)</ProgramDataBaseFileName>
       <WarningLevel>Level3</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <CompileAs>Default</CompileAs>
@@ -299,7 +299,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>.\RSPiX\c\Win32\SmartHeap\Include;.\RSPiX\Src;.\RSPiX\Src\Blue;.\RSPiX\Inc;.\RSPiX\c\Win32\HeapAgent\Include;.\steamworks\sdk\public;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\RSPiX\c\Win32\SmartHeap\Include;.\RSPiX\Src;.\RSPiX\Src\Blue;.\RSPiX\Inc;.\RSPiX\c\Win32\HeapAgent\Include;.\steamworks\sdk\public;.;%(AdditionalIncludeDirectories);.\Postal;.\Postal\Common</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>NDEBUG;TRACENASSERT;WIN32;_WINDOWS;LOCALE=US;TARGET=POSTAL_PLUS;WITH_STEAMWORKS=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
@@ -307,9 +307,9 @@
       <PrecompiledHeader />
       <PrecompiledHeaderFile>RSPiX.H</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>.\Build\Postal Plus\Optimized Debug/Postal Plus.pch</PrecompiledHeaderOutputFile>
-      <AssemblerListingLocation>.\Build\Postal Plus\Optimized Debug/</AssemblerListingLocation>
-      <ObjectFileName>.\Build\Postal Plus\Optimized Debug/</ObjectFileName>
-      <ProgramDataBaseFileName>.\Build\Postal Plus\Optimized Debug/</ProgramDataBaseFileName>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ProgramDataBaseFileName>$(OutDir)</ProgramDataBaseFileName>
       <WarningLevel>Level3</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
