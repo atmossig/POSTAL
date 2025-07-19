@@ -1,6 +1,7 @@
 syntax:glob
 bin
 Build
+Intermediate
 *.plg
 *.ncb
 *.suo
