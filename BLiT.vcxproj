@@ -82,23 +82,28 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)Build\</OutDir>
-    <IntDir>$(SolutionDir)Intermediate\</IntDir>
+    <IntDir>$(SolutionDir)Intermediate\$(ProjectName)_$(PlatformToolset)\$(Platform)_$(Configuration)\</IntDir>
+    <TargetName>$(ProjectName)_$(Platform)_$(Configuration)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseSteamworks|Win32'">
     <OutDir>$(SolutionDir)Build\</OutDir>
-    <IntDir>$(SolutionDir)Intermediate\</IntDir>
+    <IntDir>$(SolutionDir)Intermediate\$(ProjectName)_$(PlatformToolset)\$(Platform)_$(Configuration)\</IntDir>
+    <TargetName>$(ProjectName)_$(Platform)_$(Configuration)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDebugLog|Win32'">
     <OutDir>$(SolutionDir)Build\</OutDir>
-    <IntDir>$(SolutionDir)Intermediate\</IntDir>
+    <IntDir>$(SolutionDir)Intermediate\$(ProjectName)_$(PlatformToolset)\$(Platform)_$(Configuration)\</IntDir>
+    <TargetName>$(ProjectName)_$(Platform)_$(Configuration)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>$(SolutionDir)Build\</OutDir>
-    <IntDir>$(SolutionDir)Intermediate\</IntDir>
+    <IntDir>$(SolutionDir)Intermediate\$(ProjectName)_$(PlatformToolset)\$(Platform)_$(Configuration)\</IntDir>
+    <TargetName>$(ProjectName)_$(Platform)_$(Configuration)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugOptimized|Win32'">
     <OutDir>$(SolutionDir)Build\</OutDir>
-    <IntDir>$(SolutionDir)Intermediate\</IntDir>
+    <IntDir>$(SolutionDir)Intermediate\$(ProjectName)_$(PlatformToolset)\$(Platform)_$(Configuration)\</IntDir>
+    <TargetName>$(ProjectName)_$(Platform)_$(Configuration)</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -111,20 +116,22 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <PrecompiledHeader />
       <PrecompiledHeaderOutputFile>.\Build\BLiT\Release/BLiT.pch</PrecompiledHeaderOutputFile>
-      <AssemblerListingLocation>.\Build\BLiT\Release/</AssemblerListingLocation>
-      <ObjectFileName>.\Build\BLiT\Release/</ObjectFileName>
-      <ProgramDataBaseFileName>.\Build\BLiT\Release/</ProgramDataBaseFileName>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ProgramDataBaseFileName>$(OutDir)$(ProjectName)_$(Platform)_$(Configuration)</ProgramDataBaseFileName>
       <WarningLevel>Level3</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <CompileAs>Default</CompileAs>
       <ForcedIncludeFiles>$(SolutionDir)forceinclude.h;</ForcedIncludeFiles>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <GenerateXMLDocumentationFiles>false</GenerateXMLDocumentationFiles>
+      <XMLDocumentationFileName>$(IntDir)</XMLDocumentationFileName>
     </ClCompile>
     <ResourceCompile>
       <Culture>0x0409</Culture>
     </ResourceCompile>
     <Lib>
-      <OutputFile>.\Build\BLiT\Release\BLiT.lib</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
     </Lib>
   </ItemDefinitionGroup>
@@ -140,20 +147,22 @@
       <PrecompiledHeader>
       </PrecompiledHeader>
       <PrecompiledHeaderOutputFile>.\Build\BLiT\Release/BLiT.pch</PrecompiledHeaderOutputFile>
-      <AssemblerListingLocation>.\Build\BLiT\Release/</AssemblerListingLocation>
-      <ObjectFileName>.\Build\BLiT\Release/</ObjectFileName>
-      <ProgramDataBaseFileName>.\Build\BLiT\Release/</ProgramDataBaseFileName>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ProgramDataBaseFileName>$(OutDir)$(ProjectName)_$(Platform)_$(Configuration)</ProgramDataBaseFileName>
       <WarningLevel>Level3</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <CompileAs>Default</CompileAs>
       <ForcedIncludeFiles>$(SolutionDir)forceinclude.h;</ForcedIncludeFiles>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <GenerateXMLDocumentationFiles>false</GenerateXMLDocumentationFiles>
+      <XMLDocumentationFileName>$(IntDir)</XMLDocumentationFileName>
     </ClCompile>
     <ResourceCompile>
       <Culture>0x0409</Culture>
     </ResourceCompile>
     <Lib>
-      <OutputFile>.\Build\BLiT\Release\BLiT.lib</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
     </Lib>
   </ItemDefinitionGroup>
@@ -169,20 +178,22 @@
       <PrecompiledHeader>
       </PrecompiledHeader>
       <PrecompiledHeaderOutputFile>.\Build\BLiT\Release/BLiT.pch</PrecompiledHeaderOutputFile>
-      <AssemblerListingLocation>.\Build\BLiT\Release/</AssemblerListingLocation>
-      <ObjectFileName>.\Build\BLiT\Release/</ObjectFileName>
-      <ProgramDataBaseFileName>.\Build\BLiT\Release/</ProgramDataBaseFileName>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ProgramDataBaseFileName>$(OutDir)$(ProjectName)_$(Platform)_$(Configuration)</ProgramDataBaseFileName>
       <WarningLevel>Level3</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <CompileAs>Default</CompileAs>
       <ForcedIncludeFiles>$(SolutionDir)forceinclude.h;</ForcedIncludeFiles>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <GenerateXMLDocumentationFiles>false</GenerateXMLDocumentationFiles>
+      <XMLDocumentationFileName>$(IntDir)</XMLDocumentationFileName>
     </ClCompile>
     <ResourceCompile>
       <Culture>0x0409</Culture>
     </ResourceCompile>
     <Lib>
-      <OutputFile>.\Build\BLiT\Release\BLiT.lib</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
     </Lib>
   </ItemDefinitionGroup>
@@ -192,23 +203,27 @@
       <AdditionalIncludeDirectories>.\SDL2\include;.\RSPiX\Src;.\RSPiX\Src\Blue;.\RSPiX\Inc;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_DEBUG;WIN32;_WINDOWS;NOSHMALLOC;WITH_STEAMWORKS=0;RSP_DEBUG_OUT_FILE;RSP_TRACE_LOG_NAME="Postal Plus.log";%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <PrecompiledHeader />
-      <PrecompiledHeaderOutputFile>.\Build\BLiT\Debug/BLiT.pch</PrecompiledHeaderOutputFile>
-      <AssemblerListingLocation>.\Build\BLiT\Debug/</AssemblerListingLocation>
-      <ObjectFileName>.\Build\BLiT\Debug/</ObjectFileName>
-      <ProgramDataBaseFileName>.\Build\BLiT\Debug/</ProgramDataBaseFileName>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderOutputFile>
+      </PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ProgramDataBaseFileName>$(OutDir)$(ProjectName)_$(Platform)_$(Configuration)</ProgramDataBaseFileName>
       <WarningLevel>Level3</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <CompileAs>Default</CompileAs>
       <ForcedIncludeFiles>$(SolutionDir)forceinclude.h;$(SolutionDir)forceinclude.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <GenerateXMLDocumentationFiles>false</GenerateXMLDocumentationFiles>
+      <XMLDocumentationFileName>$(IntDir)</XMLDocumentationFileName>
+      <PrecompiledHeaderFile />
     </ClCompile>
     <ResourceCompile>
       <Culture>0x0409</Culture>
     </ResourceCompile>
     <Lib>
-      <OutputFile>.\Build\BLiT\Debug\BLiT.lib</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
     </Lib>
   </ItemDefinitionGroup>
@@ -223,9 +238,9 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <PrecompiledHeader />
       <PrecompiledHeaderOutputFile>.\Build\BLiT\Optimized Debug/BLiT.pch</PrecompiledHeaderOutputFile>
-      <AssemblerListingLocation>.\Build\BLiT\Optimized Debug/</AssemblerListingLocation>
-      <ObjectFileName>.\Build\BLiT\Optimized Debug/</ObjectFileName>
-      <ProgramDataBaseFileName>.\Build\BLiT\Optimized Debug/</ProgramDataBaseFileName>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ProgramDataBaseFileName>$(OutDir)$(ProjectName)_$(Platform)_$(Configuration)</ProgramDataBaseFileName>
       <BrowseInformation>true</BrowseInformation>
       <WarningLevel>Level3</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
@@ -233,12 +248,14 @@
       <CompileAs>Default</CompileAs>
       <ForcedIncludeFiles>$(SolutionDir)forceinclude.h;</ForcedIncludeFiles>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <GenerateXMLDocumentationFiles>false</GenerateXMLDocumentationFiles>
+      <XMLDocumentationFileName>$(IntDir)</XMLDocumentationFileName>
     </ClCompile>
     <ResourceCompile>
       <Culture>0x0409</Culture>
     </ResourceCompile>
     <Lib>
-      <OutputFile>.\Build\BLiT\Optimized Debug\BLiT.lib</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
     </Lib>
   </ItemDefinitionGroup>

@@ -82,23 +82,28 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugOptimized|Win32'">
     <OutDir>$(SolutionDir)Build\</OutDir>
-    <IntDir>$(SolutionDir)Intermediate\</IntDir>
+    <IntDir>$(SolutionDir)Intermediate\$(ProjectName)_$(PlatformToolset)\$(Platform)_$(Configuration)\</IntDir>
+    <TargetName>$(ProjectName)_$(Platform)_$(Configuration)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>$(SolutionDir)Build\</OutDir>
-    <IntDir>$(SolutionDir)Intermediate\</IntDir>
+    <IntDir>$(SolutionDir)Intermediate\$(ProjectName)_$(PlatformToolset)\$(Platform)_$(Configuration)\</IntDir>
+    <TargetName>$(ProjectName)_$(Platform)_$(Configuration)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)Build\</OutDir>
-    <IntDir>$(SolutionDir)Intermediate\</IntDir>
+    <IntDir>$(SolutionDir)Intermediate\$(ProjectName)_$(PlatformToolset)\$(Platform)_$(Configuration)\</IntDir>
+    <TargetName>$(ProjectName)_$(Platform)_$(Configuration)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseSteamworks|Win32'">
     <OutDir>$(SolutionDir)Build\</OutDir>
-    <IntDir>$(SolutionDir)Intermediate\</IntDir>
+    <IntDir>$(SolutionDir)Intermediate\$(ProjectName)_$(PlatformToolset)\$(Platform)_$(Configuration)\</IntDir>
+    <TargetName>$(ProjectName)_$(Platform)_$(Configuration)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDebugLog|Win32'">
     <OutDir>$(SolutionDir)Build\</OutDir>
-    <IntDir>$(SolutionDir)Intermediate\</IntDir>
+    <IntDir>$(SolutionDir)Intermediate\$(ProjectName)_$(PlatformToolset)\$(Platform)_$(Configuration)\</IntDir>
+    <TargetName>$(ProjectName)_$(Platform)_$(Configuration)</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugOptimized|Win32'">
     <ClCompile>
@@ -111,9 +116,9 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <PrecompiledHeader />
       <PrecompiledHeaderOutputFile>.\Build\Orange\Optimized Debug/Orange.pch</PrecompiledHeaderOutputFile>
-      <AssemblerListingLocation>.\Build\Orange\Optimized Debug/</AssemblerListingLocation>
-      <ObjectFileName>.\Build\Orange\Optimized Debug/</ObjectFileName>
-      <ProgramDataBaseFileName>.\Build\Orange\Optimized Debug/</ProgramDataBaseFileName>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ProgramDataBaseFileName>$(OutDir)$(ProjectName)_$(Platform)_$(Configuration)</ProgramDataBaseFileName>
       <WarningLevel>Level3</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -125,7 +130,7 @@
       <Culture>0x0409</Culture>
     </ResourceCompile>
     <Lib>
-      <OutputFile>.\Build\Orange\Optimized Debug\Orange.lib</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
     </Lib>
   </ItemDefinitionGroup>
@@ -135,23 +140,25 @@
       <AdditionalIncludeDirectories>.\SDL2\include;.\RSPiX\Src;.\RSPiX\Src\Blue;.\RSPiX\Inc;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_DEBUG;WIN32;_WINDOWS;NOSHMALLOC;WITH_STEAMWORKS=0;RSP_DEBUG_OUT_FILE;RSP_TRACE_LOG_NAME="Postal Plus.log";%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <PrecompiledHeader />
-      <PrecompiledHeaderOutputFile>.\Build\Orange\Debug/Orange.pch</PrecompiledHeaderOutputFile>
-      <AssemblerListingLocation>.\Build\Orange\Debug/</AssemblerListingLocation>
-      <ObjectFileName>.\Build\Orange\Debug/</ObjectFileName>
-      <ProgramDataBaseFileName>.\Build\Orange\Debug/</ProgramDataBaseFileName>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderOutputFile>
+      </PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ProgramDataBaseFileName>$(OutDir)$(ProjectName)_$(Platform)_$(Configuration)</ProgramDataBaseFileName>
       <WarningLevel>Level3</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <CompileAs>Default</CompileAs>
       <ForcedIncludeFiles>$(SolutionDir)forceinclude.h;$(SolutionDir)forceinclude.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <PrecompiledHeaderFile />
     </ClCompile>
     <ResourceCompile>
       <Culture>0x0409</Culture>
     </ResourceCompile>
     <Lib>
-      <OutputFile>.\Build\Orange\Debug\Orange.lib</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
     </Lib>
   </ItemDefinitionGroup>
@@ -166,9 +173,9 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <PrecompiledHeader />
       <PrecompiledHeaderOutputFile>.\Build\Orange\Release/Orange.pch</PrecompiledHeaderOutputFile>
-      <AssemblerListingLocation>.\Build\Orange\Release/</AssemblerListingLocation>
-      <ObjectFileName>.\Build\Orange\Release/</ObjectFileName>
-      <ProgramDataBaseFileName>.\Build\Orange\Release/</ProgramDataBaseFileName>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ProgramDataBaseFileName>$(OutDir)$(ProjectName)_$(Platform)_$(Configuration)</ProgramDataBaseFileName>
       <WarningLevel>Level3</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <CompileAs>Default</CompileAs>
@@ -179,7 +186,7 @@
       <Culture>0x0409</Culture>
     </ResourceCompile>
     <Lib>
-      <OutputFile>.\Build\Orange\Release\Orange.lib</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
     </Lib>
   </ItemDefinitionGroup>
@@ -195,9 +202,9 @@
       <PrecompiledHeader>
       </PrecompiledHeader>
       <PrecompiledHeaderOutputFile>.\Build\Orange\Release/Orange.pch</PrecompiledHeaderOutputFile>
-      <AssemblerListingLocation>.\Build\Orange\Release/</AssemblerListingLocation>
-      <ObjectFileName>.\Build\Orange\Release/</ObjectFileName>
-      <ProgramDataBaseFileName>.\Build\Orange\Release/</ProgramDataBaseFileName>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ProgramDataBaseFileName>$(OutDir)$(ProjectName)_$(Platform)_$(Configuration)</ProgramDataBaseFileName>
       <WarningLevel>Level3</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <CompileAs>Default</CompileAs>
@@ -208,7 +215,7 @@
       <Culture>0x0409</Culture>
     </ResourceCompile>
     <Lib>
-      <OutputFile>.\Build\Orange\Release\Orange.lib</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
     </Lib>
   </ItemDefinitionGroup>
@@ -224,9 +231,9 @@
       <PrecompiledHeader>
       </PrecompiledHeader>
       <PrecompiledHeaderOutputFile>.\Build\Orange\Release/Orange.pch</PrecompiledHeaderOutputFile>
-      <AssemblerListingLocation>.\Build\Orange\Release/</AssemblerListingLocation>
-      <ObjectFileName>.\Build\Orange\Release/</ObjectFileName>
-      <ProgramDataBaseFileName>.\Build\Orange\Release/</ProgramDataBaseFileName>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ProgramDataBaseFileName>$(OutDir)$(ProjectName)_$(Platform)_$(Configuration)</ProgramDataBaseFileName>
       <WarningLevel>Level3</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <CompileAs>Default</CompileAs>
@@ -237,7 +244,7 @@
       <Culture>0x0409</Culture>
     </ResourceCompile>
     <Lib>
-      <OutputFile>.\Build\Orange\Release\Orange.lib</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
     </Lib>
   </ItemDefinitionGroup>
