@@ -253,6 +253,10 @@
     <ClCompile Include="RSPiX\Src\Cyan\Unix\uDialog.cpp" />
     <ClCompile Include="RSPiX\Src\Cyan\Unix\uPath.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="RSPiX\Src\CYAN\cyan.h" />
+    <ClInclude Include="RSPiX\Src\CYAN\Unix\UnixCyan.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

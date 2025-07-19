@@ -1,69 +1,24 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{8230ce26-0089-4b77-81cf-3a45a6003f5c}</UniqueIdentifier>
-      <Extensions>cpp;c;cxx;rc;def;r;odl;hpj;bat;for;f90</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{cfea3f85-0d13-41a6-aa81-37685953689e}</UniqueIdentifier>
-      <Extensions>h;hpp;hxx;hm;inl;fi;fd</Extensions>
-    </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{75f1b6f9-69c8-4bf7-a667-39badb5d5f1c}</UniqueIdentifier>
-      <Extensions>ico;cur;bmp;dlg;rc2;rct;bin;cnt;rtf;gif;jpg;jpeg;jpe</Extensions>
-    </Filter>
+    <ClCompile Include="RSPiX\Src\GREEN\BLiT\ScaleFlat.cpp" />
+    <ClCompile Include="RSPiX\Src\GREEN\BLiT\alphablit.cpp" />
+    <ClCompile Include="RSPiX\Src\GREEN\BLiT\BLIT.CPP" />
+    <ClCompile Include="RSPiX\Src\GREEN\BLiT\BLITINIT.CPP" />
+    <ClCompile Include="RSPiX\Src\GREEN\BLiT\BLiTT.cpp" />
+    <ClCompile Include="RSPiX\Src\GREEN\BLiT\CFNT.cpp" />
+    <ClCompile Include="RSPiX\Src\GREEN\BLiT\Fspr1.cpp" />
+    <ClCompile Include="RSPiX\Src\GREEN\BLiT\FSPR8.cpp" />
+    <ClCompile Include="RSPiX\Src\GREEN\BLiT\line.cpp" />
+    <ClCompile Include="RSPiX\Src\GREEN\BLiT\mono.cpp" />
+    <ClCompile Include="RSPiX\Src\GREEN\BLiT\Rotate96.cpp" />
+    <ClCompile Include="RSPiX\Src\GREEN\BLiT\RPrint.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="RSPiX\Src\GREEN\BLiT\alphablit.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="RSPiX\Src\GREEN\BLiT\BLIT.CPP">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="RSPiX\Src\GREEN\BLiT\BLITINIT.CPP">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="RSPiX\Src\GREEN\BLiT\BLiTT.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="RSPiX\Src\GREEN\BLiT\CFNT.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="RSPiX\Src\GREEN\BLiT\Fspr1.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="RSPiX\Src\GREEN\BLiT\FSPR8.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="RSPiX\Src\GREEN\BLiT\line.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="RSPiX\Src\GREEN\BLiT\mono.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="RSPiX\Src\GREEN\BLiT\Rotate96.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="RSPiX\Src\GREEN\BLiT\RPrint.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="RSPiX\Src\GREEN\BLiT\ScaleFlat.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="RSPiX\Src\green\blit\alphablit.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="RSPiX\Src\GREEN\BLIT\BLiT.H">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="RSPiX\Src\green\blit\cfnt.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="RSPiX\Src\green\blit\rprint.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
+    <ClInclude Include="RSPiX\Src\green\blit\alphablit.h" />
+    <ClInclude Include="RSPiX\Src\GREEN\BLIT\BLiT.H" />
+    <ClInclude Include="RSPiX\Src\green\blit\Cfnt.h" />
+    <ClInclude Include="RSPiX\Src\green\blit\RPrint.h" />
+    <ClInclude Include="RSPiX\Src\GREEN\BLiT\_BlitInt.H" />
   </ItemGroup>
 </Project>
