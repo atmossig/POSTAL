@@ -134,6 +134,7 @@
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <CompileAs>Default</CompileAs>
       <ForcedIncludeFiles>$(SolutionDir)forceinclude.h;$(SolutionDir)forceinclude.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>_DEBUG;POSTAL_PLUS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -177,6 +178,7 @@
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <CompileAs>Default</CompileAs>
       <ForcedIncludeFiles>$(SolutionDir)forceinclude.h;</ForcedIncludeFiles>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>NDEBUG;POSTAL_PLUS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -221,6 +223,7 @@
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <CompileAs>Default</CompileAs>
       <ForcedIncludeFiles>$(SolutionDir)forceinclude.h;</ForcedIncludeFiles>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>NDEBUG;POSTAL_PLUS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -265,6 +268,7 @@
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <CompileAs>Default</CompileAs>
       <ForcedIncludeFiles>$(SolutionDir)forceinclude.h;</ForcedIncludeFiles>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>NDEBUG;POSTAL_PLUS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -309,6 +313,7 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <CompileAs>Default</CompileAs>
       <ForcedIncludeFiles>$(SolutionDir)forceinclude.h;</ForcedIncludeFiles>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>NDEBUG;POSTAL_PLUS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
