@@ -119,9 +119,9 @@
 #define MAIN_CPP
 
 #ifdef WIN32
-    #include <direct.h>
+#include <direct.h>
 #else
-    #include <sys/time.h>
+#include <sys/time.h>
 #endif
 
 #include "RSPiX.h"
@@ -179,8 +179,8 @@ static int16_t SetupVideo(					// Returns 0 on success.
 	int16_t	sUseCurrentDeviceDimensions,	// In:  1 to use current video area.
 	int16_t	sDeviceWidth,						// In:  Desired video hardware width.
 	int16_t	sDeviceHeight)						// In:  Desired video hardware height.
-	{
-	int16_t	sResult	= 0;
+{
+	int16_t	sResult = 0;
 
 #ifdef MOBILE
 	wideScreenWidth = 850;
@@ -215,7 +215,7 @@ static int16_t SetupVideo(					// Returns 0 on success.
 		MAIN_SCREEN_PAGES,
 		MAIN_SCREEN_SCALING);
 	if (sResult != 0)
-		{
+	{
 
 		// Create description of video mode for error messages
 		char acVideoMode[100];
@@ -248,7 +248,7 @@ static int16_t SetupVideo(					// Returns 0 on success.
 			&sDeviceHeight,
 			NULL);
 		if (sResult == 0)
-			{
+		{
 
 			// Try to set suggested mode
 			sResult = rspSetVideoMode(
@@ -260,30 +260,30 @@ static int16_t SetupVideo(					// Returns 0 on success.
 				MAIN_SCREEN_PAGES,
 				MAIN_SCREEN_SCALING);
 			if (sResult != 0)
-				{
+			{
 
 				// If current depth is different from required depth, then that is most likely the
 				// reason for the failure.
 				if (sCurrentDeviceDepth != MAIN_SCREEN_DEPTH)
-					{
+				{
 					rspMsgBox(RSP_MB_ICN_STOP | RSP_MB_BUT_OK,
 						g_pszCriticalErrorTitle,
 						g_pszVideoChangeDepthError,
 						acVideoMode);
 					TRACE("SetupVideo(): Error returned by rspSetVideoMode() -- most likely due to attempted change in depth!\n");
-					}
+				}
 				else
-					{
+				{
 					TRACE("SetupVideo(): Error returned by rspSetVideoMode()!\n");
 					rspMsgBox(RSP_MB_ICN_STOP | RSP_MB_BUT_OK,
 						g_pszCriticalErrorTitle,
 						g_pszVideoModeError,
 						acVideoMode);
-					}
 				}
 			}
+		}
 		else
-			{
+		{
 
 			// Since rspSuggestVideoMode() failed, we know that the requested mode is
 			// not available.  Now we just want to figure out the EXACT problem so
@@ -294,32 +294,32 @@ static int16_t SetupVideo(					// Returns 0 on success.
 			rspQueryVideoModeReset();
 			int16_t sDeviceDepth;
 			int16_t sDevicePages;
-			do	{
+			do {
 				sResult = rspQueryVideoMode(
 					&sDeviceDepth,
 					&sDeviceWidth,
 					&sDeviceHeight,
 					&sDevicePages);
-				} while ((sResult == 0) && (sDeviceDepth < MAIN_SCREEN_DEPTH));
+			} while ((sResult == 0) && (sDeviceDepth < MAIN_SCREEN_DEPTH));
 			if ((sResult == 0) && (sDeviceDepth == MAIN_SCREEN_DEPTH))
-				{
+			{
 				// We got the depth, now find a mode with the requested resolution.  If
 				// there isn't one, then resolution at this depth is the problem.
-				while ( (sResult == 0) &&
-						  (sDeviceDepth == MAIN_SCREEN_DEPTH) &&
-						  ((sDeviceWidth < MAIN_WINDOW_WIDTH) || (sDeviceHeight < MAIN_WINDOW_HEIGHT)) )
-					{
+				while ((sResult == 0) &&
+					(sDeviceDepth == MAIN_SCREEN_DEPTH) &&
+					((sDeviceWidth < MAIN_WINDOW_WIDTH) || (sDeviceHeight < MAIN_WINDOW_HEIGHT)))
+				{
 					sResult = rspQueryVideoMode(
 						&sDeviceDepth,
 						&sDeviceWidth,
 						&sDeviceHeight,
 						&sDevicePages);
-					}
-				if ( (sResult == 0) &&
-					  (sDeviceDepth == MAIN_SCREEN_DEPTH) &&
-					  (sDeviceWidth >= MAIN_WINDOW_WIDTH) &&
-					  (sDeviceHeight >= MAIN_WINDOW_HEIGHT) )
-					{
+				}
+				if ((sResult == 0) &&
+					(sDeviceDepth == MAIN_SCREEN_DEPTH) &&
+					(sDeviceWidth >= MAIN_WINDOW_WIDTH) &&
+					(sDeviceHeight >= MAIN_WINDOW_HEIGHT))
+				{
 					// We got the depth and resolution, which only leaves pages or scaling
 					// as possible problems.  RSPiX doesn't support scaling as of 04/16/97
 					// and probably never will, so if we eliminate that with an ASSERT(),
@@ -327,15 +327,15 @@ static int16_t SetupVideo(					// Returns 0 on success.
 					ASSERT(MAIN_SCREEN_SCALING == 0);
 					sResult = -1;
 					TRACE("SetupVideo(): No video modes available at %dx%d, %d-bit, with %d pages!\n",
-						MAIN_WINDOW_WIDTH , MAIN_WINDOW_HEIGHT, MAIN_SCREEN_DEPTH, MAIN_SCREEN_PAGES);
+						MAIN_WINDOW_WIDTH, MAIN_WINDOW_HEIGHT, MAIN_SCREEN_DEPTH, MAIN_SCREEN_PAGES);
 					rspMsgBox(
 						RSP_MB_ICN_STOP | RSP_MB_BUT_OK,
 						g_pszCriticalErrorTitle,
 						g_pszVideoPagesError,
 						acVideoMode);
-					}
+				}
 				else
-					{
+				{
 					sResult = -1;
 					TRACE("SetupVideo(): No %hd-bit video modes go up to %hdx%hd resolution!\n",
 						(int16_t)MAIN_SCREEN_DEPTH, (int16_t)MAIN_WINDOW_WIDTH, (int16_t)MAIN_WINDOW_HEIGHT);
@@ -344,10 +344,10 @@ static int16_t SetupVideo(					// Returns 0 on success.
 						g_pszCriticalErrorTitle,
 						g_pszVideoResolutionError,
 						acVideoMode);
-					}
 				}
+			}
 			else
-				{
+			{
 				sResult = -1;
 				TRACE("SetupVideo(): No %hd-bit video modes are available!\n",
 					(int16_t)MAIN_SCREEN_DEPTH);
@@ -356,52 +356,52 @@ static int16_t SetupVideo(					// Returns 0 on success.
 					g_pszCriticalErrorTitle,
 					g_pszVideoDepthError,
 					acVideoMode);
-				}
 			}
 		}
+	}
 
 	return sResult;
-	}
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 // Allocates a chunk and resizes so that we may be able to have some large
 // blocks of contiguous memory.
 ////////////////////////////////////////////////////////////////////////////////
 static char* CreateChunk(	// Returns the memory ptr that will hold the chunk
-									// in place.  Needs to be freed with free() when done
-									// with the chunk.
+	// in place.  Needs to be freed with free() when done
+	// with the chunk.
 	int32_t lChunkSize)			// In:  Size of chunk to create.
-	{
-	char*	pcOrig		= (char*)malloc(lChunkSize);
-	char* pcReAlloc	= (char*)realloc(pcOrig, 1024);
+{
+	char* pcOrig = (char*)malloc(lChunkSize);
+	char* pcReAlloc = (char*)realloc(pcOrig, 1024);
 	ASSERT(pcOrig == pcReAlloc);
 	if (pcReAlloc)
-		{
+	{
 		return pcReAlloc;
-		}
-	else
-		{
-		return pcOrig;
-		}
 	}
+	else
+	{
+		return pcOrig;
+	}
+}
 
 
 static void assert_types_are_sane(void)
 {
-    ASSERT(sizeof (S8) == 1);
-    ASSERT(sizeof (U8) == 1);
-    ASSERT(sizeof (S16) == 2);
-    ASSERT(sizeof (U16) == 2);
-    ASSERT(sizeof (S32) == 4);
-    ASSERT(sizeof (U32) == 4);
-    ASSERT(sizeof (S64) == 8);
-    ASSERT(sizeof (U64) == 8);
+	ASSERT(sizeof(S8) == 1);
+	ASSERT(sizeof(U8) == 1);
+	ASSERT(sizeof(S16) == 2);
+	ASSERT(sizeof(U16) == 2);
+	ASSERT(sizeof(S32) == 4);
+	ASSERT(sizeof(U32) == 4);
+	ASSERT(sizeof(S64) == 8);
+	ASSERT(sizeof(U64) == 8);
 
-    U32 val = 0x02000001;
+	U32 val = 0x02000001;
 #if SYS_ENDIAN_BIG
-    ASSERT(*((U8*) &val) == 0x02);
+	ASSERT(*((U8*)&val) == 0x02);
 #else
-    ASSERT(*((U8*) &val) == 0x01);
+	ASSERT(*((U8*)&val) == 0x01);
 #endif
 }
 
@@ -413,7 +413,7 @@ static void assert_types_are_sane(void)
 
 // Global versions of argc/argv...
 int _argc = 0;
-char **_argv = NULL;
+char** _argv = NULL;
 
 int32_t playthroughMS = 0;
 
@@ -425,345 +425,346 @@ bool StoreSteamStatsPending = false;
 bool EarnedSteamAchievements[ACHIEVEMENT_MAX];
 uint32 SteamAppID = 0;
 
-static const char *GetAchievementName(const Achievement ach)
+static const char* GetAchievementName(const Achievement ach)
 {
-    switch (ach)
-    {
-        #define ACH_CASE(name) case ACHIEVEMENT_##name: return #name
-        ACH_CASE(KILL_FIRST_VICTIM);
-        ACH_CASE(START_SECOND_LEVEL);
-        ACH_CASE(DUCK_UNDER_ROCKET);
-        ACH_CASE(RUN_5_MINUTES);
-        ACH_CASE(PERFORM_FIRST_EXECUTION);
-        ACH_CASE(KILL_100);
-        ACH_CASE(KILL_1000);
-        ACH_CASE(KILL_10000);
-        ACH_CASE(COMPLETE_LEVEL_10);
-        ACH_CASE(COMPLETE_GAME);
-        ACH_CASE(FIRE_1000000_BULLETS);
-        ACH_CASE(HIT_100000_TARGETS);
-        ACH_CASE(TAKE_10000_HITS);
-        ACH_CASE(KILL_EVERYTHING);
-        ACH_CASE(KILL_ONLY_HOSTILES);
-        ACH_CASE(USE_ONLY_M16);
-        ACH_CASE(USE_EVERY_WEAPON);
-        ACH_CASE(COMPLETE_LEVEL_ON_LOW_HEALTH);
-        ACH_CASE(FIGHT_AN_OSTRICH);
-        ACH_CASE(WATCH_ALL_CREDITS);
-        ACH_CASE(PLAY_ON_NON_WINDOWS_PLATFORM);
-        ACH_CASE(FIREBOMB_THE_BAND);
-        ACH_CASE(ROCKET_TO_THE_FACE);
-        ACH_CASE(KILL_A_NAKED_PERSON);
-        ACH_CASE(ENABLE_CHEATS);
-        ACH_CASE(COMMIT_SUICIDE);
-        ACH_CASE(TOUCH_SOMEONE_WHILE_BURNING);
-        ACH_CASE(COMPLETE_GAME_IN_X_MINUTES);
-        ACH_CASE(COMPLETE_GAME_ON_HARDEST);
-        #undef ACH_CASE
-        case ACHIEVEMENT_MAX: break;  // not a real achievement, keep compiler happy.
-    }
+	switch (ach)
+	{
+#define ACH_CASE(name) case ACHIEVEMENT_##name: return #name
+		ACH_CASE(KILL_FIRST_VICTIM);
+		ACH_CASE(START_SECOND_LEVEL);
+		ACH_CASE(DUCK_UNDER_ROCKET);
+		ACH_CASE(RUN_5_MINUTES);
+		ACH_CASE(PERFORM_FIRST_EXECUTION);
+		ACH_CASE(KILL_100);
+		ACH_CASE(KILL_1000);
+		ACH_CASE(KILL_10000);
+		ACH_CASE(COMPLETE_LEVEL_10);
+		ACH_CASE(COMPLETE_GAME);
+		ACH_CASE(FIRE_1000000_BULLETS);
+		ACH_CASE(HIT_100000_TARGETS);
+		ACH_CASE(TAKE_10000_HITS);
+		ACH_CASE(KILL_EVERYTHING);
+		ACH_CASE(KILL_ONLY_HOSTILES);
+		ACH_CASE(USE_ONLY_M16);
+		ACH_CASE(USE_EVERY_WEAPON);
+		ACH_CASE(COMPLETE_LEVEL_ON_LOW_HEALTH);
+		ACH_CASE(FIGHT_AN_OSTRICH);
+		ACH_CASE(WATCH_ALL_CREDITS);
+		ACH_CASE(PLAY_ON_NON_WINDOWS_PLATFORM);
+		ACH_CASE(FIREBOMB_THE_BAND);
+		ACH_CASE(ROCKET_TO_THE_FACE);
+		ACH_CASE(KILL_A_NAKED_PERSON);
+		ACH_CASE(ENABLE_CHEATS);
+		ACH_CASE(COMMIT_SUICIDE);
+		ACH_CASE(TOUCH_SOMEONE_WHILE_BURNING);
+		ACH_CASE(COMPLETE_GAME_IN_X_MINUTES);
+		ACH_CASE(COMPLETE_GAME_ON_HARDEST);
+#undef ACH_CASE
+	case ACHIEVEMENT_MAX: break;  // not a real achievement, keep compiler happy.
+	}
 
-    return NULL;
+	return NULL;
 }
 
 class SteamworksEvents
 {
 public:
-    SteamworksEvents()
-        : m_CallbackUserStatsReceived(this, &SteamworksEvents::OnUserStatsReceived)
-    {}
+	SteamworksEvents()
+		: m_CallbackUserStatsReceived(this, &SteamworksEvents::OnUserStatsReceived)
+	{
+	}
 
-    STEAM_CALLBACK(SteamworksEvents, OnUserStatsReceived, UserStatsReceived_t /* *pParam */, m_CallbackUserStatsReceived)
-    {
-        //printf("STEAMWORKS: OnUserStatsReceived\n");
+	STEAM_CALLBACK(SteamworksEvents, OnUserStatsReceived, UserStatsReceived_t /* *pParam */, m_CallbackUserStatsReceived)
+	{
+		//printf("STEAMWORKS: OnUserStatsReceived\n");
 
-        if (pParam->m_nGameID != SteamAppID)
-            return;
-        else if (pParam->m_eResult != k_EResultOK)
-            return;
+		if (pParam->m_nGameID != SteamAppID)
+			return;
+		else if (pParam->m_eResult != k_EResultOK)
+			return;
 
-        //printf("STEAMWORKS: Accepting these stats.\n");
+		//printf("STEAMWORKS: Accepting these stats.\n");
 
-        // Update our stats and achievements.
-        int32 val;
-        ISteamUserStats *stats = SteamUserStats();
-        #define UPDATESTAT(st) { \
-            stats->GetStat(#st, &val); \
-            /*printf("STEAMWORKS: Got stat '%s' (+%d)\n", #st, (int) val);*/ \
-            Stat_##st += (int) val; \
-            if (Stat_##st < 0) Stat_##st = 0x7FFFFFFF; \
-        }
-        UPDATESTAT(BulletsFired);
-        UPDATESTAT(BulletsHit);
-        UPDATESTAT(BulletsMissed);
-        UPDATESTAT(Deaths);
-        UPDATESTAT(Suicides);
-        UPDATESTAT(Executions);
-        UPDATESTAT(HitsTaken);
-        UPDATESTAT(DamageTaken);
-        UPDATESTAT(Burns);
-        UPDATESTAT(TimeRunning);
-        UPDATESTAT(KilledHostiles);
-        UPDATESTAT(KilledCivilians);
-        UPDATESTAT(TotalKilled);
-        UPDATESTAT(LevelsPlayed);
-        #undef UPDATESTAT
+		// Update our stats and achievements.
+		int32 val;
+		ISteamUserStats* stats = SteamUserStats();
+#define UPDATESTAT(st) { \
+			stats->GetStat(#st, &val); \
+			/*printf("STEAMWORKS: Got stat '%s' (+%d)\n", #st, (int) val);*/ \
+			Stat_##st += (int) val; \
+			if (Stat_##st < 0) Stat_##st = 0x7FFFFFFF; \
+		}
+		UPDATESTAT(BulletsFired);
+		UPDATESTAT(BulletsHit);
+		UPDATESTAT(BulletsMissed);
+		UPDATESTAT(Deaths);
+		UPDATESTAT(Suicides);
+		UPDATESTAT(Executions);
+		UPDATESTAT(HitsTaken);
+		UPDATESTAT(DamageTaken);
+		UPDATESTAT(Burns);
+		UPDATESTAT(TimeRunning);
+		UPDATESTAT(KilledHostiles);
+		UPDATESTAT(KilledCivilians);
+		UPDATESTAT(TotalKilled);
+		UPDATESTAT(LevelsPlayed);
+#undef UPDATESTAT
 
-        for (int i = 0; i < ACHIEVEMENT_MAX; i++)
-        {
-            const char *name = GetAchievementName((Achievement) i);
-            if (!name) break;  // just in case.
-            bool unlocked = false;
-            if (!stats->GetAchievement(name, &unlocked))
-                unlocked = false;
-            //printf("STEAMWORKS: Achievement '%s': %slocked\n", name, unlocked ? "un" : "");
-            EarnedSteamAchievements[i] = unlocked;
-        }
+		for (int i = 0; i < ACHIEVEMENT_MAX; i++)
+		{
+			const char* name = GetAchievementName((Achievement)i);
+			if (!name) break;  // just in case.
+			bool unlocked = false;
+			if (!stats->GetAchievement(name, &unlocked))
+				unlocked = false;
+			//printf("STEAMWORKS: Achievement '%s': %slocked\n", name, unlocked ? "un" : "");
+			EarnedSteamAchievements[i] = unlocked;
+		}
 
-        WaitingForInitialSteamStats = false;
-    }
+		WaitingForInitialSteamStats = false;
+	}
 };
 
 
-static bool touchFile(const char *fname, const int64 stamp)
+static bool touchFile(const char* fname, const int64 stamp)
 {
 #ifdef WIN32
-    HANDLE hFile = CreateFileA(fname, GENERIC_READ | FILE_WRITE_ATTRIBUTES,
-                               FILE_SHARE_READ, NULL, OPEN_EXISTING, 0, NULL);
-    if (hFile == INVALID_HANDLE_VALUE)
-        return false;
+	HANDLE hFile = CreateFileA(fname, GENERIC_READ | FILE_WRITE_ATTRIBUTES,
+		FILE_SHARE_READ, NULL, OPEN_EXISTING, 0, NULL);
+	if (hFile == INVALID_HANDLE_VALUE)
+		return false;
 
-    ULARGE_INTEGER val;
-    val.QuadPart = (uint64_t) stamp;
-    val.QuadPart += 11644473600LL;  // epoch difference. Ignoring leap seconds, oh well.
-    val.QuadPart *= 10000000LL;  // convert to nanoseconds.
-    FILETIME ft;
-    ft.dwLowDateTime = val.LowPart;
-    ft.dwHighDateTime = val.HighPart;
-    const BOOL rc = SetFileTime(hFile, NULL, NULL, &ft);
-    CloseHandle(hFile);
-    return (rc != 0);
+	ULARGE_INTEGER val;
+	val.QuadPart = (uint64_t)stamp;
+	val.QuadPart += 11644473600LL;  // epoch difference. Ignoring leap seconds, oh well.
+	val.QuadPart *= 10000000LL;  // convert to nanoseconds.
+	FILETIME ft;
+	ft.dwLowDateTime = val.LowPart;
+	ft.dwHighDateTime = val.HighPart;
+	const BOOL rc = SetFileTime(hFile, NULL, NULL, &ft);
+	CloseHandle(hFile);
+	return (rc != 0);
 #else
-    timeval ft[2];
-    ft[0].tv_sec = ft[1].tv_sec = (time_t) stamp;
-    ft[0].tv_usec = ft[1].tv_usec = 0;
-    return (utimes(fname, ft) == 0);
+	timeval ft[2];
+	ft[0].tv_sec = ft[1].tv_sec = (time_t)stamp;
+	ft[0].tv_usec = ft[1].tv_usec = 0;
+	return (utimes(fname, ft) == 0);
 #endif
 }
 
 
 static bool prepareSteamworks()
 {
-    ISteamUtils *utils;
+	ISteamUtils* utils;
 
-    if ((!SteamAPI_Init()) || ((utils = SteamUtils()) == NULL))
-    {
-        rspMsgBox(RSP_MB_BUT_OK | RSP_MB_ICN_STOP,
-                  "Error!", "%s", "Can't initialize Steamworks, aborting...");
-        return false;
-    }
+	if ((!SteamAPI_Init()) || ((utils = SteamUtils()) == NULL))
+	{
+		rspMsgBox(RSP_MB_BUT_OK | RSP_MB_ICN_STOP,
+			"Error!", "%s", "Can't initialize Steamworks, aborting...");
+		return false;
+	}
 
-    SteamAppID = utils->GetAppID();
+	SteamAppID = utils->GetAppID();
 
-    new SteamworksEvents;
+	new SteamworksEvents;
 
-    ISteamUserStats *stats = SteamUserStats();
-    if ((!stats) || (rspCommandLine("nosteamachievements")))
-        EnableSteamAchievements = false;
+	ISteamUserStats* stats = SteamUserStats();
+	if ((!stats) || (rspCommandLine("nosteamachievements")))
+		EnableSteamAchievements = false;
 
-    if (EnableSteamAchievements)
-    {
-        bool nukeAchievements = rspCommandLine("nukesteamachievements") != 0;
-        if (nukeAchievements)
-        {
-            if (rspMsgBox(RSP_MB_BUT_OKCANCEL | RSP_MB_ICN_QUERY, "Whoa!", "%s", "Really nuke your Steam Achievements? This can't be undone!") != RSP_MB_RET_OK)
-                nukeAchievements = false;
-        }
+	if (EnableSteamAchievements)
+	{
+		bool nukeAchievements = rspCommandLine("nukesteamachievements") != 0;
+		if (nukeAchievements)
+		{
+			if (rspMsgBox(RSP_MB_BUT_OKCANCEL | RSP_MB_ICN_QUERY, "Whoa!", "%s", "Really nuke your Steam Achievements? This can't be undone!") != RSP_MB_RET_OK)
+				nukeAchievements = false;
+		}
 
-        if (nukeAchievements)
-        {
-            stats->ResetAllStats(true);
-            stats->StoreStats();
-        }
+		if (nukeAchievements)
+		{
+			stats->ResetAllStats(true);
+			stats->StoreStats();
+		}
 
-        stats->RequestCurrentStats();
-    }
+		stats->RequestCurrentStats();
+	}
 
-    ISteamRemoteStorage *cloud = SteamRemoteStorage();
-    if ((!cloud) || (rspCommandLine("nosteamcloud")))
-        EnableSteamCloud = false;
+	ISteamRemoteStorage* cloud = SteamRemoteStorage();
+	if ((!cloud) || (rspCommandLine("nosteamcloud")))
+		EnableSteamCloud = false;
 
-    if (EnableSteamCloud)
-    {
-        bool nukeCloud = rspCommandLine("nukesteamcloud") != 0;
-        if (nukeCloud)
-        {
-            if (rspMsgBox(RSP_MB_BUT_OKCANCEL | RSP_MB_ICN_QUERY, "Whoa!", "%s", "Really nuke the Steam Cloud? This can't be undone!") != RSP_MB_RET_OK)
-                nukeCloud = false;
-        }
+	if (EnableSteamCloud)
+	{
+		bool nukeCloud = rspCommandLine("nukesteamcloud") != 0;
+		if (nukeCloud)
+		{
+			if (rspMsgBox(RSP_MB_BUT_OKCANCEL | RSP_MB_ICN_QUERY, "Whoa!", "%s", "Really nuke the Steam Cloud? This can't be undone!") != RSP_MB_RET_OK)
+				nukeCloud = false;
+		}
 
-        if (nukeCloud)
-        {
-            const int Max = cloud->GetFileCount();
-            for (int i = 0; i < Max; i++)
-            {
-                int32 fsize = 0;
-                const char *fname = cloud->GetFileNameAndSize(i, &fsize);
-                if (fname)
-                    cloud->FileDelete(fname);
-            }
-        }
+		if (nukeCloud)
+		{
+			const int Max = cloud->GetFileCount();
+			for (int i = 0; i < Max; i++)
+			{
+				int32 fsize = 0;
+				const char* fname = cloud->GetFileNameAndSize(i, &fsize);
+				if (fname)
+					cloud->FileDelete(fname);
+			}
+		}
 
-        // no files in the cloud? Add local ones.
-        if (cloud->GetFileCount() == 0)
-        {
-            const int Max = MAX_SAVE_SLOTS;
-            for (int i = 0; i < Max; i++)
-            {
-                char fname[64];
-                snprintf(fname, sizeof (fname), "savegame/%d.gme", i);
-                FILE *io = fopen(FindCorrectFile(fname, "rb"), "rb");
-                if (io != NULL)
-                {
-                    char buf[1024];
-                    const size_t br = fread(buf, 1, sizeof (buf), io);
-                    fclose(io);
-                    if (br > 0)
-                    {
-                        snprintf(fname, sizeof (fname), "savegame_%d.gme", i);
-                        cloud->FileWrite(fname, buf, (int32) br);
-                    }
-                }
-            }
-        }
+		// no files in the cloud? Add local ones.
+		if (cloud->GetFileCount() == 0)
+		{
+			const int Max = MAX_SAVE_SLOTS;
+			for (int i = 0; i < Max; i++)
+			{
+				char fname[64];
+				snprintf(fname, sizeof(fname), "savegame/%d.gme", i);
+				FILE* io = fopen(FindCorrectFile(fname, "rb"), "rb");
+				if (io != NULL)
+				{
+					char buf[1024];
+					const size_t br = fread(buf, 1, sizeof(buf), io);
+					fclose(io);
+					if (br > 0)
+					{
+						snprintf(fname, sizeof(fname), "savegame_%d.gme", i);
+						cloud->FileWrite(fname, buf, (int32)br);
+					}
+				}
+			}
+		}
 
-        // Copy files from the Cloud back to us.
-        const int Max = MAX_SAVE_SLOTS;
-        for (int i = 0; i < Max; i++)
-        {
-            char src[64];
-            snprintf(src, sizeof (src), "savegame_%d.gme", i);
-            char dst[64];
-            snprintf(dst, sizeof (dst), "steamcloud/%d.gme", i);
+		// Copy files from the Cloud back to us.
+		const int Max = MAX_SAVE_SLOTS;
+		for (int i = 0; i < Max; i++)
+		{
+			char src[64];
+			snprintf(src, sizeof(src), "savegame_%d.gme", i);
+			char dst[64];
+			snprintf(dst, sizeof(dst), "steamcloud/%d.gme", i);
 
-            remove(FindCorrectFile(dst, "wb"));
+			remove(FindCorrectFile(dst, "wb"));
 
-            if (!cloud->FileExists(src))
-                continue;
+			if (!cloud->FileExists(src))
+				continue;
 
-            char buf[1024];
-            const int32 br = cloud->FileRead(src, buf, (int32) sizeof (buf));
-            if (br <= 0)
-                continue;
+			char buf[1024];
+			const int32 br = cloud->FileRead(src, buf, (int32)sizeof(buf));
+			if (br <= 0)
+				continue;
 
-            FILE *io = fopen(FindCorrectFile(dst, "wb"), "wb");
-            if (!io)
-                continue;
+			FILE* io = fopen(FindCorrectFile(dst, "wb"), "wb");
+			if (!io)
+				continue;
 
-            const size_t bw = fwrite(buf, (size_t) br, 1, io);
-            fclose(io);
-            if (bw != 1)
-                remove(FindCorrectFile(dst, "wb"));
-            else
-            {
-                const int64 stamp = cloud->GetFileTimestamp(src);
-                if (stamp > 0)
-                    touchFile(FindCorrectFile(dst, "wb"), stamp);
-            }
-        }
-    }
+			const size_t bw = fwrite(buf, (size_t)br, 1, io);
+			fclose(io);
+			if (bw != 1)
+				remove(FindCorrectFile(dst, "wb"));
+			else
+			{
+				const int64 stamp = cloud->GetFileTimestamp(src);
+				if (stamp > 0)
+					touchFile(FindCorrectFile(dst, "wb"), stamp);
+			}
+		}
+	}
 
-    return true;  // good to go.
+	return true;  // good to go.
 }
 
 void RequestSteamStatsStore()
 {
-    if (EnableSteamAchievements)
-        StoreSteamStatsPending = true;
+	if (EnableSteamAchievements)
+		StoreSteamStatsPending = true;
 }
 
 void UnlockAchievement(const Achievement ach)
 {
-    //if ((ach < 0) || (ach >= ACHIEVEMENT_MAX))
-    //    return;
-    if (Flag_Achievements & FLAG_USED_CHEATS)
-        return;  // denied.
-    else if (EarnedSteamAchievements[ach])
-        return;  // already have it.
-    else if (!EnableSteamAchievements)
-        return;
-    else if (GetInputMode() == INPUT_MODE_PLAYBACK)
-        return;   // you have to actually be playing, not a demo run.  :)
+	//if ((ach < 0) || (ach >= ACHIEVEMENT_MAX))
+	//    return;
+	if (Flag_Achievements & FLAG_USED_CHEATS)
+		return;  // denied.
+	else if (EarnedSteamAchievements[ach])
+		return;  // already have it.
+	else if (!EnableSteamAchievements)
+		return;
+	else if (GetInputMode() == INPUT_MODE_PLAYBACK)
+		return;   // you have to actually be playing, not a demo run.  :)
 
-    const char *achstr = GetAchievementName(ach);
-    if (!achstr)
-        return;
+	const char* achstr = GetAchievementName(ach);
+	if (!achstr)
+		return;
 
-    ISteamUserStats *stats = SteamUserStats();
-    if (!stats)
-        return;
+	ISteamUserStats* stats = SteamUserStats();
+	if (!stats)
+		return;
 
-    //printf("STEAMWORKS: Unlocking achievement '%s'!\n", achstr);
+	//printf("STEAMWORKS: Unlocking achievement '%s'!\n", achstr);
 
-    EarnedSteamAchievements[ach] = true;
-    stats->SetAchievement(achstr);
-    RequestSteamStatsStore();
+	EarnedSteamAchievements[ach] = true;
+	stats->SetAchievement(achstr);
+	RequestSteamStatsStore();
 }
 
 void RunSteamworksUpkeep()
 {
-    SteamAPI_RunCallbacks();
+	SteamAPI_RunCallbacks();
 
-    if ((StoreSteamStatsPending) && (!WaitingForInitialSteamStats))
-    {
-        ISteamUserStats *stats = SteamUserStats();
-        if (stats)
-        {
-            //printf("STEAMWORKS: Pushing stats/achievements...\n");
+	if ((StoreSteamStatsPending) && (!WaitingForInitialSteamStats))
+	{
+		ISteamUserStats* stats = SteamUserStats();
+		if (stats)
+		{
+			//printf("STEAMWORKS: Pushing stats/achievements...\n");
 
-            // since we're pushing here anyhow, might as well update counters...
-            #define SETSTAT(st) { \
-                /*printf("STEAMWORKS: Storing stat '%s' (%d)\n", #st, Stat_##st);*/ \
-                stats->SetStat(#st, Stat_##st); \
-            }
-            SETSTAT(BulletsFired);
-            SETSTAT(BulletsHit);
-            SETSTAT(BulletsMissed);
-            SETSTAT(Deaths);
-            SETSTAT(Suicides);
-            SETSTAT(Executions);
-            SETSTAT(HitsTaken);
-            SETSTAT(DamageTaken);
-            SETSTAT(Burns);
-            SETSTAT(TimeRunning);
-            SETSTAT(KilledHostiles);
-            SETSTAT(KilledCivilians);
-            SETSTAT(TotalKilled);
-            SETSTAT(LevelsPlayed);
-            #undef SETSTAT
+			// since we're pushing here anyhow, might as well update counters...
+#define SETSTAT(st) { \
+				/*printf("STEAMWORKS: Storing stat '%s' (%d)\n", #st, Stat_##st);*/ \
+				stats->SetStat(#st, Stat_##st); \
+			}
+			SETSTAT(BulletsFired);
+			SETSTAT(BulletsHit);
+			SETSTAT(BulletsMissed);
+			SETSTAT(Deaths);
+			SETSTAT(Suicides);
+			SETSTAT(Executions);
+			SETSTAT(HitsTaken);
+			SETSTAT(DamageTaken);
+			SETSTAT(Burns);
+			SETSTAT(TimeRunning);
+			SETSTAT(KilledHostiles);
+			SETSTAT(KilledCivilians);
+			SETSTAT(TotalKilled);
+			SETSTAT(LevelsPlayed);
+#undef SETSTAT
 
-            if (stats->StoreStats())
-                StoreSteamStatsPending = false;
-        }
-    }
+			if (stats->StoreStats())
+				StoreSteamStatsPending = false;
+		}
+	}
 }
 #endif
 
 
-int main(int argc, char **argv)
-	{
+int main(int argc, char** argv)
+{
 	int16_t sResult = 0;
 
-    _argc = argc;
-    _argv = argv;
+	_argc = argc;
+	_argv = argv;
 
-    assert_types_are_sane();
-    rspPlatformInit();
+	assert_types_are_sane();
+	rspPlatformInit();
 
-    #if WITH_STEAMWORKS
-    if (!prepareSteamworks())
-        return 1;
-    #endif
+#if WITH_STEAMWORKS
+	if (!prepareSteamworks())
+		return 1;
+#endif
 
 	//------------------------------------------------------------------------
 	// Get hardware-related settings from prefs file
@@ -777,7 +778,7 @@ int main(int argc, char **argv)
 	// user does something stupid.
 	RPrefs prefs;
 	if (prefs.Open(g_pszPrefFileName, "rt") == 0)
-		{
+	{
 		// Get video preferences
 		int16_t sDeviceWidth;
 		int16_t sDeviceHeight;
@@ -801,19 +802,19 @@ int main(int argc, char **argv)
 
 		// Make sure no errors occurred
 		if (prefs.IsError() == 0)
-			{
+		{
 
 			//---------------------------------------------------------------------------
 			// Init blue layer
 			//---------------------------------------------------------------------------
 			if (rspInitBlue() == 0)
-				{
+			{
 
-// Turn on profile (if enabled via macro)
-rspProfileOn();
+				// Turn on profile (if enabled via macro)
+				rspProfileOn();
 
-// Set profile report file name
-rspSetProfileOutput("profile.out");	
+				// Set profile report file name
+				rspSetProfileOutput("profile.out");
 
 				//------------------------------------------------------------------------
 				// Set system stuff
@@ -834,23 +835,23 @@ rspSetProfileOutput("profile.out");
 				// Setup video
 				//------------------------------------------------------------------------
 
-				sResult	= SetupVideo(				// Returns 0 on success.
+				sResult = SetupVideo(				// Returns 0 on success.
 					sUseCurrentDeviceDimensions,	// In:  1 to use current video area.
 					sDeviceWidth,						// In:  Desired video hardware width.
 					sDeviceHeight);					// In:  Desired video hardware height.
 
 				if (sResult == 0)
-					{
+				{
 					// Set Win32 static colors and lock them.
 					rspSetWin32StaticColors(1);
-					
+
 					//---------------------------------------------------------------
 					// Setup audio
 					//---------------------------------------------------------------
 
 					// If the INI or default mode fails b/c it is incompatible with the
 					// hardware, we will try vanilla settings.
-					bool	bSwitchedToVanillaSettings	= false;
+					bool	bSwitchedToVanillaSettings = false;
 					// A common reason why the audio mode can't be set is that another
 					// process started a sound that hasn't finished playing by the time
 					// this app starts.  Therefore, it often pays to keep trying for a
@@ -861,11 +862,11 @@ rspSetProfileOutput("profile.out");
 					bool bRetry = true;
 
 					while (bRetry)
-						{
+					{
 						// Keep trying until it works or time runs out, whichever comes first
 						int32_t	lTime = rspGetMilliseconds();
-						bool	bDone	= false;
-						do	{
+						bool	bDone = false;
+						do {
 							// Try to set mode
 							sResult = RMix::SetMode(
 								sAudioSamplesPerSec,
@@ -877,94 +878,94 @@ rspSetProfileOutput("profile.out");
 								sMixBitsPerSample);
 
 							switch (sResult)
+							{
+							case 0:
+								// Alrighty.
+								bDone = true;
+								break;
+							case BLU_ERR_DEVICE_IN_USE:
+								// Try again until timer expires.
+								if ((rspGetMilliseconds() - lTime) < AUDIO_RETRY_TIME)
 								{
-								case 0:
-									// Alrighty.
-									bDone	= true;
-									break;
-								case BLU_ERR_DEVICE_IN_USE:
-									// Try again until timer expires.
-									if ((rspGetMilliseconds() - lTime) < AUDIO_RETRY_TIME)
-										{
-										// Continue.
-										}
-									else
-										{
-										// Done.
-										bDone	= true;
-										}
-									break;
-								case BLU_ERR_NO_DEVICE:
-									// Not much we can do about this.  Note that we'll still
-									// need to be able to open the sample files to query info
-									// about them (even if NO sound).  This is handled by game.cpp.
-									bDone	= true;
-									break;
-								case BLU_ERR_NOT_SUPPORTED:
-									// Trying more won't help.  Jump out of this loop so the
-									// user can choose what to do.
-									bDone	= true;
-									break;
+									// Continue.
 								}
+								else
+								{
+									// Done.
+									bDone = true;
+								}
+								break;
+							case BLU_ERR_NO_DEVICE:
+								// Not much we can do about this.  Note that we'll still
+								// need to be able to open the sample files to query info
+								// about them (even if NO sound).  This is handled by game.cpp.
+								bDone = true;
+								break;
+							case BLU_ERR_NOT_SUPPORTED:
+								// Trying more won't help.  Jump out of this loop so the
+								// user can choose what to do.
+								bDone = true;
+								break;
+							}
 
-							} while (bDone == false);
+						} while (bDone == false);
 
 						// If it worked, clear the retry flag
 						if (sResult == 0)
-							{
+						{
 							bRetry = false;
-							}
+						}
 						else
-							{
+						{
 							TRACE("main(): Audio didn't work, using msgbox to find out what to do...\n");
 							char buf[100];
 							sprintf(buf, "%.3f kHz, %hd Bit, %s",
-								(float)sAudioSamplesPerSec/(float)1000,
+								(float)sAudioSamplesPerSec / (float)1000,
 								(int16_t)sDeviceBitsPerSample,
 								(MAIN_AUDIO_CHANNELS == 1) ? "Mono" : "Stereo");
-							
+
 							// Default to generic error.
-							char*	pszMsg;
-							uint16_t usFlags; 
+							char* pszMsg;
+							uint16_t usFlags;
 							// Try to find a better one, though, based on the return value.
 							switch (sResult)
+							{
+							case BLU_ERR_DEVICE_IN_USE:
+								pszMsg = g_pszAudioModeInUseError_s;
+								usFlags = RSP_MB_ICN_QUERY | RSP_MB_BUT_ABORTRETRYIGNORE;
+								break;
+							case BLU_ERR_NO_DEVICE:
+								pszMsg = g_pszAudioModeNoDeviceError_s;
+								usFlags = RSP_MB_ICN_QUERY | RSP_MB_BUT_YESNO;
+								break;
+							case BLU_ERR_NOT_SUPPORTED:
+								// If we haven't already tried vanilla settings . . .
+								if (bSwitchedToVanillaSettings == false)
 								{
-								case BLU_ERR_DEVICE_IN_USE:
-									pszMsg	= g_pszAudioModeInUseError_s;
-									usFlags	= RSP_MB_ICN_QUERY | RSP_MB_BUT_ABORTRETRYIGNORE;
-									break;
-								case BLU_ERR_NO_DEVICE:
-									pszMsg	= g_pszAudioModeNoDeviceError_s;
-									usFlags	= RSP_MB_ICN_QUERY | RSP_MB_BUT_YESNO;
-									break;
-								case BLU_ERR_NOT_SUPPORTED:
-									// If we haven't already tried vanilla settings . . .
-									if (bSwitchedToVanillaSettings == false)
-										{
-										pszMsg	= g_pszAudioModeNotSupportedError_s;
-										usFlags	= RSP_MB_ICN_QUERY | RSP_MB_BUT_ABORTRETRYIGNORE;
-										// Fall back on our most Vanilla mode.
-										sAudioSamplesPerSec		= MAIN_VANILLA_AUDIO_RATE;
-										sDeviceBitsPerSample		= MAIN_VANILLA_AUDIO_BITS;
-										
-										// Should we alter sMixBitsPerSample????
-										// Let's not -- that way they should be able to use the
-										// assets they originally installed.
-										
-										// Remember.
-										bSwitchedToVanillaSettings	= true;
-										}
-									else
-										{
-										pszMsg	= g_pszAudioVanillaModeNotSupportedError_s;
-										usFlags	= RSP_MB_ICN_QUERY | RSP_MB_BUT_YESNO;
-										}
-									break;
-								default:
-									pszMsg	= g_pszAudioModeGeneralError_s;
-									usFlags	= RSP_MB_ICN_QUERY | RSP_MB_BUT_ABORTRETRYIGNORE;
-									break;
+									pszMsg = g_pszAudioModeNotSupportedError_s;
+									usFlags = RSP_MB_ICN_QUERY | RSP_MB_BUT_ABORTRETRYIGNORE;
+									// Fall back on our most Vanilla mode.
+									sAudioSamplesPerSec = MAIN_VANILLA_AUDIO_RATE;
+									sDeviceBitsPerSample = MAIN_VANILLA_AUDIO_BITS;
+
+									// Should we alter sMixBitsPerSample????
+									// Let's not -- that way they should be able to use the
+									// assets they originally installed.
+
+									// Remember.
+									bSwitchedToVanillaSettings = true;
 								}
+								else
+								{
+									pszMsg = g_pszAudioVanillaModeNotSupportedError_s;
+									usFlags = RSP_MB_ICN_QUERY | RSP_MB_BUT_YESNO;
+								}
+								break;
+							default:
+								pszMsg = g_pszAudioModeGeneralError_s;
+								usFlags = RSP_MB_ICN_QUERY | RSP_MB_BUT_ABORTRETRYIGNORE;
+								break;
+							}
 
 							int16_t sButton = rspMsgBox(
 								usFlags,
@@ -972,29 +973,29 @@ rspSetProfileOutput("profile.out");
 								pszMsg,
 								buf);
 							switch (sButton)
-								{
-								case RSP_MB_RET_NO:
-								case RSP_MB_RET_ABORT:
-									// To abort, just clear the retry flag.  
-									// Keep the error, though.
-									bRetry = false;
-									break;
-								case RSP_MB_RET_RETRY:
-									// To retry, just clear the error (not really necessary, but seems like a good thing)
-									sResult = 0;
-									break;
-								case RSP_MB_RET_YES:
-								case RSP_MB_RET_IGNORE:
-									// To ignore, just clear the error and the retry flag
-									sResult = 0;
-									bRetry = false;
-									break;
-								}
+							{
+							case RSP_MB_RET_NO:
+							case RSP_MB_RET_ABORT:
+								// To abort, just clear the retry flag.  
+								// Keep the error, though.
+								bRetry = false;
+								break;
+							case RSP_MB_RET_RETRY:
+								// To retry, just clear the error (not really necessary, but seems like a good thing)
+								sResult = 0;
+								break;
+							case RSP_MB_RET_YES:
+							case RSP_MB_RET_IGNORE:
+								// To ignore, just clear the error and the retry flag
+								sResult = 0;
+								bRetry = false;
+								break;
 							}
 						}
+					}
 
 					if (sResult == 0)
-						{
+					{
 
 						//------------------------------------------------------------
 						// Run the game
@@ -1008,44 +1009,44 @@ rspSetProfileOutput("profile.out");
 
 						// Restore system cursor
 						rspShowMouseCursor();
-						
+
 						// Kill audio
 						RMix::KillMode();
-						}
+					}
 
 					// Kill video
 					rspKillVideoMode();
-					}
+				}
 
-// Turn off profile (if enabled via macro)
-rspProfileOff();
+				// Turn off profile (if enabled via macro)
+				rspProfileOff();
 
 				// Kill blue layer
 				rspKillBlue();
-				}
+			}
 			else
-				{
+			{
 				// Can't init blue
 				TRACE("main(): Error returned by rspInitBlue()!\n");
 				rspMsgBox(RSP_MB_ICN_STOP | RSP_MB_BUT_OK, g_pszCriticalErrorTitle, g_pszBadBlueInit);
-				}
 			}
+		}
 		else
-			{
+		{
 			// Error reading preference file
 			TRACE("main(): Error reading prefs file!\n");
 			rspMsgBox(RSP_MB_ICN_STOP | RSP_MB_BUT_OK, g_pszCriticalErrorTitle, g_pszPrefReadError);
-			}
 		}
+	}
 	else
-		{
+	{
 		// Can't open preference file
 		TRACE("main(): Couldn't open prefs file: %s !\n", g_pszPrefFileName);
 		rspMsgBox(RSP_MB_ICN_STOP | RSP_MB_BUT_OK, g_pszCriticalErrorTitle, g_pszPrefOpenError);
-		}
-
-    return 0;
 	}
+
+	return 0;
+}
 
 
 ////////////////////////////////////////////////////////////////////////////////
